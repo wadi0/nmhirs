@@ -343,6 +343,42 @@
 
         /* === Dashboard Content Area === */
         .content-area { padding: 35px 40px; }
+
+        /* === Responsive Sidebar & Layout === */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(15, 23, 42, 0.3);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .sidebar-overlay.active {
+            opacity: 1; visibility: visible;
+        }
+
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                box-shadow: 10px 0 30px rgba(15, 23, 42, 0.08);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-wrapper {
+                margin-left: 0 !important;
+            }
+            .top-header {
+                padding: 0 20px;
+            }
+            .content-area {
+                padding: 20px 15px;
+            }
+        }
         
         /* Dashboard Section Handling */
         .dashboard-section { display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -565,6 +601,9 @@
 </head>
 <body>
 
+    <!-- Sidebar overlay for mobile views -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
     <!-- ============================================== -->
     <!-- SIDEBAR NAVIGATION                             -->
     <!-- ============================================== -->
@@ -605,7 +644,12 @@
         
         <!-- Top Header -->
         <header class="top-header">
-            <h2 class="header-title" id="page-title">ড্যাশবোর্ড ওভারভিউ</h2>
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-light d-lg-none border shadow-sm" id="sidebar-toggle" onclick="toggleSidebar()" style="border-radius: 12px; padding: 6px 12px;">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+                <h2 class="header-title" id="page-title">ড্যাশবোর্ড ওভারভিউ</h2>
+            </div>
             <div class="d-flex align-items-center gap-4">
                 <div class="position-relative clickable" onclick="alert('আপনার কোনো নতুন নোটিফিকেশন নেই।')">
                     <i class="bi bi-bell fs-5 text-muted"></i>
@@ -640,7 +684,7 @@
                 </div>
 
                 <div class="row g-4">
-                    <div class="col-xl-4 col-lg-6 d-flex">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-12 mb-4 mb-lg-0 d-flex">
                         <div class="data-panel text-center d-flex flex-column justify-content-between w-100">
                             <div>
                                 <h5 class="fw-bold mb-3"><i class="bi bi-emoji-smile-fill text-purple"></i> বর্তমান বেবি স্ট্যাটাস</h5>
@@ -653,7 +697,7 @@
                             <button class="btn w-100 rounded-pill text-purple fw-bold mt-3" style="background:#f3ebff;" onclick="document.querySelectorAll('.nav-link')[1].click()">বিস্তারিত জানুন</button>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-6 d-flex">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-12 mb-4 mb-lg-0 d-flex">
                         <div class="data-panel text-center d-flex flex-column justify-content-between w-100" style="background: linear-gradient(135deg, var(--primary-teal), #0f766e); color: white;">
                             <div>
                                 <i class="bi bi-footprints-fill fs-2 opacity-75 mb-2"></i>
@@ -664,7 +708,7 @@
                             <button class="btn btn-light w-100 rounded-pill fw-bold text-teal shadow-sm mt-3" style="color:var(--primary-teal);" onclick="document.querySelectorAll('.nav-link')[2].click()">+ কিক যোগ করুন</button>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-12 d-flex">
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-12 d-flex">
                         <div class="data-panel d-flex flex-column justify-content-between w-100">
                             <div>
                                 <h5 class="fw-bold mb-3"><i class="bi bi-list-check text-primary"></i> আজকের চেকলিস্ট</h5>
@@ -2119,7 +2163,25 @@
                 element.classList.add('active');
                 document.getElementById('page-title').innerText = element.innerText.trim();
             }
+            
+            // Auto close sidebar on mobile menu selection
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            if (sidebar && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+            if (overlay && overlay.classList.contains('active')) {
+                overlay.classList.remove('active');
+            }
+            
             window.scrollTo(0,0);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            if (sidebar) sidebar.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
         }
 
         function nextStep(currentStep) {
