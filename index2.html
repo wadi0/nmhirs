@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মাতৃত্ব ও NMHIRS - ইন্টিগ্রেটেড ড্যাশবোর্ড</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            /* The Beautiful Matritwa Brand Colors */
+            --primary-pink: #f03e82;
+            --primary-purple: #5c35a5;
+            --primary-teal: #0d9488;
+            --bg-body: #f8fafc;
+            --border-color: #e2e8f0;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --font-bn: 'Noto Sans Bengali', sans-serif;
+            --font-en: 'Poppins', sans-serif;
+            --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: var(--font-bn);
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .en-text { font-family: var(--font-en); }
+
+        /* === Sidebar === */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            position: fixed;
+            top: 0; left: 0;
+            background: #ffffff;
+            border-right: 1px solid var(--border-color);
+            padding: 24px 20px;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.01);
+        }
+        .sidebar::-webkit-scrollbar { width: 5px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        
+        .brand {
+            font-size: 1.6rem; font-weight: 700; color: var(--primary-purple);
+            display: flex; align-items: center; gap: 12px; margin-bottom: 30px; padding-left: 8px;
+            text-decoration: none;
+        }
+        .brand-icon {
+            background: linear-gradient(135deg, var(--primary-pink), #ff6b9e); color: #fff;
+            width: 42px; height: 42px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(240, 62, 130, 0.3);
+        }
+        .nav-menu { list-style: none; padding: 0; margin: 0; }
+        .nav-section-title { font-size: 0.75rem; font-weight: 700; color: var(--primary-purple); opacity: 0.6; margin: 24px 0 10px 10px; text-transform: uppercase; letter-spacing: 0.5px;}
+        .nav-item { margin-bottom: 4px; }
+        .nav-link {
+            display: flex; align-items: center; gap: 12px;
+            padding: 11px 16px; border-radius: 12px;
+            color: var(--text-muted); font-weight: 500; font-size: 0.95rem;
+            transition: var(--transition-smooth); text-decoration: none;
+            cursor: pointer;
+        }
+        .nav-link i { font-size: 1.2rem; }
+        .nav-link:hover { background: #f8fafc; color: var(--primary-purple); }
+        .nav-link.active { 
+            background: linear-gradient(135deg, var(--primary-purple), #7c3aed); 
+            color: #ffffff; 
+            font-weight: 600; 
+            box-shadow: 0 4px 15px rgba(92, 53, 165, 0.2);
+        }
+        
+        /* === Main Layout === */
+        .main-wrapper {
+            margin-left: 280px;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+        }
+        
+        /* === Top Header === */
+        .top-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            height: 75px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px;
+            position: sticky; top: 0; z-index: 900;
+        }
+        .header-title { font-size: 1.35rem; font-weight: 700; margin: 0; color: var(--text-dark);}
+        
+        .user-profile { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 6px 14px; border-radius: 14px; border: 1px solid var(--border-color); background: #fff; transition: var(--transition-smooth);}
+        .user-profile:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.03); transform: translateY(-1px); }
+        .user-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-pink), var(--primary-purple)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.95rem; }
+
+        /* === Dashboard Content Area === */
+        .content-area { padding: 35px 40px; }
+        
+        /* Dashboard Section Handling */
+        .dashboard-section { display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        #section-overview { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* === Data Panels === */
+        .data-panel {
+            background: #ffffff; border-radius: 24px; padding: 30px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: var(--transition-smooth);
+        }
+        .data-panel:hover {
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.06);
+        }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .panel-title { font-size: 1.15rem; font-weight: 700; margin: 0; color: var(--text-dark); display: flex; align-items: center; gap: 10px;}
+        
+        /* === UI Components === */
+        .kpi-card { display: flex; align-items: center; gap: 18px; }
+        .kpi-icon { width: 58px; height: 58px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; box-shadow: 0 8px 20px -6px rgba(0,0,0,0.08); }
+        .kpi-pink { background: #fff1f5; color: var(--primary-pink); }
+        .kpi-teal { background: #f0fdfa; color: var(--primary-teal); }
+        .kpi-blue { background: #eff6ff; color: #3b82f6; }
+        .kpi-green { background: #f0fdf4; color: #22c55e; }
+        .kpi-orange { background: #fff7ed; color: #f97316; }
+        .kpi-purple { background: #f5f3ff; color: var(--primary-purple); }
+        
+        .kpi-info p { margin: 0 0 4px 0; font-size: 0.85rem; color: var(--text-muted); font-weight: 600;}
+        .kpi-info h3 { margin: 0; font-size: 1.65rem; font-weight: 700; color: var(--text-dark); display: flex; align-items: baseline; gap: 5px;}
+        .kpi-info h3 span { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+        
+        .chart-container { display: flex; align-items: flex-end; justify-content: space-between; height: 180px; padding-top: 20px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;}
+        .chart-col { display: flex; flex-direction: column; align-items: center; width: 18%; }
+        .bar-wrap { height: 130px; width: 100%; display: flex; align-items: flex-end; justify-content: center; background: #f8fafc; border-radius: 10px; position: relative; overflow: hidden;}
+        .chart-bar { width: 28px; background: #e2e8f0; border-radius: 8px; transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative;}
+        .chart-bar.active { background: linear-gradient(180deg, var(--primary-teal), #0f766e); box-shadow: 0 4px 12px rgba(13, 148, 136, 0.35);}
+        .chart-val { font-size: 0.9rem; font-weight: 600; font-family: var(--font-en); margin-bottom: 6px; color: var(--text-muted); }
+        .chart-bar.active + .chart-val { color: var(--primary-teal); }
+        .chart-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-weight: 500;}
+
+        /* Custom Water Glass tracker */
+        .water-glass { width: 34px; height: 44px; border: 2px solid #38bdf8; border-radius: 6px 6px 14px 14px; display: inline-block; position: relative; overflow: hidden; margin-right: 10px; cursor:pointer; transition: var(--transition-smooth); background: #fff;}
+        .water-glass:hover { transform: scale(1.15) translateY(-2px); }
+        .water-glass.filled::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 85%; background: linear-gradient(180deg, #38bdf8, #0284c7); opacity: 0.8; }
+
+        /* Profile Stepper */
+        .step-circle { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; background: #fff; border: 2px solid #cbd5e1; color: #cbd5e1; z-index: 2; position: relative; transition: var(--transition-smooth);}
+        .step-circle.active { border-color: var(--primary-purple); background: var(--primary-purple); color: #fff; box-shadow: 0 0 0 5px #f5f3ff;}
+        .step-circle.completed { border-color: var(--primary-purple); background: #fff; color: var(--primary-purple); }
+        .step-line { height: 3px; background: #e2e8f0; position: absolute; top: 18px; left: 20px; right: 20px; z-index: 1;}
+        .step-line-fill { height: 100%; background: var(--primary-purple); width: 0%; transition: var(--transition-smooth);}
+
+        /* Stakeholder Grid */
+        .stakeholder-card { border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 16px; padding: 24px 16px; text-align: center; transition: var(--transition-smooth); cursor: pointer; background: #fff; height: 100%; box-shadow: var(--card-shadow); }
+        .stakeholder-card:hover { border-color: var(--primary-purple); box-shadow: 0 15px 30px rgba(92,53,165,0.08); transform: translateY(-4px);}
+        .stakeholder-icon { font-size: 2.8rem; margin-bottom: 12px; color: var(--primary-purple); display: inline-block; transition: var(--transition-smooth); }
+        .stakeholder-card:hover .stakeholder-icon { transform: scale(1.1) rotate(5deg); }
+
+        /* Custom Table for Admin */
+        .table-custom th { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; background: #f8fafc; border-bottom: 2px solid var(--border-color); padding: 14px 18px;}
+        .table-custom td { padding: 18px; vertical-align: middle; border-bottom: 1px solid var(--border-color); font-size: 0.95rem;}
+        
+        /* Status Badges */
+        .status-badge { padding: 6px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; font-family: var(--font-en); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .status-critical { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+        .status-high { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+        .status-normal { background: #d1fae5; color: #047857; border: 1px solid #a7f3d0; }
+
+        .clickable { cursor: pointer; transition: var(--transition-smooth); }
+        .clickable:hover { opacity: 0.8; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================== -->
+    <!-- SIDEBAR NAVIGATION                             -->
+    <!-- ============================================== -->
+    <aside class="sidebar">
+        <a href="#" class="brand">
+            <div class="brand-icon"><i class="bi bi-person-hearts"></i></div>
+            <div>
+                মাতৃত্ব
+                <span style="display:block; font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-top: -3px;">Powered by NMHIRS</span>
+            </div>
+        </a>
+        <ul class="nav-menu">
+            <!-- Mother's App Features (Image 1 & 2) -->
+            <div class="nav-section-title">আমার অ্যাপ (মায়ের জন্য)</div>
+            <li class="nav-item"><a class="nav-link active" onclick="switchMenu('section-overview', this)"><i class="bi bi-grid-1x2-fill"></i> ড্যাশবোর্ড ওভারভিউ</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-baby', this)"><i class="bi bi-calendar2-heart"></i> বেবি স্ট্যাটাস</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-kick', this)"><i class="bi bi-activity"></i> কিক ট্র্যাকিং</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-diet', this)"><i class="bi bi-apple"></i> ডায়েট গাইড</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-vaccine', this)"><i class="bi bi-shield-plus"></i> টিকাদান (Vaccine)</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-profile', this)"><i class="bi bi-person-lines-fill"></i> প্রোফাইল সেটআপ</a></li>
+            
+            <!-- NMHIRS Enterprise Features (Doc & Image 3) -->
+            <div class="nav-section-title mt-4">সিস্টেম ও মনিটরিং (NMHIRS)</div>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-national', this)"><i class="bi bi-speedometer2"></i> জাতীয় ড্যাশবোর্ড</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-registry', this)"><i class="bi bi-card-list"></i> মাতৃ নিবন্ধন</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-anc', this)"><i class="bi bi-clipboard-pulse"></i> ANC ট্র্যাকিং</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-risk', this)"><i class="bi bi-exclamation-triangle"></i> রিস্ক ও অ্যালার্ট</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-referral', this)"><i class="bi bi-ambulance"></i> রেফারেল ও ইমার্জেন্সি</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-facility', this)"><i class="bi bi-hospital"></i> হাসপাতাল মডিউল</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-rbac', this)"><i class="bi bi-diagram-3-fill"></i> স্টেকহোল্ডার (RBAC)</a></li>
+        </ul>
+    </aside>
+
+    <!-- ============================================== -->
+    <!-- MAIN CONTENT WRAPPER                           -->
+    <!-- ============================================== -->
+    <div class="main-wrapper">
+        
+        <!-- Top Header -->
+        <header class="top-header">
+            <h2 class="header-title" id="page-title">ড্যাশবোর্ড ওভারভিউ</h2>
+            <div class="d-flex align-items-center gap-4">
+                <div class="position-relative clickable" onclick="alert('আপনার কোনো নতুন নোটিফিকেশন নেই।')">
+                    <i class="bi bi-bell fs-5 text-muted"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar">মা</div>
+                    <div class="d-none d-md-block text-start">
+                        <p class="m-0 fw-bold text-dark lh-1" style="font-size: 0.95rem;">তাসনিয়া রহমান</p>
+                        <p class="m-0 text-muted mt-1" style="font-size: 0.8rem;">২৮ সপ্তাহ গর্ভবতী</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-area">
+            
+            <!-- ============================================== -->
+            <!-- 1. MOTHER OVERVIEW (Matritwa)                  -->
+            <!-- ============================================== -->
+            <div id="section-overview" class="dashboard-section">
+                <div class="mb-4">
+                    <h3 class="fw-bold text-dark mb-1">শুভ সকাল, তাসনিয়া!</h3>
+                    <p class="text-muted fs-6">আপনার গর্ভাবস্থার বর্তমান ডেটা এবং আজকের শিডিউল নিচে দেওয়া হলো।</p>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-sm-6 col-xl-3"><div class="data-panel py-3 px-4"><div class="kpi-card"><div class="kpi-icon kpi-pink"><i class="bi bi-calendar-check"></i></div><div class="kpi-info"><p>বর্তমান সময়কাল</p><h3 class="en-text">28 <span class="font-bn fs-6 text-muted fw-normal">সপ্তাহ</span></h3></div></div></div></div>
+                    <div class="col-sm-6 col-xl-3"><div class="data-panel py-3 px-4"><div class="kpi-card"><div class="kpi-icon kpi-teal"><i class="bi bi-footprints-fill"></i></div><div class="kpi-info"><p>আজকের কিক কাউন্ট</p><h3 class="en-text">16 <span class="font-bn fs-6 text-muted fw-normal">/ লক্ষ্য ১০</span></h3></div></div></div></div>
+                    <div class="col-sm-6 col-xl-3"><div class="data-panel py-3 px-4"><div class="kpi-card"><div class="kpi-icon kpi-blue"><i class="bi bi-droplet-fill"></i></div><div class="kpi-info"><p>পানি পান</p><h3 class="en-text">6 <span class="font-bn fs-6 text-muted fw-normal">/ ৮ গ্লাস</span></h3></div></div></div></div>
+                    <div class="col-sm-6 col-xl-3"><div class="data-panel py-3 px-4"><div class="kpi-card"><div class="kpi-icon kpi-green"><i class="bi bi-hospital"></i></div><div class="kpi-info"><p>পরবর্তী চেকআপ</p><h3 class="en-text">12 <span class="font-bn fs-6 text-muted fw-normal">নভেম্বর</span></h3></div></div></div></div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-xl-4 col-lg-6">
+                        <div class="data-panel text-center">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-emoji-smile-fill text-purple"></i> বর্তমান বেবি স্ট্যাটাস</h5>
+                            <div class="p-3 bg-light rounded-circle d-inline-block mb-3">
+                                <img src="https://img.icons8.com/color/96/000000/corn.png" alt="Corn Size" style="width: 50px;">
+                            </div>
+                            <h6 class="fw-bold">আকার: ভুট্টার মতো</h6>
+                            <p class="text-muted small mb-4">২য় ট্রাইমেস্টার, ২৮ সপ্তাহ</p>
+                            <button class="btn w-100 rounded-pill text-purple fw-bold" style="background:#f3ebff;" onclick="document.querySelectorAll('.nav-link')[1].click()">বিস্তারিত জানুন</button>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-6">
+                        <div class="data-panel text-center" style="background: linear-gradient(135deg, var(--primary-teal), #0f766e); color: white;">
+                            <i class="bi bi-footprints-fill fs-2 opacity-75 mb-2"></i>
+                            <h5 class="fw-bold mb-1">কিক ট্র্যাকিং</h5>
+                            <h1 class="display-3 fw-bold en-text m-0">16</h1>
+                            <p class="opacity-75 small mb-4">স্বাভাবিক নড়াচড়া</p>
+                            <button class="btn btn-light w-100 rounded-pill fw-bold text-teal shadow-sm" style="color:var(--primary-teal);" onclick="document.querySelectorAll('.nav-link')[2].click()">+ কিক যোগ করুন</button>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-12">
+                        <div class="data-panel d-flex flex-column">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-list-check text-primary"></i> আজকের চেকলিস্ট</h5>
+                            <div class="d-flex align-items-center gap-2 mb-3"><input type="checkbox" class="form-check-input" checked><span class="text-muted text-decoration-line-through">সকালের আয়রন ট্যাবলেট</span></div>
+                            <div class="d-flex align-items-center gap-2 mb-3"><input type="checkbox" class="form-check-input"><span class="fw-medium">২০ মিনিট হালকা হাঁটা</span></div>
+                            <button class="btn btn-outline-primary w-100 rounded-pill fw-bold mt-auto" onclick="document.querySelectorAll('.nav-link')[3].click()">সম্পূর্ণ ডায়েট ও রুটিন দেখুন</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 2. BABY STATUS                                 -->
+            <!-- ============================================== -->
+            <div id="section-baby" class="dashboard-section">
+                <div class="row g-4">
+                    <div class="col-lg-5">
+                        <div class="data-panel text-center">
+                            <h4 class="text-purple fw-bold mb-1">২৮ সপ্তাহ</h4>
+                            <p class="text-muted mb-4">২য় ট্রাইমেস্টার</p>
+                            <div class="p-4 bg-purple-subtle rounded-circle d-inline-block mb-4" style="background: #f3ebff;">
+                                <img src="https://img.icons8.com/color/150/000000/embryo.png" alt="Baby Size" style="width: 120px;">
+                            </div>
+                            <h5 class="fw-bold mb-2">আকার: একটি ভুট্টার মতো</h5>
+                            <div class="d-flex justify-content-center gap-4 mt-4">
+                                <div class="bg-light p-3 rounded-3" style="min-width: 100px;"><p class="small text-muted mb-1">দৈর্ঘ্য</p><h4 class="en-text fw-bold text-dark m-0">37.6 cm</h4></div>
+                                <div class="bg-light p-3 rounded-3" style="min-width: 100px;"><p class="small text-muted mb-1">ওজন</p><h4 class="en-text fw-bold text-dark m-0">1.1 kg</h4></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="data-panel h-100">
+                            <h4 class="fw-bold mb-4">এই সপ্তাহের ডেভেলপমেন্ট</h4>
+                            <ul class="list-unstyled">
+                                <li class="d-flex gap-3 mb-4 align-items-start"><div class="p-2 bg-info bg-opacity-10 text-info rounded"><i class="bi bi-lungs-fill fs-5"></i></div><div><h6 class="fw-bold mb-1">ফুসফুসের বিকাশ</h6><p class="small text-muted m-0">বেবির ফুসফুস শ্বাস নেওয়ার জন্য প্রস্তুত হচ্ছে।</p></div></li>
+                                <li class="d-flex gap-3 mb-4 align-items-start"><div class="p-2 bg-warning bg-opacity-10 text-warning rounded"><i class="bi bi-eye-fill fs-5"></i></div><div><h6 class="fw-bold mb-1">চোখ খোলা ও বন্ধ করা</h6><p class="small text-muted m-0">বেবি এখন চোখ খুলতে ও বন্ধ করতে পারে।</p></div></li>
+                                <li class="d-flex gap-3 align-items-start"><div class="p-2 bg-purple-subtle text-purple rounded" style="background:#f3ebff; color:var(--primary-purple);"><i class="bi bi-brain fs-5"></i></div><div><h6 class="fw-bold mb-1">ব্রেইনের বৃদ্ধি</h6><p class="small text-muted m-0">ব্রেইনে বিলিয়ন নিউরন তৈরি হচ্ছে।</p></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 3. KICK TRACKING                               -->
+            <!-- ============================================== -->
+            <div id="section-kick" class="dashboard-section">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="data-panel text-center d-flex flex-column justify-content-center h-100" style="background: linear-gradient(135deg, var(--primary-teal), #0f766e); color: white; border: none;">
+                            <i class="bi bi-footprints-fill fs-1 opacity-75 mb-3"></i>
+                            <h3 class="fw-bold mb-1">কিক কাউন্টার</h3>
+                            <h1 class="display-1 fw-bold en-text mb-0 mt-3">16</h1>
+                            <p class="opacity-75 fw-medium mb-5">আজকের মোট কিক (লক্ষ্য: ১০)</p>
+                            <button class="btn btn-light btn-lg rounded-pill fw-bold text-teal shadow clickable" style="color: var(--primary-teal);" onclick="alert('কিক রেকর্ড করা হয়েছে')"><i class="bi bi-plus-circle-fill me-2"></i> এখন কিক যোগ করুন</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="data-panel">
+                            <h4 class="fw-bold mb-4">কিক হিস্ট্রি চার্ট</h4>
+                            <div class="chart-container">
+                                <div class="chart-col"><span class="chart-val">6</span><div class="bar-wrap"><div class="chart-bar" style="height: 40%;"></div></div><span class="chart-label">সকাল</span></div>
+                                <div class="chart-col"><span class="chart-val">10</span><div class="bar-wrap"><div class="chart-bar" style="height: 60%;"></div></div><span class="chart-label">দুপুর</span></div>
+                                <div class="chart-col active"><span class="chart-val">16</span><div class="bar-wrap"><div class="chart-bar active" style="height: 100%;"></div></div><span class="chart-label fw-bold text-dark">বিকাল</span></div>
+                                <div class="chart-col"><span class="chart-val">12</span><div class="bar-wrap"><div class="chart-bar" style="height: 75%;"></div></div><span class="chart-label">সন্ধ্যা</span></div>
+                                <div class="chart-col"><span class="chart-val">8</span><div class="bar-wrap"><div class="chart-bar" style="height: 50%;"></div></div><span class="chart-label">রাত</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 4. DIET PLAN                                   -->
+            <!-- ============================================== -->
+            <div id="section-diet" class="dashboard-section">
+                <!-- Diet Visit Stepper / Tabs -->
+                <div class="data-panel mb-4 text-center">
+                    <h4 class="fw-bold text-purple mb-2"><i class="bi bi-apple me-2"></i>গর্ভাবস্থায় খাবার চার্ট</h4>
+                    <p class="text-muted small mb-4">মায়ের পুষ্টি, সুস্থ বাচ্চার ভরসা</p>
+                    
+                    <div class="d-flex justify-content-center gap-2 flex-wrap mb-2">
+                        <button class="btn btn-outline-purple btn-sm rounded-pill px-3 py-2 active diet-tab-btn" onclick="switchDietTab(1, this)">১ম ভিজিট (১২ সপ্তাহ পর্যন্ত)</button>
+                        <button class="btn btn-outline-purple btn-sm rounded-pill px-3 py-2 diet-tab-btn" onclick="switchDietTab(2, this)">২য় ভিজিট (২০ - ২৪ সপ্তাহ)</button>
+                        <button class="btn btn-outline-purple btn-sm rounded-pill px-3 py-2 diet-tab-btn" onclick="switchDietTab(3, this)">৩য় ভিজিট (২৮ - ৩২ সপ্তাহ)</button>
+                        <button class="btn btn-outline-purple btn-sm rounded-pill px-3 py-2 diet-tab-btn" onclick="switchDietTab(4, this)">৪র্থ ভিজিট (৩৬ সপ্তাহ - প্রসব)</button>
+                    </div>
+                </div>
+
+                <!-- Visit 1 Content -->
+                <div id="diet-visit-1" class="diet-visit-content">
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <div class="data-panel mb-4">
+                                <h5 class="fw-bold text-pink mb-3"><i class="bi bi-bookmark-star-fill"></i> ১ম ভিজিট (প্রথম ট্রাইমেস্টার)</h5>
+                                <p class="text-muted small"><strong>লক্ষ্য:</strong> গর্ভাবস্থা নিশ্চিতকরণ ও মায়ের পুষ্টির ভিত্তি গড়ে তোলা।</p>
+                                
+                                <h6 class="fw-bold mt-4 mb-3 text-success"><i class="bi bi-check-circle-fill"></i> কি খাবেন:</h6>
+                                <div class="d-flex gap-2 flex-wrap mb-4">
+                                    <span class="badge bg-light text-dark border p-2"><i class="bi bi-cup-straw text-primary me-1"></i> দুধ ও দুগ্ধজাত খাবার</span>
+                                    <span class="badge bg-light text-dark border p-2"><i class="bi bi-egg-fried text-warning me-1"></i> ডিম</span>
+                                    <span class="badge bg-light text-dark border p-2"><i class="bi bi-grain text-success me-1"></i> ডাল ও শিম</span>
+                                    <span class="badge bg-light text-dark border p-2"><i class="bi bi-flower1 text-success me-1"></i> শাকসবজি</span>
+                                    <span class="badge bg-light text-dark border p-2"><i class="bi bi-apple text-danger me-1"></i> ফল</span>
+                                </div>
+
+                                <h6 class="fw-bold mb-3 text-primary"><i class="bi bi-calculator-fill"></i> প্রতিদিনের পরিমাণ:</h6>
+                                <p class="small text-dark mb-0">২ গ্লাস দুধ • ১টি ডিম • ১ কাপ ডাল • ২ কাপ শাকসবজি • ২-৩টি ফল</p>
+                            </div>
+
+                            <div class="data-panel">
+                                <h5 class="fw-bold text-danger mb-3"><i class="bi bi-exclamation-octagon-fill"></i> কি এড়িয়ে চলবেন:</h5>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">অতিরিক্ত চা বা কফি</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">অতিরিক্ত মসলাদার খাবার</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">কাঁচা বা আধা-সেদ্ধ খাবার</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">ফাস্ট ফুড ও জাঙ্ক ফুড</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="data-panel bg-purple-subtle border-purple" style="background: #f3ebff;">
+                                <h5 class="fw-bold text-purple mb-4"><i class="bi bi-lightbulb-fill"></i> গুরুত্বপূর্ণ টিপস</h5>
+                                <ul class="list-unstyled small lh-lg">
+                                    <li class="mb-3"><i class="bi bi-check-lg text-purple me-2"></i> ফলিক অ্যাসিড সমৃদ্ধ খাবার খান (শাকসবজি, ডাল, কমলা)।</li>
+                                    <li class="mb-3"><i class="bi bi-check-lg text-purple me-2"></i> দিনে ৩ বার প্রধান খাবার ও ২-৩ বার হালকা পুষ্টিকর খাবার খান।</li>
+                                    <li><i class="bi bi-check-lg text-purple me-2"></i> পর্যাপ্ত পরিমাণ পানি পান নিশ্চিত করুন (৮-১০ গ্লাস)।</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visit 2 Content -->
+                <div id="diet-visit-2" class="diet-visit-content" style="display: none;">
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <div class="data-panel mb-4">
+                                <h5 class="fw-bold text-pink mb-3"><i class="bi bi-bookmark-star-fill"></i> ২য় ভিজিট (দ্বিতীয় ট্রাইমেস্টার)</h5>
+                                <p class="text-muted small"><strong>লক্ষ্য:</strong> ভ্রূণের বৃদ্ধি ও বিকাশের জন্য পর্যাপ্ত পুষ্টি নিশ্চিত করা।</p>
+                                
+                                <h6 class="fw-bold mt-4 mb-3 text-success"><i class="bi bi-check-circle-fill"></i> কি খাবেন:</h6>
+                                <div class="d-flex gap-2 flex-wrap mb-4">
+                                    <span class="badge bg-light text-dark border p-2"><i class="bi bi-cup-straw text-primary me-1"></i> দুধ ও দুগ্ধজাত খাবার</span>
+                                    <span class="badge bg-light text-dark border p-2"><i class="bi bi-egg-fried text-warning me-1"></i> মাছ</span>
+                                    <span class="badge bg-light text-dark border p-2"><i class="bi bi-egg text-danger me-1"></i> মুরগি/মাংস</span>
+                                    <span class="badge bg-light text-dark border p-2"><i class="bi bi-grain text-success me-1"></i> ডাল ও শিম</span>
+                                    <span class="badge bg-light text-dark border p-2"><i class="bi bi-flower1 text-success me-1"></i> শাকসবজি</span>
+                                </div>
+
+                                <h6 class="fw-bold mb-3 text-primary"><i class="bi bi-calculator-fill"></i> প্রতিদিনের পরিমাণ:</h6>
+                                <p class="small text-dark mb-0">২-৩ গ্লাস দুধ • ১টি ডিম • ১ কাপ ডাল • ১ পিস মাছ/মাংস • ২ কাপ শাকসবজি • ২-৩টি ফল</p>
+                            </div>
+
+                            <div class="data-panel">
+                                <h5 class="fw-bold text-danger mb-3"><i class="bi bi-exclamation-octagon-fill"></i> কি এড়িয়ে চলবেন:</h5>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">অতিরিক্ত চা বা কফি</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">অতিরিক্ত মিষ্টি</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">কাঁচা বা আধা-সেদ্ধ খাবার</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">অতিরিক্ত তেল বা ভাজাপোড়া</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="data-panel bg-purple-subtle border-purple" style="background: #f3ebff;">
+                                <h5 class="fw-bold text-purple mb-4"><i class="bi bi-lightbulb-fill"></i> গুরুত্বপূর্ণ টিপস</h5>
+                                <ul class="list-unstyled small lh-lg">
+                                    <li class="mb-3"><i class="bi bi-check-lg text-purple me-2"></i> ক্যালসিয়াম ও আয়রন সমৃদ্ধ খাবার পর্যাপ্ত পরিমাণে খান।</li>
+                                    <li class="mb-3"><i class="bi bi-check-lg text-purple me-2"></i> প্রোটিন সমৃদ্ধ খাবার (মাছ, ডিম, মাংস, ডাল) নিয়মিত রাখুন।</li>
+                                    <li><i class="bi bi-check-lg text-purple me-2"></i> নিয়মিত হালকা ব্যায়াম করুন ও পর্যাপ্ত বিশ্রাম নিন।</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visit 3 Content -->
+                <div id="diet-visit-3" class="diet-visit-content" style="display: none;">
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <div class="data-panel mb-4">
+                                <h5 class="fw-bold text-pink mb-3"><i class="bi bi-bookmark-star-fill"></i> ৩য় ভিজিট (তৃতীয় ট্রাইমেস্টার)</h5>
+                                <p class="text-muted small"><strong>লক্ষ্য:</strong> মায়ের স্বাস্থ্য ভালো রাখা ও জটিলতা প্রতিরোধ করা।</p>
+                                
+                                <h6 class="fw-bold mt-4 mb-3 text-success"><i class="bi bi-check-circle-fill"></i> কি খাবেন:</h6>
+                                <div class="d-flex gap-2 flex-wrap mb-4">
+                                    <span class="badge bg-light text-dark border p-2">দুধ ও দুগ্ধজাত খাবার</span>
+                                    <span class="badge bg-light text-dark border p-2">মাছ ও মাংস</span>
+                                    <span class="badge bg-light text-dark border p-2">ডাল ও শিম</span>
+                                    <span class="badge bg-light text-dark border p-2">শাকসবজি ও ফল</span>
+                                    <span class="badge bg-light text-dark border p-2">বাদাম ও বীজ</span>
+                                </div>
+
+                                <h6 class="fw-bold mb-3 text-primary"><i class="bi bi-calculator-fill"></i> প্রতিদিনের পরিমাণ:</h6>
+                                <p class="small text-dark mb-0">২-৩ গ্লাস দুধ • ১টি ডিম • ১-২ কাপ ডাল • ১ পিস মাছ/মাংস • ২ কাপ শাকসবজি • ২-৩টি ফল</p>
+                            </div>
+
+                            <div class="data-panel">
+                                <h5 class="fw-bold text-danger mb-3"><i class="bi bi-exclamation-octagon-fill"></i> কি এড়িয়ে চলবেন:</h5>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">অতিরিক্ত লবণ</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">অতিরিক্ত তেল</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">ফাস্ট ফুড ও জাঙ্ক ফুড</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">মদ্যপান ও ধূমপান</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="data-panel bg-purple-subtle border-purple" style="background: #f3ebff;">
+                                <h5 class="fw-bold text-purple mb-4"><i class="bi bi-lightbulb-fill"></i> গুরুত্বপূর্ণ টিপস</h5>
+                                <ul class="list-unstyled small lh-lg">
+                                    <li class="mb-3"><i class="bi bi-check-lg text-purple me-2"></i> আয়রন ও ক্যালসিয়ামের পরিমাণ আরো বাড়িয়ে দিন।</li>
+                                    <li class="mb-3"><i class="bi bi-check-lg text-purple me-2"></i> কোষ্ঠকাঠিন্য এড়াতে আঁশযুক্ত সবুজ খাবার বেশি খান।</li>
+                                    <li><i class="bi bi-check-lg text-purple me-2"></i> অতিরিক্ত ওজন বৃদ্ধি নিয়ন্ত্রণে রাখতে স্বাস্থ্যকর খাদ্যতালিকা অনুসরণ করুন।</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visit 4 Content -->
+                <div id="diet-visit-4" class="diet-visit-content" style="display: none;">
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <div class="data-panel mb-4">
+                                <h5 class="fw-bold text-pink mb-3"><i class="bi bi-bookmark-star-fill"></i> ৪র্থ ভিজিট (প্রসব পূর্ববর্তী সময়)</h5>
+                                <p class="text-muted small"><strong>লক্ষ্য:</strong> প্রসবের জন্য শরীর প্রস্তুত রাখা ও মায়ের শক্তি বজায় রাখা।</p>
+                                
+                                <h6 class="fw-bold mt-4 mb-3 text-success"><i class="bi bi-check-circle-fill"></i> কি খাবেন:</h6>
+                                <div class="d-flex gap-2 flex-wrap mb-4">
+                                    <span class="badge bg-light text-dark border p-2">দুধ ও প্রোটিন</span>
+                                    <span class="badge bg-light text-dark border p-2">মাছ ও ডিম</span>
+                                    <span class="badge bg-light text-dark border p-2">ডাল ও ডাল জাতীয় খাবার</span>
+                                    <span class="badge bg-light text-dark border p-2">শাকসবজি ও ফল</span>
+                                    <span class="badge bg-light text-dark border p-2">আটা/চাল/রুটি</span>
+                                </div>
+
+                                <h6 class="fw-bold mb-3 text-primary"><i class="bi bi-calculator-fill"></i> প্রতিদিনের পরিমাণ:</h6>
+                                <p class="small text-dark mb-0">২-৩ গ্লাস দুধ • ১টি ডিম • ১-২ কাপ ডাল • ১ পিস মাছ/মাংস • ২ কাপ শাকসবজি • ২-৩টি ফল</p>
+                            </div>
+
+                            <div class="data-panel">
+                                <h5 class="fw-bold text-danger mb-3"><i class="bi bi-exclamation-octagon-fill"></i> কি এড়িয়ে চলবেন:</h5>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">অতিরিক্ত লবণ</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">অতিরিক্ত মিষ্টি</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">কাঁচা বা আধা-সেদ্ধ খাবার</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle p-2">ফাস্ট ফুড ও জাঙ্ক ফুড</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="data-panel bg-purple-subtle border-purple" style="background: #f3ebff;">
+                                <h5 class="fw-bold text-purple mb-4"><i class="bi bi-lightbulb-fill"></i> গুরুত্বপূর্ণ টিপস</h5>
+                                <ul class="list-unstyled small lh-lg">
+                                    <li class="mb-3"><i class="bi bi-check-lg text-purple me-2"></i> খাবার অল্প অল্প করে নিয়ে বারে বারে খান।</li>
+                                    <li class="mb-3"><i class="bi bi-check-lg text-purple me-2"></i> প্রসবের সময় শক্তির যোগানের জন্য জটিল শর্করা (Complex Carbs) বেশি খান।</li>
+                                    <li><i class="bi bi-check-lg text-purple me-2"></i> পর্যাপ্ত বিশ্রাম ও ঘুমের মাধ্যমে মানসিক চাপ কমান।</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Water Tracker Moved Below the Visit Details -->
+                <div class="row g-4 mt-3">
+                    <div class="col-12">
+                        <div class="data-panel bg-info bg-opacity-10 border-info">
+                            <h5 class="fw-bold text-info mb-3" style="color: #0284c7 !important;"><i class="bi bi-droplet-fill"></i> দৈনিক পানি পানের লক্ষ্য (৮ গ্লাস)</h5>
+                            <div>
+                                <div class="water-glass filled" onclick="this.classList.toggle('filled')"></div>
+                                <div class="water-glass filled" onclick="this.classList.toggle('filled')"></div>
+                                <div class="water-glass filled" onclick="this.classList.toggle('filled')"></div>
+                                <div class="water-glass filled" onclick="this.classList.toggle('filled')"></div>
+                                <div class="water-glass filled" onclick="this.classList.toggle('filled')"></div>
+                                <div class="water-glass filled" onclick="this.classList.toggle('filled')"></div>
+                                <div class="water-glass" onclick="this.classList.toggle('filled')"></div>
+                                <div class="water-glass" onclick="this.classList.toggle('filled')"></div>
+                            </div>
+                            <p class="small text-muted mt-2 mb-0">* গ্লাসে ট্যাপ করে আপনার দৈনিক পানি পানের হিসাব রেকর্ড করুন।</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 5. VACCINATION & CHILD CARE                    -->
+            <!-- ============================================== -->
+            <div id="section-vaccine" class="dashboard-section">
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="data-panel bg-success bg-opacity-10 border-success text-center">
+                            <i class="bi bi-shield-check fs-1 text-success mb-2 d-block"></i>
+                            <h5 class="fw-bold text-success mb-1">পরবর্তী টিকা: TT 2 (টিটেনাস)</h5>
+                            <p class="text-dark fw-medium m-0">সম্ভাব্য তারিখ: ১৫ নভেম্বর ২০২৬</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="data-panel bg-info bg-opacity-10 border-info text-center">
+                            <i class="bi bi-emoji-smile fs-1 text-info mb-2 d-block" style="color: #0284c7 !important;"></i>
+                            <h5 class="fw-bold text-info mb-1" style="color: #0284c7 !important;">নবজাতকের ইম্যুনাইজেশন</h5>
+                            <p class="text-dark fw-medium m-0">BCG, পেন্টাভেলেন্ট, পোলিও ট্র্যাকিং</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="data-panel">
+                    <h4 class="fw-bold mb-4 text-purple">টিকাদান শিডিউল (EPI)</h4>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead><tr><th>টিকার নাম</th><th>উদ্দেশ্য</th><th>সময়কাল</th><th>স্ট্যাটাস</th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="fw-bold">TT 1 (টিটেনাস)</span></td><td>ধনুষ্টংকার প্রতিরোধ</td><td>গর্ভাবস্থার ৪র্থ মাস</td><td><span class="status-badge status-normal">সম্পন্ন</span></td></tr>
+                                <tr><td><span class="fw-bold">TT 2 (টিটেনাস)</span></td><td>ধনুষ্টংকার প্রতিরোধ</td><td>TT 1 এর ১ মাস পর</td><td><span class="badge bg-warning bg-opacity-10 text-warning border border-warning px-3 py-2">পেন্ডিং (১৫ নভে)</span></td></tr>
+                                <tr><td colspan="4" class="bg-light text-center fw-bold text-muted small py-3">জন্মের পর শিশুর টিকা (National EPI)</td></tr>
+                                <tr><td><span class="fw-bold text-muted">BCG</span></td><td class="text-muted">যক্ষ্মা প্রতিরোধ</td><td class="text-muted">জন্মের পরপরই</td><td><span class="badge bg-secondary bg-opacity-10 text-secondary border px-3 py-2">অপেক্ষমান</span></td></tr>
+                                <tr><td><span class="fw-bold text-muted">পেন্টাভেলেন্ট ১</span></td><td class="text-muted">ডিপথেরিয়া, হুপিংকাশি, হেপাটাইটিস বি</td><td class="text-muted">৬ সপ্তাহ বয়স</td><td><span class="badge bg-secondary bg-opacity-10 text-secondary border px-3 py-2">অপেক্ষমান</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 6. PROFILE SETUP (Image 2)                     -->
+            <!-- ============================================== -->
+            <div id="section-profile" class="dashboard-section">
+                <div class="data-panel mx-auto" style="max-width: 700px;">
+                    <h4 class="fw-bold mb-2 text-center text-purple" style="color: var(--primary-purple);"><i class="bi bi-person-heart"></i> প্রোফাইল সেটআপ</h4>
+                    <p class="text-center text-muted mb-5 small">আপনার তথ্য দিন, আমরা আপনার জন্য আরও ভালো সেবা নিশ্চিত করব</p>
+                    
+                    <div class="position-relative mb-5 px-3">
+                        <div class="step-line"><div class="step-line-fill" id="step-progress" style="width: 0%;"></div></div>
+                        <div class="d-flex justify-content-between">
+                            <div class="step-circle active" id="sc-1">1</div><div class="step-circle" id="sc-2">2</div>
+                            <div class="step-circle" id="sc-3">3</div><div class="step-circle" id="sc-4">4</div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2 px-1 text-muted small fw-medium" style="font-size: 0.75rem;">
+                            <span class="text-purple">মাতার প্রোফাইল</span><span>ঠিকানা</span><span>স্বামীর নাম</span><span>যোগাযোগ</span>
+                        </div>
+                    </div>
+                    
+                    <div id="step-1" class="setup-step-content">
+                        <h6 class="fw-bold mb-3">মাতার প্রোফাইল তথ্য</h6>
+                        <input type="text" class="form-control bg-light border-0 mb-3" placeholder="পূর্ণ নাম (মা)" value="সাবিনা আক্তার">
+                        <input type="date" class="form-control bg-light border-0 mb-3" value="1996-03-15">
+                        <button class="btn btn-primary w-100 rounded-pill py-2" style="background: var(--primary-purple); border:none;" onclick="nextStep(1)">পরবর্তী</button>
+                    </div>
+                    <div id="step-2" class="setup-step-content" style="display:none;">
+                        <h6 class="fw-bold mb-3">বর্তমান ঠিকানা</h6>
+                        <input type="text" class="form-control bg-light border-0 mb-3" placeholder="বাড়ি নং / রোড" value="১২/বি, পূর্ব কাজীপাড়া">
+                        <button class="btn btn-primary w-100 rounded-pill py-2" style="background: var(--primary-purple); border:none;" onclick="nextStep(2)">পরবর্তী</button>
+                    </div>
+                    <div id="step-3" class="setup-step-content" style="display:none;">
+                        <h6 class="fw-bold mb-3">স্বামীর তথ্য</h6>
+                        <input type="text" class="form-control bg-light border-0 mb-3" placeholder="স্বামীর পূর্ণ নাম" value="মোহাম্মদ রাকিবুল ইসলাম">
+                        <button class="btn btn-primary w-100 rounded-pill py-2" style="background: var(--primary-purple); border:none;" onclick="nextStep(3)">পরবর্তী</button>
+                    </div>
+                    <div id="step-4" class="setup-step-content" style="display:none;">
+                        <h6 class="fw-bold mb-3">যোগাযোগ নম্বর</h6>
+                        <input type="text" class="form-control bg-light border-0 mb-4" placeholder="মোবাইল নম্বর" value="০১৭১২-৩৪৫৬৭৮">
+                        <button class="btn btn-success w-100 rounded-pill py-2 shadow-sm" onclick="alert('সেভ হয়েছে'); switchMenu('section-overview', document.getElementById('nav-overview'))">সংরক্ষণ করুন</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 6. NATIONAL DASHBOARD (NMHIRS Module)          -->
+            <!-- ============================================== -->
+            <div id="section-national" class="dashboard-section">
+                <div class="mb-4">
+                    <h3 class="fw-bold text-dark mb-1">জাতীয় মাতৃস্বাস্থ্য ওভারভিউ</h3>
+                    <p class="text-muted m-0">রিয়েল-টাইম ডাটা ট্র্যাকিং এবং ইন্টেলিজেন্স ড্যাশবোর্ড</p>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3"><div class="kpi-card"><div class="kpi-icon bg-primary bg-opacity-10 text-primary"><i class="bi bi-people-fill"></i></div><div class="kpi-info"><p>নিবন্ধিত মাতৃ</p><h3 class="en-text text-primary">3.5M</h3></div></div></div>
+                    <div class="col-md-3"><div class="kpi-card" style="border-left: 4px solid #dc2626;"><div class="kpi-icon bg-danger bg-opacity-10 text-danger"><i class="bi bi-exclamation-triangle-fill"></i></div><div class="kpi-info"><p>হাই-রিস্ক প্রেগন্যান্সি</p><h3 class="en-text text-danger">45,230</h3></div></div></div>
+                    <div class="col-md-3"><div class="kpi-card"><div class="kpi-icon bg-warning bg-opacity-10 text-warning"><i class="bi bi-ambulance"></i></div><div class="kpi-info"><p>সক্রিয় রেফারেল</p><h3 class="en-text text-warning">1,204</h3></div></div></div>
+                    <div class="col-md-3"><div class="kpi-card border-warning"><div class="kpi-icon bg-secondary bg-opacity-10 text-secondary"><i class="bi bi-calendar-x"></i></div><div class="kpi-info"><p>মিসড ANC</p><h3 class="en-text text-dark">12,450</h3></div></div></div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="data-panel">
+                            <h5 class="fw-bold mb-4">ডিলে (Delay) প্রিডিকশন মডেল</h5>
+                            <div class="mb-3"><div class="d-flex justify-content-between mb-1"><span class="fw-bold text-dark small">Delay-1: সিদ্ধান্ত নিতে দেরি</span><span class="en-text text-danger fw-bold small">42%</span></div><div class="progress" style="height: 8px;"><div class="progress-bar bg-danger" style="width: 42%;"></div></div></div>
+                            <div class="mb-3"><div class="d-flex justify-content-between mb-1"><span class="fw-bold text-dark small">Delay-2: পৌঁছাতে দেরি</span><span class="en-text text-warning fw-bold small">35%</span></div><div class="progress" style="height: 8px;"><div class="progress-bar bg-warning" style="width: 35%;"></div></div></div>
+                            <div><div class="d-flex justify-content-between mb-1"><span class="fw-bold text-dark small">Delay-3: চিকিৎসায় দেরি</span><span class="en-text text-primary fw-bold small">15%</span></div><div class="progress" style="height: 8px;"><div class="progress-bar bg-primary" style="width: 15%;"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 7. MATERNAL REGISTRY (NMHIRS Module)           -->
+            <!-- ============================================== -->
+            <div id="section-registry" class="dashboard-section">
+                <div class="data-panel">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="fw-bold m-0">মাতৃ নিবন্ধন ডেটাবেস</h4>
+                        <button class="btn btn-primary" style="background: var(--primary-purple); border:none;"><i class="bi bi-plus-lg"></i> নতুন নিবন্ধন</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead><tr><th>ID & NID</th><th>মাতার নাম</th><th>EDD</th><th>অবস্থান</th><th>স্ট্যাটাস</th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="fw-bold text-primary en-text">NM-10029</span><br><small class="text-muted en-text">199045...89</small></td><td><p class="fw-bold m-0">সালমা সুলতানা</p></td><td><p class="m-0 en-text small">15 Dec 2026</p></td><td><p class="m-0 fw-medium">মিরপুর, ঢাকা</p></td><td><span class="status-badge status-normal">Active</span></td></tr>
+                                <tr><td><span class="fw-bold text-primary en-text">NM-10030</span><br><small class="text-muted en-text">199588...12</small></td><td><p class="fw-bold m-0">ফারজানা হক</p></td><td><p class="m-0 en-text small">10 Jan 2027</p></td><td><p class="m-0 fw-medium">টংগী, গাজীপুর</p></td><td><span class="status-badge status-high">High Risk</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- ============================================== -->
+            <!-- NEW: ANC TRACKING                              -->
+            <!-- ============================================== -->
+            <div id="section-anc" class="dashboard-section">
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-4"><div class="data-panel text-center"><h1 class="display-4 fw-bold text-success en-text mb-0">82%</h1><p class="text-muted fw-bold">ANC 1 কমপ্লায়েন্স</p></div></div>
+                    <div class="col-lg-4"><div class="data-panel text-center"><h1 class="display-4 fw-bold text-primary en-text mb-0">65%</h1><p class="text-muted fw-bold">ANC 4 কমপ্লায়েন্স</p></div></div>
+                    <div class="col-lg-4"><div class="data-panel text-center border-warning"><h1 class="display-4 fw-bold text-warning en-text mb-0">12,450</h1><p class="text-muted fw-bold">মিসড ভিজিট (অ্যালার্ট)</p></div></div>
+                </div>
+                <div class="data-panel">
+                    <h5 class="fw-bold mb-4 text-purple">ANC ভিজিট শিডিউল ও ট্র্যাকিং</h5>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead><tr><th>ID & নাম</th><th>ভিজিট নং</th><th>ব্লাড প্রেসার</th><th>হিমোগ্লোবিন</th><th>স্ট্যাটাস</th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="fw-bold en-text">NM-10029</span><br><small class="text-muted">সালমা সুলতানা</small></td><td><span class="badge bg-primary">ANC 2</span></td><td class="en-text text-success fw-medium">120/80</td><td class="en-text text-success fw-medium">11.5 g/dL</td><td><span class="status-badge status-normal">সম্পন্ন</span></td></tr>
+                                <tr><td><span class="fw-bold en-text">NM-10030</span><br><small class="text-muted">ফারজানা হক</small></td><td><span class="badge bg-warning text-dark">ANC 3</span></td><td class="en-text text-danger fw-medium">150/95</td><td class="en-text text-warning fw-medium">8.5 g/dL</td><td><span class="status-badge status-high">অস্বাভাবিক</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 8. RISK ALERTS (NMHIRS Module)                 -->
+            <!-- ============================================== -->
+            <div id="section-risk" class="dashboard-section">
+                <div class="data-panel">
+                    <h5 class="fw-bold mb-4 text-danger"><i class="bi bi-shield-exclamation me-2"></i> ক্রিটিক্যাল হাই-রিস্ক অ্যালার্ট (লাইভ)</h5>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead><tr><th>মাতার নাম ও আইডি</th><th>রিস্ক ফ্যাক্টর (AI Detected)</th><th>অবস্থান</th><th>স্ট্যাটাস</th></tr></thead>
+                            <tbody>
+                                <tr><td><p class="fw-bold m-0">রহিমা বেগম</p><p class="small text-muted m-0 en-text">ID: NM-847291</p></td><td><span class="status-badge status-critical mb-1 d-inline-block">Severe Pre-eclampsia</span><br><small class="text-muted en-text">BP: 160/110, Age: 36</small></td><td><p class="m-0 fw-medium">গাজীপুর সদর</p></td><td><span class="badge bg-danger bg-opacity-10 text-danger border border-danger">অ্যাকশন প্রয়োজন</span></td></tr>
+                                <tr><td><p class="fw-bold m-0">আয়েশা খাতুন</p><p class="small text-muted m-0 en-text">ID: NM-558290</p></td><td><span class="status-badge status-high mb-1 d-inline-block">Severe Anemia</span><br><small class="text-muted en-text">Hb: 6.5 g/dL</small></td><td><p class="m-0 fw-medium">সাভার উপজেলা</p></td><td><span class="badge bg-warning bg-opacity-10 text-warning border border-warning">রেফারেল পেন্টং</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- NEW: REFERRAL & EMERGENCY                      -->
+            <!-- ============================================== -->
+            <div id="section-referral" class="dashboard-section">
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="data-panel">
+                            <h5 class="fw-bold mb-4"><i class="bi bi-ambulance text-warning me-2"></i> লাইভ রেফারেল স্ট্যাটাস</h5>
+                            <div class="table-responsive">
+                                <table class="table table-custom">
+                                    <thead><tr><th>রেফারেল আইডি</th><th>উৎস (CHW/UHC)</th><th>গন্তব্য (Hospital)</th><th>স্ট্যাটাস</th></tr></thead>
+                                    <tbody>
+                                        <tr><td class="en-text fw-bold text-primary">REF-9921</td><td><p class="m-0 fw-medium">FWV মমতাজ</p><small class="text-muted">ধামরাই UHC</small></td><td><p class="m-0 fw-medium">সোহরাওয়ার্দী হাসপাতাল</p></td><td><span class="badge bg-warning text-dark border border-warning">In Transit</span></td></tr>
+                                        <tr><td class="en-text fw-bold text-primary">REF-9920</td><td><p class="m-0 fw-medium">CSBA নাসরিন</p><small class="text-muted">সাভার সদর</small></td><td><p class="m-0 fw-medium">সাভার উপজেলা হেলথ কমপ্লেক্স</p></td><td><span class="badge bg-success text-white border border-success">Admitted</span></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="data-panel text-center" style="background: #fdf2f8;">
+                            <i class="bi bi-hospital fs-1 text-pink mb-3 d-block"></i>
+                            <h5 class="fw-bold text-pink mb-3">ফ্যাসিলিটি ম্যাপিং</h5>
+                            <p class="small text-muted mb-4">নিকটবর্তী হাসপাতাল এবং ট্রান্সপোর্ট প্রাপ্যতা</p>
+                            <button class="btn w-100 fw-bold py-2 mb-2 text-white shadow-sm" style="background: var(--primary-pink);"><i class="bi bi-geo-alt-fill"></i> লোকেটার ওপেন করুন</button>
+                            <button class="btn btn-outline-danger w-100 fw-bold py-2 bg-white"><i class="bi bi-telephone-fill"></i> অ্যাম্বুলেন্স কল</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- NEW: FACILITY MODULE                           -->
+            <!-- ============================================== -->
+            <div id="section-facility" class="dashboard-section">
+                <div class="data-panel">
+                    <h5 class="fw-bold mb-4 text-teal"><i class="bi bi-hospital-fill me-2"></i> হাসপাতাল ও ক্লিনিক্যাল ম্যানেজমেন্ট</h5>
+                    <p class="text-muted">রোগী ভর্তি, ডেলিভারি স্ট্যাটাস এবং আউটকাম ট্র্যাকিং (DHIS2 ইন্টিগ্রেটেড)।</p>
+                    <div class="row g-4 mt-2">
+                        <div class="col-md-4"><div class="p-4 border rounded-4 bg-light text-center"><i class="bi bi-person-check fs-1 text-success mb-2"></i><h6 class="fw-bold">অ্যাডমিশন ট্র্যাকিং</h6></div></div>
+                        <div class="col-md-4"><div class="p-4 border rounded-4 bg-light text-center"><i class="bi bi-heart-pulse fs-1 text-danger mb-2"></i><h6 class="fw-bold">কমপ্লিকেশন রেকর্ড</h6></div></div>
+                        <div class="col-md-4"><div class="p-4 border rounded-4 bg-light text-center"><i class="bi bi-clipboard-check fs-1 text-primary mb-2"></i><h6 class="fw-bold">ডেলিভারি আউটকাম</h6></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 9. RBAC STAKEHOLDERS (Image 3)                 -->
+            <!-- ============================================== -->
+            <div id="section-rbac" class="dashboard-section">
+                <div class="mb-4 text-center">
+                    <h3 class="fw-bold text-dark mb-1">স্টেকহোল্ডার ও ডায়নামিক আরব্যাক (RBAC)</h3>
+                    <p class="text-muted small">তথ্য নিরাপত্তা, গোপনীয়তা ও কার্যকর সহযোগিতা নিশ্চিত করতে ডাইনামিক অনুমতি ম্যানেজমেন্ট</p>
+                </div>
+
+                <div class="alert text-center mb-5 border-0 rounded-4 shadow-sm" style="background: linear-gradient(135deg, #f3ebff, #e0e7ff); color: var(--primary-purple);">
+                    <i class="bi bi-quote fs-3 opacity-50 d-block mb-1"></i>
+                    <h5 class="fw-bold mb-1">"বাংলাদেশের একটি নবজাতক শিশুর লাইফসাইকেল জন্মের এক বছর আগে থেকেই শুরু হয়"</h5>
+                    <p class="small m-0 fw-medium opacity-75 en-text">A newborn baby's lifecycle in Bangladesh starts a year before birth.</p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Top Level -->
+                    <div class="col-lg-3 col-md-4 col-sm-6"><div class="stakeholder-card"><i class="bi bi-shield-lock-fill stakeholder-icon text-primary"></i><h6 class="fw-bold m-0 en-text">Superadmin</h6><p class="small text-muted m-0 mt-1">সিস্টেম কনফিগারেশন</p></div></div>
+                    <div class="col-lg-3 col-md-4 col-sm-6"><div class="stakeholder-card"><i class="bi bi-building-fill stakeholder-icon text-info"></i><h6 class="fw-bold m-0 en-text">DC Sir</h6><p class="small text-muted m-0 mt-1">জেলা মনিটরিং ও মূল্যায়ন</p></div></div>
+                    <div class="col-lg-3 col-md-4 col-sm-6"><div class="stakeholder-card" style="background: #fdf2f8; border-color: #fbcfe8;"><i class="bi bi-person-pregnant stakeholder-icon text-pink" style="color: var(--primary-pink);"></i><h6 class="fw-bold m-0 text-pink en-text" style="color: var(--primary-pink);">Mother (মা)</h6><p class="small text-muted m-0 mt-1">গর্ভকালীন স্বাস্থ্য ট্র্যাকিং</p></div></div>
+                    <div class="col-lg-3 col-md-4 col-sm-6"><div class="stakeholder-card"><i class="bi bi-emoji-smile-fill stakeholder-icon text-warning"></i><h6 class="fw-bold m-0">নবজাতক শিশু</h6><p class="small text-muted m-0 mt-1 en-text">BRN ও NID ইন্টিগ্রেশন</p></div></div>
+                    
+                    <!-- Ground Level & Community -->
+                    <div class="col-lg-3 col-md-4 col-sm-6"><div class="stakeholder-card"><i class="bi bi-clipboard2-pulse-fill stakeholder-icon text-teal" style="color: var(--primary-teal);"></i><h6 class="fw-bold m-0 en-text">Health Worker</h6><p class="small text-muted m-0 mt-1">মাঠ পর্যায়ের ডেটা এন্ট্রি</p></div></div>
+                    <div class="col-lg-3 col-md-4 col-sm-6"><div class="stakeholder-card"><i class="bi bi-hospital-fill stakeholder-icon text-danger"></i><h6 class="fw-bold m-0 en-text">Community Clinic</h6><p class="small text-muted m-0 mt-1">সেবা ও স্টক ব্যবস্থাপনা</p></div></div>
+                    <div class="col-lg-3 col-md-4 col-sm-6"><div class="stakeholder-card"><i class="bi bi-house-heart-fill stakeholder-icon text-success"></i><h6 class="fw-bold m-0 en-text">Ward / Union</h6><p class="small text-muted m-0 mt-1">লোকাল সাপোর্ট ও ডেটা</p></div></div>
+                    <div class="col-lg-3 col-md-4 col-sm-6"><div class="stakeholder-card"><i class="bi bi-buildings-fill stakeholder-icon" style="color: #6366f1;"></i><h6 class="fw-bold m-0 en-text">City Corporation</h6><p class="small text-muted m-0 mt-1">শহর এলাকার হেলথ মনিটরিং</p></div></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Functional Scripts -->
+    <script>
+        function switchMenu(sectionId, element) {
+            document.querySelectorAll('.dashboard-section').forEach(sec => sec.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+            
+            if(element) {
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                element.classList.add('active');
+                document.getElementById('page-title').innerText = element.innerText.trim();
+            }
+            window.scrollTo(0,0);
+        }
+
+        function nextStep(currentStep) {
+            document.getElementById('step-' + currentStep).style.display = 'none';
+            let next = currentStep + 1;
+            document.getElementById('step-' + next).style.display = 'block';
+            
+            document.getElementById('sc-' + currentStep).classList.replace('active', 'completed');
+            document.getElementById('sc-' + currentStep).innerHTML = '<i class="bi bi-check"></i>';
+            document.getElementById('sc-' + next).classList.add('active');
+            
+            let progress = ((next - 1) / 3) * 100;
+            document.getElementById('step-progress').style.width = progress + '%';
+        }
+
+        function switchDietTab(visitNum, button) {
+            document.querySelectorAll('.diet-visit-content').forEach(content => content.style.display = 'none');
+            document.getElementById('diet-visit-' + visitNum).style.display = 'block';
+            
+            document.querySelectorAll('.diet-tab-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        }
+    </script>
+</body>
+</html>
