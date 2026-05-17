@@ -59,6 +59,36 @@
 
         .en-text { font-family: var(--font-en); }
 
+        /* Custom Vaccine Component Styling */
+        .btn-purple {
+            background-color: var(--primary-purple) !important;
+            color: #ffffff !important;
+            border: 1px solid var(--primary-purple) !important;
+            transition: var(--transition-smooth);
+        }
+        .btn-purple:hover, .btn-purple.active {
+            background-color: #4c288f !important;
+            border-color: #4c288f !important;
+            color: #ffffff !important;
+        }
+        .btn-outline-purple {
+            color: var(--primary-purple) !important;
+            border: 1px solid var(--primary-purple) !important;
+            background: transparent !important;
+            transition: var(--transition-smooth);
+        }
+        .btn-outline-purple:hover, .btn-outline-purple.active {
+            background-color: var(--primary-purple) !important;
+            color: #ffffff !important;
+        }
+        
+        @media (min-width: 992px) {
+            .col-lg-2col {
+                flex: 0 0 20%;
+                max-width: 20%;
+            }
+        }
+
         /* === Sidebar === */
         .sidebar {
             width: 280px;
@@ -661,37 +691,295 @@
             <!-- 5. VACCINATION & CHILD CARE                    -->
             <!-- ============================================== -->
             <div id="section-vaccine" class="dashboard-section">
-                <div class="row g-4 mb-4">
-                    <div class="col-md-6">
-                        <div class="data-panel bg-success bg-opacity-10 border-success text-center">
-                            <i class="bi bi-shield-check fs-1 text-success mb-2 d-block"></i>
-                            <h5 class="fw-bold text-success mb-1">পরবর্তী টিকা: TT 2 (টিটেনাস)</h5>
-                            <p class="text-dark fw-medium m-0">সম্ভাব্য তারিখ: ১৫ নভেম্বর ২০২৬</p>
+                <!-- Premium Vaccine Header Banner -->
+                <div class="data-panel mb-4 p-0 overflow-hidden border-0 shadow-sm" style="background: linear-gradient(135deg, #f5f3ff, #edd8fd); position: relative;">
+                    <div class="p-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <!-- Baby Avatar Icon Wrapper -->
+                            <div class="bg-white p-2 rounded-circle shadow-sm d-flex align-items-center justify-content-center" style="width: 75px; height: 75px; border: 3px solid #ffccd5;">
+                                <svg viewBox="0 0 100 100" style="width: 55px; height: 55px;">
+                                    <circle cx="50" cy="50" r="40" fill="#ffe0db" />
+                                    <path d="M25 40 Q50 15 75 40 Q50 30 25 40" fill="#b45309" />
+                                    <circle cx="38" cy="48" r="4.5" fill="#1e293b" />
+                                    <circle cx="62" cy="48" r="4.5" fill="#1e293b" />
+                                    <circle cx="30" cy="56" r="6" fill="#f87171" opacity="0.4" />
+                                    <circle cx="70" cy="56" r="6" fill="#f87171" opacity="0.4" />
+                                    <path d="M42 62 Q50 70 58 62" stroke="#b91c1c" stroke-width="3" stroke-linecap="round" fill="none" />
+                                    <circle cx="50" cy="18" r="8" fill="#818cf8" opacity="0.8" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold text-purple mb-1" style="font-size: 1.3rem;"><i class="bi bi-shield-plus me-1"></i> শিশুর টিকাদান সূচি</h5>
+                                <p class="text-muted small m-0 fw-semibold">সুরক্ষিত শিশু, সুস্থ ভবিষ্যৎ ❤️</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="data-panel bg-info bg-opacity-10 border-info text-center">
-                            <i class="bi bi-emoji-smile fs-1 text-info mb-2 d-block" style="color: #0284c7 !important;"></i>
-                            <h5 class="fw-bold text-info mb-1" style="color: #0284c7 !important;">নবজাতকের ইম্যুনাইজেশন</h5>
-                            <p class="text-dark fw-medium m-0">BCG, পেন্টাভেলেন্ট, পোলিও ট্র্যাকিং</p>
+                        <div class="bg-white px-3 py-2 rounded-pill shadow-sm d-flex align-items-center gap-2 border border-purple-subtle">
+                            <i class="bi bi-patch-check-fill text-purple fs-4"></i>
+                            <span class="small fw-semibold text-purple">জন্মের পর থেকেই নির্ধারিত সময়ে সব টিকা দিন</span>
                         </div>
                     </div>
                 </div>
-                <div class="data-panel">
-                    <h4 class="fw-bold mb-4 text-purple">টিকাদান শিডিউল (EPI)</h4>
-                    <div class="table-responsive">
-                        <table class="table table-custom">
-                            <thead><tr><th>টিকার নাম</th><th>উদ্দেশ্য</th><th>সময়কাল</th><th>স্ট্যাটাস</th></tr></thead>
-                            <tbody>
-                                <tr><td><span class="fw-bold">TT 1 (টিটেনাস)</span></td><td>ধনুষ্টংকার প্রতিরোধ</td><td>গর্ভাবস্থার ৪র্থ মাস</td><td><span class="status-badge status-normal">সম্পন্ন</span></td></tr>
-                                <tr><td><span class="fw-bold">TT 2 (টিটেনাস)</span></td><td>ধনুষ্টংকার প্রতিরোধ</td><td>TT 1 এর ১ মাস পর</td><td><span class="badge bg-warning bg-opacity-10 text-warning border border-warning px-3 py-2">পেন্ডিং (১৫ নভে)</span></td></tr>
-                                <tr><td colspan="4" class="bg-light text-center fw-bold text-muted small py-3">জন্মের পর শিশুর টিকা (National EPI)</td></tr>
-                                <tr><td><span class="fw-bold text-muted">BCG</span></td><td class="text-muted">যক্ষ্মা প্রতিরোধ</td><td class="text-muted">জন্মের পরপরই</td><td><span class="badge bg-secondary bg-opacity-10 text-secondary border px-3 py-2">অপেক্ষমান</span></td></tr>
-                                <tr><td><span class="fw-bold text-muted">পেন্টাভেলেন্ট ১</span></td><td class="text-muted">ডিপথেরিয়া, হুপিংকাশি, হেপাটাইটিস বি</td><td class="text-muted">৬ সপ্তাহ বয়স</td><td><span class="badge bg-secondary bg-opacity-10 text-secondary border px-3 py-2">অপেক্ষমান</span></td></tr>
-                            </tbody>
-                        </table>
+
+                <!-- Vaccination Tab Buttons (Switches via JS) -->
+                <div class="d-flex justify-content-center gap-2 flex-wrap mb-4">
+                    <button id="vaccine-epi-btn" class="btn btn-purple btn-sm rounded-pill px-4 py-2 active vaccine-tab-btn" onclick="switchVaccineTab('epi', this)"><i class="bi bi-hospital-fill me-1"></i> সরকারি টিকাদান সূচি (EPI)</button>
+                    <button id="vaccine-private-btn" class="btn btn-outline-purple btn-sm rounded-pill px-4 py-2 vaccine-tab-btn" onclick="switchVaccineTab('private', this)"><i class="bi bi-shield-plus me-1"></i> বেসরকারি/অতিরিক্ত টিকা (ঐচ্ছিক)</button>
+                </div>
+
+                <!-- EPI Vaccination Content -->
+                <div id="vaccine-epi-content" class="vaccine-content-block">
+                    <!-- KPI Cards for Next Vaccine -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <div class="data-panel bg-success bg-opacity-10 border-success text-center py-3">
+                                <i class="bi bi-shield-check fs-1 text-success mb-2 d-block"></i>
+                                <h5 class="fw-bold text-success mb-1">পরবর্তী টিকা: TT 2 (টিটেনাস)</h5>
+                                <p class="text-dark fw-medium m-0 small">সম্ভাব্য তারিখ: ১৫ নভেম্বর ২০২৬</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="data-panel bg-info bg-opacity-10 border-info text-center py-3">
+                                <i class="bi bi-emoji-smile fs-1 text-info mb-2 d-block" style="color: #0284c7 !important;"></i>
+                                <h5 class="fw-bold text-info mb-1" style="color: #0284c7 !important;">নবজাতকের ইম্যুনাইজেশন</h5>
+                                <p class="text-dark fw-medium m-0 small">BCG, পেন্টাভেলেন্ট, পোলিও ট্র্যাকিং</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EPI Vaccine Table -->
+                    <div class="data-panel shadow-sm">
+                        <h5 class="fw-bold mb-4 text-purple"><i class="bi bi-table me-2"></i> সরকারি টিকাদান সূচি (National EPI)</h5>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle" style="border-collapse: separate; border-spacing: 0 10px;">
+                                <thead>
+                                    <tr class="bg-light text-muted small uppercase">
+                                        <th class="ps-3">শিশুর বয়স</th>
+                                        <th>টিকার নাম</th>
+                                        <th>রোগ থেকে সুরক্ষা</th>
+                                        <th>টিকার ধরন</th>
+                                        <th>ডোজ</th>
+                                        <th class="pe-3">অবস্থা (স্ট্যাটাস)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Row 1 -->
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-danger-subtle text-danger p-2 rounded-3 fw-semibold"><i class="bi bi-baby me-1"></i> জন্মের সময়</span></td>
+                                        <td><strong>বিসিজি (BCG) ও হেপাটাইটিস বি</strong></td>
+                                        <td class="small text-muted">যক্ষ্মা, হেপাটাইটিস বি</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success border border-success-subtle">সরকারি</span></td>
+                                        <td class="small">১ম ডোজ</td>
+                                        <td class="pe-3"><span class="badge bg-success-subtle text-success border border-success-subtle p-2 rounded-pill fw-semibold"><i class="bi bi-check-circle-fill me-1"></i> দেওয়া হয়েছে<br><small class="text-muted" style="font-size:0.65rem;">১০ জানুয়ারি, ২০২৬</small></span></td>
+                                    </tr>
+                                    <!-- Row 2 -->
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-primary-subtle text-primary p-2 rounded-3 fw-semibold"><i class="bi bi-calendar2-week me-1"></i> ৬ সপ্তাহ (১.৫ মাস)</span></td>
+                                        <td><strong>পেন্টাভেলেন্ট-১, ওপিভি-১, পিসিভি-১, রোটা-১</strong></td>
+                                        <td class="small text-muted">ডিপথেরিয়া, হুপিং কাশি, ধনুষ্টংকার, হেপাটাইটিস বি, মেনিনজাইটিস, পোলিও, নিউমোনিয়া, ডায়রিয়া</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success border border-success-subtle">সরকারি</span></td>
+                                        <td class="small">১ম ডোজ</td>
+                                        <td class="pe-3"><span class="badge bg-success-subtle text-success border border-success-subtle p-2 rounded-pill fw-semibold"><i class="bi bi-check-circle-fill me-1"></i> দেওয়া হয়েছে<br><small class="text-muted" style="font-size:0.65rem;">২১ ফেব্রুয়ারি, ২০২৬</small></span></td>
+                                    </tr>
+                                    <!-- Row 3 -->
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-warning-subtle text-warning p-2 rounded-3 fw-semibold"><i class="bi bi-calendar2-week me-1"></i> ১০ সপ্তাহ (২.৫ মাস)</span></td>
+                                        <td><strong>পেন্টাভেলেন্ট-২, ওপিভি-২, পিসিভি-২, রোটা-২</strong></td>
+                                        <td class="small text-muted">ডিপথেরিয়া, হুপিং কাশি, ধনুষ্টংকার, হেপাটাইটিস বি, মেনিনজাইটিস, পোলিও, নিউমোনিয়া, ডায়রিয়া</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success border border-success-subtle">সরকারি</span></td>
+                                        <td class="small">২য় ডোজ</td>
+                                        <td class="pe-3"><span class="badge bg-primary-subtle text-primary border border-primary-subtle p-2 rounded-pill fw-semibold"><i class="bi bi-clock-history me-1"></i> আসবে<br><small class="text-muted" style="font-size:0.65rem;">২১ মার্চ, ২০২৬</small></span></td>
+                                    </tr>
+                                    <!-- Row 4 -->
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-info-subtle text-info p-2 rounded-3 fw-semibold"><i class="bi bi-calendar2-week me-1"></i> ১৪ সপ্তাহ (৩.৫ মাস)</span></td>
+                                        <td><strong>পেন্টাভেলেন্ট-৩, ওপিভি-৩, আইপিভি-১, পিসিভি-৩, রোটা-৩</strong></td>
+                                        <td class="small text-muted">ডিপথেরিয়া, হুপিং কাশি, ধনুষ্টংকার, হেপাটাইটিস বি, মেনিনজাইটিস, পোলিও, নিউমোনিয়া, ডায়রিয়া</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success border border-success-subtle">সরকারি</span></td>
+                                        <td class="small">৩য় ডোজ</td>
+                                        <td class="pe-3"><span class="badge bg-primary-subtle text-primary border border-primary-subtle p-2 rounded-pill fw-semibold"><i class="bi bi-clock-history me-1"></i> আসবে<br><small class="text-muted" style="font-size:0.65rem;">১৮ এপ্রিল, ২০২৬</small></span></td>
+                                    </tr>
+                                    <!-- Row 5 -->
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-secondary bg-opacity-10 text-dark p-2 rounded-3 fw-semibold"><i class="bi bi-calendar2-event me-1"></i> ৯ মাস</span></td>
+                                        <td><strong>এমআর-১ (হাম ও রুবেলা)</strong></td>
+                                        <td class="small text-muted">হাম, রুবেলা</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success border border-success-subtle">সরকারি</span></td>
+                                        <td class="small">১ম ডোজ</td>
+                                        <td class="pe-3"><span class="badge bg-primary-subtle text-primary border border-primary-subtle p-2 rounded-pill fw-semibold"><i class="bi bi-clock-history me-1"></i> আসবে<br><small class="text-muted" style="font-size:0.65rem;">১০ অক্টোবর, ২০২৬</small></span></td>
+                                    </tr>
+                                    <!-- Row 6 -->
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-secondary bg-opacity-10 text-dark p-2 rounded-3 fw-semibold"><i class="bi bi-calendar2-event me-1"></i> ১৫ মাস</span></td>
+                                        <td><strong>এমআর-২ ও পিসিভি বুস্টার</strong></td>
+                                        <td class="small text-muted">হাম, রুবেলা, নিউমোনিয়া</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success border border-success-subtle">সরকারি</span></td>
+                                        <td class="small">বুস্টার ডোজ</td>
+                                        <td class="pe-3"><span class="badge bg-primary-subtle text-primary border border-primary-subtle p-2 rounded-pill fw-semibold"><i class="bi bi-clock-history me-1"></i> আসবে<br><small class="text-muted" style="font-size:0.65rem;">১০ এপ্রিল, ২০২৭</small></span></td>
+                                    </tr>
+                                    <!-- Row 7 -->
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-secondary bg-opacity-10 text-dark p-2 rounded-3 fw-semibold"><i class="bi bi-calendar2-event me-1"></i> ১৮ মাস</span></td>
+                                        <td><strong>ডিপিটি বুস্টার-১ ও ওপিভি বুস্টার</strong></td>
+                                        <td class="small text-muted">ডিপথেরিয়া, হুপিং কাশি, ধনুষ্টংকার, পোলিও</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success border border-success-subtle">সরকারি</span></td>
+                                        <td class="small">বুস্টার ডোজ</td>
+                                        <td class="pe-3"><span class="badge bg-primary-subtle text-primary border border-primary-subtle p-2 rounded-pill fw-semibold"><i class="bi bi-clock-history me-1"></i> আসবে<br><small class="text-muted" style="font-size:0.65rem;">১০ জুলাই, ২০২৭</small></span></td>
+                                    </tr>
+                                    <!-- Row 8 -->
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-secondary bg-opacity-10 text-dark p-2 rounded-3 fw-semibold"><i class="bi bi-calendar2-event me-1"></i> ৪ বছর</span></td>
+                                        <td><strong>ডিপিটি বুস্টার-২ ও ওপিভি বুস্টার</strong></td>
+                                        <td class="small text-muted">ডিপথেরিয়া, হুপিং কাশি, ধনুষ্টংকার, পোলিও</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success border border-success-subtle">সরকারি</span></td>
+                                        <td class="small">বুস্টার ডোজ</td>
+                                        <td class="pe-3"><span class="badge bg-primary-subtle text-primary border border-primary-subtle p-2 rounded-pill fw-semibold"><i class="bi bi-clock-history me-1"></i> আসবে<br><small class="text-muted" style="font-size:0.65rem;">১০ জানুয়ারি, ২০৩০</small></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Private & Optional Vaccines Content (Hidden by default) -->
+                <div id="vaccine-private-content" class="vaccine-content-block" style="display: none;">
+                    <!-- Private Vaccine Table -->
+                    <div class="data-panel shadow-sm mb-4">
+                        <h5 class="fw-bold mb-4 text-purple"><i class="bi bi-table me-2"></i> বেসরকারি ও ঐচ্ছিক টিকা সূচি</h5>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle" style="border-collapse: separate; border-spacing: 0 10px;">
+                                <thead>
+                                    <tr class="bg-light text-muted small uppercase">
+                                        <th class="ps-3">বয়স</th>
+                                        <th>টিকার নাম</th>
+                                        <th>রোগের বিরুদ্ধে সুরক্ষা</th>
+                                        <th>ডোজ</th>
+                                        <th class="pe-3">নির্ধারিত সময়</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-purple-subtle text-purple p-2 rounded-3 fw-semibold">৬ সপ্তাহ থেকে</span></td>
+                                        <td><strong>হেপাটাইটিস বি (অতিরিক্ত ডোজ)</strong></td>
+                                        <td class="small text-muted">হেপাটাইটিস বি</td>
+                                        <td class="small">৩ ডোজ</td>
+                                        <td class="pe-3 small text-muted">০, ১ ও ৬ মাস</td>
+                                    </tr>
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-purple-subtle text-purple p-2 rounded-3 fw-semibold">২ মাস থেকে</span></td>
+                                        <td><strong>ইনফ্লুয়েঞ্জা (ফ্লু) টিকা</strong></td>
+                                        <td class="small text-muted">ইনফ্লুয়েঞ্জা</td>
+                                        <td class="small">প্রতি বছর ১ ডোজ</td>
+                                        <td class="pe-3 small text-muted">প্রতি বছর (শরৎ/শীতকালে)</td>
+                                    </tr>
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-purple-subtle text-purple p-2 rounded-3 fw-semibold">৯ মাস থেকে</span></td>
+                                        <td><strong>টাইফয়েড (কনজুগেট ভ্যাকসিন)</strong></td>
+                                        <td class="small text-muted">টাইফয়েড জ্বর</td>
+                                        <td class="small">১ বা ২ ডোজ</td>
+                                        <td class="pe-3 small text-muted">চিকিৎসকের পরামর্শ অনুযায়ী</td>
+                                    </tr>
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-purple-subtle text-purple p-2 rounded-3 fw-semibold">১ বছর থেকে</span></td>
+                                        <td><strong>ভ্যারিসেলা (জলবসন্ত) টিকা</strong></td>
+                                        <td class="small text-muted">জলবসন্ত (Chickenpox)</td>
+                                        <td class="small">২ ডোজ</td>
+                                        <td class="pe-3 small text-muted">১-২ বছর ব্যবধানে</td>
+                                    </tr>
+                                    <tr class="bg-white shadow-sm rounded">
+                                        <td class="ps-3"><span class="badge bg-purple-subtle text-purple p-2 rounded-3 fw-semibold">৯-১৪ বছর</span></td>
+                                        <td><strong>এইচপিভি (HPV) টিকা</strong></td>
+                                        <td class="small text-muted">জরায়ু মুখের ক্যান্সারসহ কিছু ক্যান্সার</td>
+                                        <td class="small">২ বা ৩ ডোজ</td>
+                                        <td class="pe-3 small text-muted">চিকিৎসকের পরামর্শ অনুযায়ী</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium Bottom Cards: Optional Vaccines Grid (Visually stunning, matches Image 1) -->
+                <div class="mt-4">
+                    <h5 class="fw-bold mb-3 text-purple"><i class="bi bi-grid-fill me-2"></i> বেসরকারি/অতিরিক্ত টিকা (ঐচ্ছিক)</h5>
+                    <div class="row g-3 justify-content-center">
+                        <div class="col-lg-2col col-md-4 col-sm-6">
+                            <div class="data-panel h-100 text-center p-3 border-0 shadow-sm" style="background: #fff8f8; border: 1px solid #ffebeb !important; border-radius: 20px;">
+                                <div class="bg-white rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-heart-pulse-fill text-danger fs-4"></i>
+                                </div>
+                                <h6 class="fw-bold text-dark small mb-1">হেপাটাইটিস এ</h6>
+                                <p class="text-muted small m-0" style="font-size:0.75rem;">১২ মাস+ (২ ডোজ)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2col col-md-4 col-sm-6">
+                            <div class="data-panel h-100 text-center p-3 border-0 shadow-sm" style="background: #f0fdfa; border: 1px solid #ccfbf1 !important; border-radius: 20px;">
+                                <div class="bg-white rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-shield-plus text-teal fs-4" style="color: var(--primary-teal);"></i>
+                                </div>
+                                <h6 class="fw-bold text-dark small mb-1">টাইফয়েড</h6>
+                                <p class="text-muted small m-0" style="font-size:0.75rem;">৯ মাস+</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2col col-md-4 col-sm-6">
+                            <div class="data-panel h-100 text-center p-3 border-0 shadow-sm" style="background: #fffbeb; border: 1px solid #fef3c7 !important; border-radius: 20px;">
+                                <div class="bg-white rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-virus text-warning fs-4"></i>
+                                </div>
+                                <h6 class="fw-bold text-dark small mb-1">ভ্যারিসেলা (জলবসন্ত)</h6>
+                                <p class="text-muted small m-0" style="font-size:0.75rem;">১২-১৫ মাস+ (২ ডোজ)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2col col-md-4 col-sm-6">
+                            <div class="data-panel h-100 text-center p-3 border-0 shadow-sm" style="background: #fdf2f8; border: 1px solid #fce7f3 !important; border-radius: 20px;">
+                                <div class="bg-white rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-gender-female text-pink fs-4" style="color: var(--primary-pink);"></i>
+                                </div>
+                                <h6 class="fw-bold text-dark small mb-1">এইচপিভি (HPV)</h6>
+                                <p class="text-muted small m-0" style="font-size:0.75rem;">৯ বছর+ (২ বা ৩ ডোজ)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2col col-md-4 col-sm-6">
+                            <div class="data-panel h-100 text-center p-3 border-0 shadow-sm" style="background: #f0f9ff; border: 1px solid #e0f2fe !important; border-radius: 20px;">
+                                <div class="bg-white rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-droplet-fill text-primary fs-4"></i>
+                                </div>
+                                <h6 class="fw-bold text-dark small mb-1">ইনফ্লুয়েঞ্জা (Flu)</h6>
+                                <p class="text-muted small m-0" style="font-size:0.75rem;">৬ মাস+ (প্রতি বছর)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Important Info Callout Box (Matches Image 1) -->
+                <div class="data-panel mt-4 p-4 border-0 shadow-sm" style="background: linear-gradient(135deg, #fff1f2, #ffe4e6); border-radius: 24px;">
+                    <div class="d-flex align-items-center gap-3 flex-wrap">
+                        <div class="bg-white p-3 rounded-circle shadow-sm d-flex align-items-center justify-content-center" style="width: 65px; height: 65px; flex-shrink:0;">
+                            <i class="bi bi-info-circle-fill text-danger fs-2"></i>
+                        </div>
+                        <div style="flex-grow:1;">
+                            <h5 class="fw-bold text-danger mb-2"><i class="bi bi-exclamation-triangle-fill me-1"></i> গুরুত্বপূর্ণ তথ্য ও সতর্কতা</h5>
+                            <ul class="list-unstyled small lh-lg mb-0 text-dark">
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-danger me-2"></i> নির্ধারিত সময়ে সব টিকা নিন ও বুস্টার ডোজ পুরো করুন।</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-danger me-2"></i> টিকা নেওয়ার পর শিশুর হালকা জ্বর বা কান্না স্বাভাবিক। তবে সমস্যা হলে নিকটস্থ স্বাস্থ্যকেন্দ্রে যোগাযোগ করুন।</li>
+                                <li><i class="bi bi-check-circle-fill text-danger me-2"></i> টিকার কার্ড সংরক্ষণ করুন এবং প্রতিবার স্বাস্থ্যকেন্দ্রে সাথে আনুন।</li>
+                            </ul>
+                        </div>
+                        <!-- Vaccine Bottle Art Styling -->
+                        <div class="d-none d-lg-block">
+                            <svg viewBox="0 0 100 100" style="width: 80px; height: 80px;">
+                                <rect x="35" y="20" width="30" height="50" rx="5" fill="#e0f2fe" stroke="#38bdf8" stroke-width="4" />
+                                <rect x="42" y="10" width="16" height="10" rx="2" fill="#94a3b8" />
+                                <rect x="39" y="32" width="22" height="18" rx="2" fill="#fff" stroke="#38bdf8" stroke-width="2" />
+                                <circle cx="50" cy="41" r="5" fill="#38bdf8" />
+                                <path d="M47 41 L53 41 M50 38 L50 44" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+                                <path d="M25 75 C 25 75, 50 65, 75 75" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Source line -->
+                <p class="text-muted small mt-4 text-center"><i class="bi bi-info-circle me-1"></i> তথ্যসূত্র: জাতীয় টিকাদান কর্মসূচি (EPI), স্বাস্থ্য অধিদপ্তর, বাংলাদেশ</p>
             </div>
 
             <!-- ============================================== -->
@@ -943,6 +1231,22 @@
             
             document.querySelectorAll('.diet-tab-btn').forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
+        }
+
+        function switchVaccineTab(tabType, button) {
+            document.querySelectorAll('.vaccine-content-block').forEach(content => content.style.display = 'none');
+            if (tabType === 'epi') {
+                document.getElementById('vaccine-epi-content').style.display = 'block';
+            } else {
+                document.getElementById('vaccine-private-content').style.display = 'block';
+            }
+            
+            document.querySelectorAll('.vaccine-tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'btn-purple');
+                btn.classList.add('btn-outline-purple');
+            });
+            button.classList.add('active', 'btn-purple');
+            button.classList.remove('btn-outline-purple');
         }
     </script>
 </body>
