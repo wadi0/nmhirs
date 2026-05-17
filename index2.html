@@ -21,7 +21,7 @@
             --primary-teal: #0d9488;
             --bg-body: #f8fafc;
             --border-color: #e2e8f0;
-            --text-dark: #0f172a;
+            --text-dark: #475569;
             --text-muted: #64748b;
             --font-bn: 'Noto Sans Bengali', sans-serif;
             --font-en: 'Poppins', sans-serif;
@@ -34,8 +34,29 @@
             background-color: var(--bg-body);
             color: var(--text-dark);
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
         
+        /* Clean and premium typography scaling without faux-bold double rendering */
+        h1, h2, h3, h4, h5, h6, 
+        .brand, 
+        .nav-section-title, 
+        .header-title, 
+        .panel-title, 
+        .kpi-info h3 {
+            font-weight: 600;
+        }
+        
+        .fw-bold {
+            font-weight: 600 !important;
+        }
+
+        /* Override Bootstrap's default harsh dark text classes to use our soft gray */
+        .text-dark, .text-black {
+            color: var(--text-dark) !important;
+        }
+
         .en-text { font-family: var(--font-en); }
 
         /* === Sidebar === */
