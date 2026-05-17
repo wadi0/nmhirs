@@ -299,7 +299,7 @@
             box-shadow: 0 4px 12px rgba(240, 62, 130, 0.3);
         }
         .nav-menu { list-style: none; padding: 0; margin: 0; }
-        .nav-section-title { font-size: 0.75rem; font-weight: 700; color: var(--primary-purple); opacity: 0.6; margin: 24px 0 10px 10px; text-transform: uppercase; letter-spacing: 0.5px;}
+        .nav-section-title { font-size: 0.75rem; font-weight: 700; color: var(--primary-purple); opacity: 0.6; margin: 24px 0 10px 10px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;}
         .nav-item { margin-bottom: 4px; }
         .nav-link {
             display: flex; align-items: center; gap: 12px;
@@ -307,6 +307,7 @@
             color: var(--text-muted); font-weight: 500; font-size: 0.95rem;
             transition: var(--transition-smooth); text-decoration: none;
             cursor: pointer;
+            white-space: nowrap;
         }
         .nav-link i { font-size: 1.2rem; }
         .nav-link:hover { background: #f8fafc; color: var(--primary-purple); }
@@ -439,9 +440,15 @@
         .stakeholder-icon { font-size: 2.8rem; margin-bottom: 12px; color: var(--primary-purple); display: inline-block; transition: var(--transition-smooth); }
         .stakeholder-card:hover .stakeholder-icon { transform: scale(1.1) rotate(5deg); }
 
-        /* Custom Table for Admin */
-        .table-custom th { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; background: #f8fafc; border-bottom: 2px solid var(--border-color); padding: 14px 18px;}
-        .table-custom td { padding: 18px; vertical-align: middle; border-bottom: 1px solid var(--border-color); font-size: 0.95rem;}
+        /* Custom Table for Admin & Responsive Tables */
+        .table-custom th, .table th { 
+            font-size: 0.85rem; color: var(--text-muted); font-weight: 600; background: #f8fafc; border-bottom: 2px solid var(--border-color); padding: 14px 18px;
+            white-space: nowrap;
+        }
+        .table-custom td, .table td { 
+            padding: 18px; vertical-align: middle; border-bottom: 1px solid var(--border-color); font-size: 0.95rem;
+            white-space: nowrap;
+        }
         
         /* Status Badges */
         .status-badge { padding: 6px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; font-family: var(--font-en); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
