@@ -190,14 +190,11 @@
         /* Connected Feature Styling */
         .feature-connect-card {
             background: #ffffff;
-            border-left: 4px solid var(--primary-purple);
+            border: 1px solid #f1f5f9;
             border-radius: 12px;
             padding: 10px 14px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
             transition: var(--transition-smooth);
-            border-top: 1px solid #f1f5f9;
-            border-bottom: 1px solid #f1f5f9;
-            border-right: 1px solid #f1f5f9;
             height: 100%;
         }
         .feature-connect-card:hover {
@@ -643,32 +640,38 @@
                 </div>
 
                 <div class="row g-4">
-                    <div class="col-xl-4 col-lg-6">
-                        <div class="data-panel text-center">
-                            <h5 class="fw-bold mb-3"><i class="bi bi-emoji-smile-fill text-purple"></i> বর্তমান বেবি স্ট্যাটাস</h5>
-                            <div class="p-3 bg-light rounded-circle d-inline-block mb-3">
-                                <img src="https://img.icons8.com/color/96/000000/corn.png" alt="Corn Size" style="width: 50px;">
+                    <div class="col-xl-4 col-lg-6 d-flex">
+                        <div class="data-panel text-center d-flex flex-column justify-content-between w-100">
+                            <div>
+                                <h5 class="fw-bold mb-3"><i class="bi bi-emoji-smile-fill text-purple"></i> বর্তমান বেবি স্ট্যাটাস</h5>
+                                <div class="p-3 bg-light rounded-circle d-inline-block mb-3">
+                                    <img src="https://img.icons8.com/color/96/000000/corn.png" alt="Corn Size" style="width: 50px;">
+                                </div>
+                                <h6 class="fw-bold">আকার: ভুট্টার মতো</h6>
+                                <p class="text-muted small mb-4">২য় ট্রাইমেস্টার, ২৮ সপ্তাহ</p>
                             </div>
-                            <h6 class="fw-bold">আকার: ভুট্টার মতো</h6>
-                            <p class="text-muted small mb-4">২য় ট্রাইমেস্টার, ২৮ সপ্তাহ</p>
-                            <button class="btn w-100 rounded-pill text-purple fw-bold" style="background:#f3ebff;" onclick="document.querySelectorAll('.nav-link')[1].click()">বিস্তারিত জানুন</button>
+                            <button class="btn w-100 rounded-pill text-purple fw-bold mt-3" style="background:#f3ebff;" onclick="document.querySelectorAll('.nav-link')[1].click()">বিস্তারিত জানুন</button>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-6">
-                        <div class="data-panel text-center" style="background: linear-gradient(135deg, var(--primary-teal), #0f766e); color: white;">
-                            <i class="bi bi-footprints-fill fs-2 opacity-75 mb-2"></i>
-                            <h5 class="fw-bold mb-1">কিক ট্র্যাকিং</h5>
-                            <h1 class="display-3 fw-bold en-text m-0">16</h1>
-                            <p class="opacity-75 small mb-4">স্বাভাবিক নড়াচড়া</p>
-                            <button class="btn btn-light w-100 rounded-pill fw-bold text-teal shadow-sm" style="color:var(--primary-teal);" onclick="document.querySelectorAll('.nav-link')[2].click()">+ কিক যোগ করুন</button>
+                    <div class="col-xl-4 col-lg-6 d-flex">
+                        <div class="data-panel text-center d-flex flex-column justify-content-between w-100" style="background: linear-gradient(135deg, var(--primary-teal), #0f766e); color: white;">
+                            <div>
+                                <i class="bi bi-footprints-fill fs-2 opacity-75 mb-2"></i>
+                                <h5 class="fw-bold mb-1">কিক ট্র্যাকিং</h5>
+                                <h1 class="display-3 fw-bold en-text m-0">16</h1>
+                                <p class="opacity-75 small mb-4">স্বাভাবিক নড়াচড়া</p>
+                            </div>
+                            <button class="btn btn-light w-100 rounded-pill fw-bold text-teal shadow-sm mt-3" style="color:var(--primary-teal);" onclick="document.querySelectorAll('.nav-link')[2].click()">+ কিক যোগ করুন</button>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="data-panel d-flex flex-column">
-                            <h5 class="fw-bold mb-3"><i class="bi bi-list-check text-primary"></i> আজকের চেকলিস্ট</h5>
-                            <div class="d-flex align-items-center gap-2 mb-3"><input type="checkbox" class="form-check-input" checked><span class="text-muted text-decoration-line-through">সকালের আয়রন ট্যাবলেট</span></div>
-                            <div class="d-flex align-items-center gap-2 mb-3"><input type="checkbox" class="form-check-input"><span class="fw-medium">২০ মিনিট হালকা হাঁটা</span></div>
-                            <button class="btn btn-outline-primary w-100 rounded-pill fw-bold mt-auto" onclick="document.querySelectorAll('.nav-link')[3].click()">সম্পূর্ণ ডায়েট ও রুটিন দেখুন</button>
+                    <div class="col-xl-4 col-lg-12 d-flex">
+                        <div class="data-panel d-flex flex-column justify-content-between w-100">
+                            <div>
+                                <h5 class="fw-bold mb-3"><i class="bi bi-list-check text-primary"></i> আজকের চেকলিস্ট</h5>
+                                <div class="d-flex align-items-center gap-2 mb-3"><input type="checkbox" class="form-check-input" checked><span class="text-muted text-decoration-line-through">সকালের আয়রন ট্যাবলেট</span></div>
+                                <div class="d-flex align-items-center gap-2 mb-3"><input type="checkbox" class="form-check-input"><span class="fw-medium">২০ মিনিট হালকা হাঁটা</span></div>
+                            </div>
+                            <button class="btn btn-outline-primary w-100 rounded-pill fw-bold mt-3" onclick="document.querySelectorAll('.nav-link')[3].click()">সম্পূর্ণ ডায়েট ও রুটিন দেখুন</button>
                         </div>
                     </div>
                 </div>
@@ -1686,17 +1689,17 @@
                                         <h6 class="fw-bold text-dark small mb-1">পার্সোনালাইজড জার্নি</h6>
                                         <p class="text-muted m-0" style="font-size: 0.7rem; line-height: 1.3;">প্রোফাইল ও নির্ধারিত তারিখ সেটআপ, পার্সোনালাইজড টাইমলাইন, সাপ্তাহিক আপডেট ও মাইলস্টোন ট্র্যাকিং।</p>
                                     </div>
-                                    <div class="feature-connect-card" style="border-left-color: var(--primary-pink);">
+                                    <div class="feature-connect-card">
                                         <span class="feature-connect-icon bg-pink-subtle text-pink" style="background:#ffe4e6; color:var(--primary-pink);"><i class="bi bi-heart-pulse-fill"></i></span>
                                         <h6 class="fw-bold text-dark small mb-1">স্বাস্থ্য ও সুস্থতা</h6>
                                         <p class="text-muted m-0" style="font-size: 0.7rem; line-height: 1.3;">লক্ষণ ট্র্যাকার, ওজন ও রক্তচাপ ট্র্যাকার, কিক কাউন্টার, ঘুম ও মেজাজ ট্র্যাকার, রিমাইন্ডার।</p>
                                     </div>
-                                    <div class="feature-connect-card" style="border-left-color: #3b82f6;">
+                                    <div class="feature-connect-card">
                                         <span class="feature-connect-icon bg-primary-subtle text-primary"><i class="bi bi-calendar2-check-fill"></i></span>
                                         <h6 class="fw-bold text-dark small mb-1">অ্যাপয়েন্টমেন্ট</h6>
                                         <p class="text-muted m-0" style="font-size: 0.7rem; line-height: 1.3;">ডাক্তারের অ্যাপয়েন্টমেন্ট বুকিং, রিমাইন্ডার, ভিজিট ইতিহাস, মেডিকেল রিপোর্টস ও পার্সোনাল নোটস।</p>
                                     </div>
-                                    <div class="feature-connect-card" style="border-left-color: var(--primary-teal);">
+                                    <div class="feature-connect-card">
                                         <span class="feature-connect-icon bg-teal-subtle text-teal" style="background:#e0f2f1; color:var(--primary-teal);"><i class="bi bi-apple"></i></span>
                                         <h6 class="fw-bold text-dark small mb-1">পুষ্টি নির্দেশিকা</h6>
                                         <p class="text-muted m-0" style="font-size: 0.7rem; line-height: 1.3;">প্রেগন্যান্সি ডায়েট প্ল্যান, স্বাস্থ্যকর পুষ্টিকর রেসিপি, পুষ্টি ট্র্যাকার ও পানি পানের রিমাইন্ডার।</p>
@@ -1797,27 +1800,27 @@
 
                                 <!-- Right side features list -->
                                 <div class="col-lg-4 col-md-12 d-flex flex-column gap-3">
-                                    <div class="feature-connect-card" style="border-left-color: #f59e0b;">
+                                    <div class="feature-connect-card">
                                         <span class="feature-connect-icon bg-warning-subtle text-warning"><i class="bi bi-book-half"></i></span>
                                         <h6 class="fw-bold text-dark small mb-1">শিক্ষা ও নির্দেশিকা</h6>
                                         <p class="text-muted m-0" style="font-size: 0.7rem; line-height: 1.3;">প্রেগন্যান্সি ও প্রসবের আর্টিকেল, অ্যানিমেটেড ভিডিও ও বিশেষ পরামর্শ, প্রসব পরবর্তী শিশুর যত্ন গাইড।</p>
                                     </div>
-                                    <div class="feature-connect-card" style="border-left-color: #ec4899;">
+                                    <div class="feature-connect-card">
                                         <span class="feature-connect-icon bg-pink-subtle text-pink" style="background:#fce7f3; color:#ec4899;"><i class="bi bi-telephone-fill"></i></span>
                                         <h6 class="fw-bold text-dark small mb-1">ডাক্তার ও সহায়তা</h6>
                                         <p class="text-muted m-0" style="font-size: 0.7rem; line-height: 1.3;">OB/GYN ডাক্তারের সাথে ভিডিও যোগাযোগ, অনলাইন স্বাস্থ্য পরামর্শ, সরাসরি চ্যাট ও দ্বিতীয় মতামত।</p>
                                     </div>
-                                    <div class="feature-connect-card" style="border-left-color: #8b5cf6;">
+                                    <div class="feature-connect-card">
                                         <span class="feature-connect-icon bg-purple-subtle text-purple" style="background:#ede9fe; color:#8b5cf6;"><i class="bi bi-activity"></i></span>
                                         <h6 class="fw-bold text-dark small mb-1">প্রসব ও ডেলিভারি সহায়তা</h6>
                                         <p class="text-muted m-0" style="font-size: 0.7rem; line-height: 1.3;">ডেলিভারি ব্যাগ চেকলিস্ট, বার্থ প্ল্যান অরিয়েন্টেশন, কনট্রাকশন টাইমার ও নিকটস্থ ক্লিনিক ফাইন্ডার।</p>
                                     </div>
-                                    <div class="feature-connect-card" style="border-left-color: #06b6d4;">
+                                    <div class="feature-connect-card">
                                         <span class="feature-connect-icon bg-info-subtle text-info"><i class="bi bi-emoji-smile-fill"></i></span>
                                         <h6 class="fw-bold text-dark small mb-1">প্রসব পরবর্তী ও শিশুর যত্ন</h6>
                                         <p class="text-muted m-0" style="font-size: 0.7rem; line-height: 1.3;">মায়ের রিকভারি ট্র্যাকার, ব্রেস্টফিডিং গাইড, শিশুর টিকাকরণ, গ্রোথ মাইলস্টোন ও বৃদ্ধি ট্র্যাকিং।</p>
                                     </div>
-                                    <div class="feature-connect-card" style="border-left-color: #10b981;">
+                                    <div class="feature-connect-card">
                                         <span class="feature-connect-icon bg-emerald-subtle text-emerald" style="background:#d1fae5; color:#10b981;"><i class="bi bi-people-fill"></i></span>
                                         <h6 class="fw-bold text-dark small mb-1">কমিউনিটি ও মানসিক সহায়তা</h6>
                                         <p class="text-muted m-0" style="font-size: 0.7rem; line-height: 1.3;">অন্যান্য মায়েদের সাথে ফোরাম কানেক্টিভিটি, গ্রুপ ডিসকাশন, অভিজ্ঞতা শেয়ার ও লাইভ মেন্টাল সাপোর্ট।</p>
