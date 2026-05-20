@@ -12,6 +12,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         :root {
@@ -383,12 +385,12 @@
         
         /* Dashboard Section Handling */
         .dashboard-section { display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        #section-overview { display: block; }
+        #section-main-dashboard { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
         /* === Data Panels === */
         .data-panel {
-            background: #ffffff; border-radius: 24px; padding: 30px;
+            background: #ffffff; border-radius: 12px; padding: 30px;
             box-shadow: var(--card-shadow);
             border: 1px solid rgba(226, 232, 240, 0.8);
             transition: var(--transition-smooth);
@@ -623,24 +625,26 @@
             </div>
         </a>
         <ul class="nav-menu">
+            <li class="nav-item"><a class="nav-link active" id="nav-main-dashboard" onclick="switchMenu('section-main-dashboard', this)"><i class="bi bi-speedometer2"></i> ড্যাশবোর্ড</a></li>
+            
             <!-- Mother's App Features (Image 1 & 2) -->
             <div class="nav-section-title">আমার অ্যাপ (মায়ের জন্য)</div>
-            <li class="nav-item"><a class="nav-link active" onclick="switchMenu('section-overview', this)"><i class="bi bi-grid-1x2-fill"></i> ড্যাশবোর্ড ওভারভিউ</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-baby', this)"><i class="bi bi-calendar2-heart"></i> বেবি স্ট্যাটাস</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-kick', this)"><i class="bi bi-activity"></i> কিক ট্র্যাকিং</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-diet', this)"><i class="bi bi-apple"></i> ডায়েট গাইড</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-vaccine', this)"><i class="bi bi-shield-plus"></i> টিকাদান (Vaccine)</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-profile', this)"><i class="bi bi-person-lines-fill"></i> প্রোফাইল সেটআপ</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-overview" onclick="switchMenu('section-overview', this)"><i class="bi bi-grid-1x2-fill"></i> ড্যাশবোর্ড ওভারভিউ</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-baby" onclick="switchMenu('section-baby', this)"><i class="bi bi-calendar2-heart"></i> বেবি স্ট্যাটাস</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-kick" onclick="switchMenu('section-kick', this)"><i class="bi bi-activity"></i> কিক ট্র্যাকিং</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-diet" onclick="switchMenu('section-diet', this)"><i class="bi bi-apple"></i> ডায়েট গাইড</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-vaccine" onclick="switchMenu('section-vaccine', this)"><i class="bi bi-shield-plus"></i> টিকাদান (Vaccine)</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-profile" onclick="switchMenu('section-profile', this)"><i class="bi bi-person-lines-fill"></i> প্রোফাইল সেটআপ</a></li>
             
             <!-- NMHIRS Enterprise Features (Doc & Image 3) -->
             <div class="nav-section-title mt-4">সিস্টেম ও মনিটরিং (NMHIRS)</div>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-national', this)"><i class="bi bi-speedometer2"></i> জাতীয় ড্যাশবোর্ড</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-registry', this)"><i class="bi bi-card-list"></i> মাতৃ নিবন্ধন</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-anc', this)"><i class="bi bi-clipboard-pulse"></i> ANC ট্র্যাকিং</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-risk', this)"><i class="bi bi-exclamation-triangle"></i> রিস্ক ও অ্যালার্ট</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-referral', this)"><i class="bi bi-ambulance"></i> রেফারেল ও ইমার্জেন্সি</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-facility', this)"><i class="bi bi-hospital"></i> হাসপাতাল মডিউল</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="switchMenu('section-rbac', this)"><i class="bi bi-diagram-3-fill"></i> স্টেকহোল্ডার (RBAC)</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-national" onclick="switchMenu('section-national', this)"><i class="bi bi-speedometer2"></i> জাতীয় ড্যাশবোর্ড</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-registry" onclick="switchMenu('section-registry', this)"><i class="bi bi-card-list"></i> মাতৃ নিবন্ধন</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-anc" onclick="switchMenu('section-anc', this)"><i class="bi bi-clipboard-pulse"></i> ANC ট্র্যাকিং</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-risk" onclick="switchMenu('section-risk', this)"><i class="bi bi-exclamation-triangle"></i> রিস্ক ও অ্যালার্ট</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-referral" onclick="switchMenu('section-referral', this)"><i class="bi bi-ambulance"></i> রেফারেল ও ইমার্জেন্সি</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-facility" onclick="switchMenu('section-facility', this)"><i class="bi bi-hospital"></i> হাসপাতাল মডিউল</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-rbac" onclick="switchMenu('section-rbac', this)"><i class="bi bi-diagram-3-fill"></i> স্টেকহোল্ডার (RBAC)</a></li>
         </ul>
     </aside>
 
@@ -655,7 +659,7 @@
                 <button class="btn btn-light d-lg-none border shadow-sm" id="sidebar-toggle" onclick="toggleSidebar()" style="border-radius: 12px; padding: 6px 12px;">
                     <i class="bi bi-list fs-4"></i>
                 </button>
-                <h2 class="header-title" id="page-title">ড্যাশবোর্ড ওভারভিউ</h2>
+                <h2 class="header-title" id="page-title">ড্যাশবোর্ড</h2>
             </div>
             <div class="d-flex align-items-center gap-4">
                 <div class="position-relative clickable" onclick="alert('আপনার কোনো নতুন নোটিফিকেশন নেই।')">
@@ -674,6 +678,212 @@
 
         <div class="content-area">
             
+            <!-- ============================================== -->
+            <!-- 0. SYSTEM MAIN DASHBOARD (Combined Overview)    -->
+            <!-- ============================================== -->
+            <div id="section-main-dashboard" class="dashboard-section">
+                <!-- Welcome Banner -->
+                <div class="data-panel mb-4 p-0 overflow-hidden border-0 shadow-sm" style="background: linear-gradient(135deg, var(--primary-purple), #7c3aed); color: white;">
+                    <div class="p-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                        <div>
+                            <h3 class="fw-bold mb-1"><i class="bi bi-activity me-2"></i>একীভূত স্বাস্থ্য ড্যাশবোর্ড (Integrated Dashboard)</h3>
+                            <p class="mb-0 opacity-90 text-white-50">মাতৃত্ব এবং NMHIRS এন্টারপ্রাইজ সিস্টেমের রিয়েল-টাইম ওভারভিউ ও এআই বিশ্লেষণ</p>
+                        </div>
+                        <div class="px-3 py-2 rounded-pill d-flex align-items-center gap-2" style="background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                            <span class="pulse-dot"></span>
+                            <span class="small fw-semibold">সিস্টেম লাইভ মনিটরিং সক্রিয়</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="row g-4 mb-4">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="data-panel py-3 px-4 h-100">
+                            <div class="kpi-card">
+                                <div class="kpi-icon kpi-blue"><i class="bi bi-people-fill"></i></div>
+                                <div class="kpi-info">
+                                    <p>মোট নিবন্ধিত গর্ভবতী</p>
+                                    <h3>৩.৫ মিলিয়ন <span class="fs-6 text-success fw-bold"><i class="bi bi-arrow-up-short"></i>৪.২%</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="data-panel py-3 px-4 h-100">
+                            <div class="kpi-card">
+                                <div class="kpi-icon kpi-pink"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                                <div class="kpi-info">
+                                    <p>ঝুঁকিপূর্ণ গর্ভাবস্থা</p>
+                                    <h3>৪৫,২৩০ <span class="fs-6 text-danger fw-bold"><i class="bi bi-exclamation-circle"></i> উচ্চ</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="data-panel py-3 px-4 h-100">
+                            <div class="kpi-card">
+                                <div class="kpi-icon kpi-teal"><i class="bi bi-truck"></i></div>
+                                <div class="kpi-info">
+                                    <p>সক্রিয় রেফারেল</p>
+                                    <h3>১,২০৪ <span class="fs-6 text-warning fw-bold"><i class="bi bi-clock-history"></i> ট্রানজিটে</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="data-panel py-3 px-4 h-100">
+                            <div class="kpi-card">
+                                <div class="kpi-icon kpi-purple"><i class="bi bi-hospital"></i></div>
+                                <div class="kpi-info">
+                                    <p>কমিউনিটি ক্লিনিক লিংকড</p>
+                                    <h3>১৮,৪৫০ <span class="fs-6 text-primary fw-bold"><i class="bi bi-check-circle"></i> সক্রিয়</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="row g-4 mb-4">
+                    <!-- Chart 1: Registration Trend (Line) -->
+                    <div class="col-lg-6 col-xl-6">
+                        <div class="data-panel h-100">
+                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-graph-up text-primary me-2"></i>নিবন্ধনের মাসিক প্রবণতা (Monthly Registration Trend)</h5>
+                            <div style="position: relative; height: 260px;">
+                                <canvas id="chart-registration-trend"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: Risk Levels (Doughnut) -->
+                    <div class="col-lg-6 col-xl-6">
+                        <div class="data-panel h-100">
+                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-pie-chart text-danger me-2"></i>গর্ভবতী নারীদের ঝুঁকির মাত্রা (Pregnancy Risk Distribution)</h5>
+                            <div style="position: relative; height: 260px; display: flex; justify-content: center; align-items: center;">
+                                <canvas id="chart-risk-levels"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <!-- Chart 3: ANC Compliance (Bar) -->
+                    <div class="col-lg-6 col-xl-6">
+                        <div class="data-panel h-100">
+                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-bar-chart-steps text-teal me-2"></i>ANC কমপ্লায়েন্স এবং মিসড ভিজিট (ANC Compliance vs Missed Visits)</h5>
+                            <div style="position: relative; height: 260px;">
+                                <canvas id="chart-anc-compliance"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart 4: Delays Prediction (Radar or Polar Area) -->
+                    <div class="col-lg-6 col-xl-6">
+                        <div class="data-panel h-100">
+                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-hourglass-bottom text-purple me-2"></i>প্রসবকালীন ৩টি বিলম্বের কারণ (Three Delays Distribution)</h5>
+                            <div style="position: relative; height: 260px; display: flex; justify-content: center; align-items: center;">
+                                <canvas id="chart-delays-prediction"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Alerts & Quick Navigation Split -->
+                <div class="row g-4">
+                    <!-- Recent Alerts (Left) -->
+                    <div class="col-lg-7">
+                        <div class="data-panel h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold m-0 text-danger"><i class="bi bi-bell-fill me-2"></i>সাম্প্রতিক জরুরি সংকেত (Live Critical Alerts)</h5>
+                                <span class="badge bg-danger rounded-pill px-2.5 py-1">লাইভ</span>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead>
+                                        <tr class="text-muted small uppercase">
+                                            <th>মাতা ও আইডি</th>
+                                            <th>ঝুঁকির কারণ</th>
+                                            <th>অবস্থান</th>
+                                            <th>অ্যাকশন</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span class="fw-bold d-block text-dark">রহিমা বেগম</span>
+                                                <small class="text-muted">NM-৮৪৭২৯১</small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-semibold">Severe Pre-eclampsia</span>
+                                            </td>
+                                            <td>মিরপুর, ঢাকা</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-purple rounded-pill px-3" onclick="alert('সংশ্লিষ্ট স্বাস্থ্যকর্মীকে অবহিত করা হয়েছে।')">যোগাযোগ</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="fw-bold d-block text-dark">আয়েশা খাতুন</span>
+                                                <small class="text-muted">NM-৫৫৮২৯০</small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-warning-subtle text-warning border border-warning-subtle fw-semibold text-dark">Severe Anemia</span>
+                                            </td>
+                                            <td>সাভার উপজেলা</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-purple rounded-pill px-3" onclick="alert('রেফারেল এন্ট্রি প্রক্রিয়াধীন।')">রেফার করুন</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="fw-bold d-block text-dark">ফারজানা হক</span>
+                                                <small class="text-muted">NM-১০০৩০</small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-warning-subtle text-warning border border-warning-subtle fw-semibold text-dark">High BP (১৫০/৯৫)</span>
+                                            </td>
+                                            <td>টংগী, গাজীপুর</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-purple rounded-pill px-3" onclick="alert('ANC ফলো-আপ নোটিফিকেশন পাঠানো হয়েছে।')">ফলো-আপ</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Operations (Right) -->
+                    <div class="col-lg-5">
+                        <div class="data-panel h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="fw-bold mb-3 text-purple"><i class="bi bi-lightning-fill me-2"></i>কুইক অপারেশন (Quick Actions)</h5>
+                                <p class="text-muted small">মাতৃত্ব ও NMHIRS ইকোসিস্টেমের গুরুত্বপূর্ণ ফিচারে সরাসরি প্রবেশ করুন:</p>
+                                <div class="d-flex flex-column gap-2 mt-3">
+                                    <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-overview').click()">
+                                        <i class="bi bi-grid-1x2-fill me-2 text-pink"></i> মায়ের ড্যাশবোর্ড ওভারভিউ
+                                    </button>
+                                    <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-national').click()">
+                                        <i class="bi bi-speedometer2 me-2 text-primary"></i> জাতীয় মাতৃস্বাস্থ্য ড্যাশবোর্ড
+                                    </button>
+                                    <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-registry').click()">
+                                        <i class="bi bi-card-list me-2 text-success"></i> মাতৃ নিবন্ধন ডাটাবেস
+                                    </button>
+                                    <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-rbac').click()">
+                                        <i class="bi bi-diagram-3-fill me-2 text-warning"></i> স্টেকহোল্ডার ও আরএবিসি (RBAC)
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="bg-light p-3 rounded-3 border mt-4 text-center">
+                                <span class="fw-bold text-dark d-block mb-1" style="font-size: 0.85rem;"><i class="bi bi-phone-fill me-1"></i> মাতৃত্ব হেল্পলাইন</span>
+                                <h6 class="text-danger fw-bold m-0 fs-5"><i class="bi bi-telephone-outbound-fill"></i> ১৬২৬৩</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ============================================== -->
             <!-- 1. MOTHER OVERVIEW (Matritwa)                  -->
             <!-- ============================================== -->
@@ -701,7 +911,7 @@
                                 <h6 class="fw-bold">আকার: ভুট্টার মতো</h6>
                                 <p class="text-muted small mb-4">২য় ট্রাইমেস্টার, ২৮ সপ্তাহ</p>
                             </div>
-                            <button class="btn w-100 rounded-pill text-purple fw-bold mt-3" style="background:#f3ebff;" onclick="document.querySelectorAll('.nav-link')[1].click()">বিস্তারিত জানুন</button>
+                            <button class="btn w-100 rounded-pill text-purple fw-bold mt-3" style="background:#f3ebff;" onclick="document.getElementById('nav-baby').click()">বিস্তারিত জানুন</button>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-6 col-12 mb-4 mb-lg-0 d-flex">
@@ -712,7 +922,7 @@
                                 <h1 class="display-3 fw-bold en-text m-0">16</h1>
                                 <p class="opacity-75 small mb-4">স্বাভাবিক নড়াচড়া</p>
                             </div>
-                            <button class="btn btn-light w-100 rounded-pill fw-bold text-teal shadow-sm mt-3" style="color:var(--primary-teal);" onclick="document.querySelectorAll('.nav-link')[2].click()">+ কিক যোগ করুন</button>
+                            <button class="btn btn-light w-100 rounded-pill fw-bold text-teal shadow-sm mt-3" style="color:var(--primary-teal);" onclick="document.getElementById('nav-kick').click()">+ কিক যোগ করুন</button>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-12 col-12 d-flex">
@@ -722,7 +932,7 @@
                                 <div class="d-flex align-items-center gap-2 mb-3"><input type="checkbox" class="form-check-input" checked><span class="text-muted text-decoration-line-through">সকালের আয়রন ট্যাবলেট</span></div>
                                 <div class="d-flex align-items-center gap-2 mb-3"><input type="checkbox" class="form-check-input"><span class="fw-medium">২০ মিনিট হালকা হাঁটা</span></div>
                             </div>
-                            <button class="btn btn-outline-primary w-100 rounded-pill fw-bold mt-3" onclick="document.querySelectorAll('.nav-link')[3].click()">সম্পূর্ণ ডায়েট ও রুটিন দেখুন</button>
+                            <button class="btn btn-outline-primary w-100 rounded-pill fw-bold mt-3" onclick="document.getElementById('nav-diet').click()">সম্পূর্ণ ডায়েট ও রুটিন দেখুন</button>
                         </div>
                     </div>
                 </div>
@@ -1336,7 +1546,7 @@
                 </div>
 
                 <!-- Important Info Callout Box (Matches Image 1) -->
-                <div class="data-panel mt-4 p-4 border-0 shadow-sm" style="background: linear-gradient(135deg, #fff1f2, #ffe4e6); border-radius: 24px;">
+                <div class="data-panel mt-4 p-4 border-0 shadow-sm" style="background: linear-gradient(135deg, #fff1f2, #ffe4e6); border-radius: 12px;">
                     <div class="d-flex align-items-center gap-3 flex-wrap">
                         <div class="bg-white p-3 rounded-circle shadow-sm d-flex align-items-center justify-content-center" style="width: 65px; height: 65px; flex-shrink:0;">
                             <i class="bi bi-info-circle-fill text-danger fs-2"></i>
@@ -1991,7 +2201,7 @@
                 </div>
 
                 <!-- Green Row Panel: Child Profile & National Integration -->
-                <div class="data-panel mb-5 shadow-sm border-0" style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 1px solid #a7f3d0 !important; border-radius: 24px;">
+                <div class="data-panel mb-5 shadow-sm border-0" style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 1px solid #a7f3d0 !important; border-radius: 12px;">
                     <div class="row g-4 align-items-center">
                         <div class="col-xl-3 col-lg-12">
                             <h4 class="fw-bold text-success mb-2"><i class="bi bi-cpu-fill me-2"></i>শিশু প্রোফাইল ও জাতীয় সিস্টেম ইন্টিগ্রেশন</h4>
@@ -2040,7 +2250,7 @@
                 </div>
 
                 <!-- Bottom Panel 1: Community Clinic Management Hub -->
-                <div class="data-panel mb-5 shadow-sm border-0" style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border: 1px solid #bae6fd !important; border-radius: 24px;">
+                <div class="data-panel mb-5 shadow-sm border-0" style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border: 1px solid #bae6fd !important; border-radius: 12px;">
                     <div class="row g-4 align-items-center">
                         <div class="col-xl-3 col-lg-12">
                             <h4 class="fw-bold text-primary mb-2" style="color: #0284c7 !important;"><i class="bi bi-hospital-fill me-2"></i>কমিউনিটি ক্লিনিক ব্যবস্থাপনা</h4>
@@ -2089,7 +2299,7 @@
                 </div>
 
                 <!-- Bottom Panel 2: Security & Privacy Compliance Box -->
-                <div class="data-panel shadow-sm border-0 mb-4" style="background: linear-gradient(135deg, #f5f3ff, #edd8fd); border: 1px solid #ddd6fe !important; border-radius: 24px;">
+                <div class="data-panel shadow-sm border-0 mb-4" style="background: linear-gradient(135deg, #f5f3ff, #edd8fd); border: 1px solid #ddd6fe !important; border-radius: 12px;">
                     <div class="row g-4 align-items-center">
                         <div class="col-xl-3 col-lg-12">
                             <h4 class="fw-bold text-purple mb-2"><i class="bi bi-lock-fill me-2"></i>নিরাপত্তা, গোপনীয়তা ও কমপ্লায়েন্স</h4>
@@ -2145,7 +2355,7 @@
                 </div>
 
                 <!-- Footer Loving Quote matching the poster -->
-                <div class="data-panel text-center border-0 mt-5 p-4 shadow-sm" style="background: linear-gradient(135deg, #fff1f2, #ffe4e6); border-radius: 24px;">
+                <div class="data-panel text-center border-0 mt-5 p-4 shadow-sm" style="background: linear-gradient(135deg, #fff1f2, #ffe4e6); border-radius: 12px;">
                     <h5 class="fw-bold text-danger m-0 d-inline-flex align-items-center justify-content-center gap-2" style="font-size: 1.15rem;">
                         <i class="bi bi-heart-fill fs-4 text-danger animate-pulse"></i> 
                         আমরা আপনার সাথে আছি, পরিকল্পনা থেকে মা হওয়া পর্যন্ত প্রতিটি পদক্ষেপে।
@@ -2161,6 +2371,253 @@
     
     <!-- Functional Scripts -->
     <script>
+        // Helper to translate numbers to Bengali
+        function toBengaliNumber(num) {
+            if (num === null || num === undefined) return '';
+            const banglaDigits = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+            return num.toString().split('').map(digit => banglaDigits[digit] || digit).join('');
+        }
+
+        // Initialize Chart.js Graphs
+        document.addEventListener("DOMContentLoaded", function() {
+            // Chart 1: Registration Trend
+            const ctxReg = document.getElementById('chart-registration-trend').getContext('2d');
+            const regChart = new Chart(ctxReg, {
+                type: 'line',
+                data: {
+                    labels: ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন'],
+                    datasets: [{
+                        label: 'নিবন্ধিত গর্ভবতী (মিলিয়ন)',
+                        data: [2.9, 3.0, 3.2, 3.3, 3.4, 3.54],
+                        borderColor: '#5c35a5',
+                        backgroundColor: 'rgba(92, 53, 165, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#5c35a5',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += toBengaliNumber(context.parsed.y.toFixed(2)) + ' মিলিয়ন';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 2.5,
+                            ticks: {
+                                callback: function(value) {
+                                    return toBengaliNumber(value.toFixed(1)) + ' মিলিয়ন';
+                                }
+                            },
+                            grid: {
+                                color: '#f1f5f9'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Chart 2: Risk Levels
+            const ctxRisk = document.getElementById('chart-risk-levels').getContext('2d');
+            const riskChart = new Chart(ctxRisk, {
+                type: 'doughnut',
+                data: {
+                    labels: ['কম ঝুঁকি (Low Risk)', 'মাঝারি ঝুঁকি (Medium Risk)', 'উচ্চ ঝুঁকি (High Risk)', 'ক্রিটিক্যাল (Critical)'],
+                    datasets: [{
+                        data: [75, 18, 5, 2],
+                        backgroundColor: ['#0d9488', '#f59e0b', '#f97316', '#ef4444'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 15,
+                                font: {
+                                    family: "'Noto Sans Bengali', sans-serif",
+                                    size: 11
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.raw !== null) {
+                                        label += toBengaliNumber(context.raw) + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+
+            // Chart 3: ANC Compliance
+            const ctxAnc = document.getElementById('chart-anc-compliance').getContext('2d');
+            const ancChart = new Chart(ctxAnc, {
+                type: 'bar',
+                data: {
+                    labels: ['ANC 1', 'ANC 2', 'ANC 3', 'ANC 4', 'মিসড ভিজিট'],
+                    datasets: [{
+                        label: 'কমপ্লায়েন্স শতকরা (%)',
+                        data: [82, 75, 70, 65, 12],
+                        backgroundColor: ['#3b82f6', '#0d9488', '#8b5cf6', '#10b981', '#ef4444'],
+                        borderRadius: 8,
+                        barThickness: 24
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += toBengaliNumber(context.parsed.y) + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return toBengaliNumber(value) + '%';
+                                }
+                            },
+                            grid: {
+                                color: '#f1f5f9'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Chart 4: Delays Prediction
+            const ctxDelays = document.getElementById('chart-delays-prediction').getContext('2d');
+            const delaysChart = new Chart(ctxDelays, {
+                type: 'polarArea',
+                data: {
+                    labels: ['Delay-1: সিদ্ধান্ত নিতে দেরি', 'Delay-2: পৌঁছাতে দেরি', 'Delay-3: চিকিৎসায় দেরি', 'অন্যান্য কারণ'],
+                    datasets: [{
+                        data: [42, 35, 15, 8],
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.7)',
+                            'rgba(245, 158, 11, 0.7)',
+                            'rgba(59, 130, 246, 0.7)',
+                            'rgba(148, 163, 184, 0.7)'
+                        ],
+                        borderColor: [
+                            '#ef4444',
+                            '#f59e0b',
+                            '#3b82f6',
+                            '#94a3b8'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 10,
+                                font: {
+                                    family: "'Noto Sans Bengali', sans-serif",
+                                    size: 11
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.raw !== null) {
+                                        label += toBengaliNumber(context.raw) + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        r: {
+                            ticks: {
+                                display: false
+                            },
+                            grid: {
+                                color: '#e2e8f0'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
         function switchMenu(sectionId, element) {
             document.querySelectorAll('.dashboard-section').forEach(sec => sec.style.display = 'none');
             document.getElementById(sectionId).style.display = 'block';
