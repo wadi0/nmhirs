@@ -53,6 +53,7 @@
             <li class="nav-item"><a class="nav-link" id="nav-risk" onclick="switchMenu('section-risk', this)"><i class="bi bi-exclamation-triangle"></i> রিস্ক ও অ্যালার্ট</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-referral" onclick="switchMenu('section-referral', this)"><i class="bi bi-ambulance"></i> রেফারেল ও ইমার্জেন্সি</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-facility" onclick="switchMenu('section-facility', this)"><i class="bi bi-hospital"></i> হাসপাতাল মডিউল</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-blood" onclick="switchMenu('section-blood', this)"><i class="bi bi-droplet-fill text-red"></i> রক্তদান মডিউল</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-rbac" onclick="switchMenu('section-rbac', this)"><i class="bi bi-diagram-3-fill"></i> স্টেকহোল্ডার (RBAC)</a></li>
         </ul>
     </aside>
@@ -2562,6 +2563,308 @@
                 </div>
             </div>
 
+            <!-- ============================================== -->
+            <!-- BLOOD DONATION MODULE                          -->
+            <!-- ============================================== -->
+            <div id="section-blood" class="dashboard-section" style="display: none;">
+                <!-- Main Header Title -->
+                <div class="mb-5 text-center">
+                    <h2 class="fw-bold text-red mb-2" style="font-size: 1.8rem; color: #e11d48;"><i class="bi bi-droplet-fill me-2 animate-pulse text-danger"></i>রক্তদান ও ডোনার ডাটাবেজ (Blood Donation Hub)</h2>
+                    <h5 class="text-danger fw-semibold mb-3">নিরাপদ মাতৃত্ব ও জরুরী প্রসবকালীন রক্ত সঞ্চালন রেজিস্ট্রি</h5>
+                    <p class="text-muted mx-auto" style="max-width: 800px; font-size: 0.9rem;">
+                        জরুরী মুহূর্তে রক্তের প্রয়োজনের পূর্বাভাস, রক্তদাতাদের দ্রুত অনুসন্ধান এবং রক্ত আদান-প্রদান ট্র্যাকিংয়ের মাধ্যমে প্রসবকালীন রক্তপাতের জটিলতা কমানোর ডিজিটাল পোর্টাল।
+                    </p>
+                </div>
+
+                <!-- KPI Metrics Cards Grid -->
+                <div class="row g-4 mb-5">
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="blood-kpi-card shadow-sm border-0">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="kpi-info">
+                                    <p>মোট রক্তদাতা</p>
+                                    <h3 id="blood-total-donors">০ জন</h3>
+                                </div>
+                                <div class="blood-icon-box bg-red-subtle text-red">
+                                    <i class="bi bi-people-fill text-danger"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="blood-kpi-card shadow-sm border-0">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="kpi-info">
+                                    <p>রক্তদান সম্পন্ন</p>
+                                    <h3 id="blood-total-transfusions">০ বার</h3>
+                                </div>
+                                <div class="blood-icon-box bg-success-subtle text-success" style="background:#ecfdf5 !important; color:#059669 !important;">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="blood-kpi-card shadow-sm border-0">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="kpi-info">
+                                    <p>জরুরী রক্তের চাহিদা</p>
+                                    <h3 id="blood-urgent-requests" class="text-red">০ জন</h3>
+                                </div>
+                                <div class="blood-icon-box bg-danger-subtle text-danger" style="background:#fff1f2 !important; color:#e11d48 !important;">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="blood-kpi-card shadow-sm border-0">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="kpi-info">
+                                    <p>শীর্ষ রক্তের গ্রুপ</p>
+                                    <h3 id="blood-top-group">O+, B+</h3>
+                                </div>
+                                <div class="blood-icon-box bg-purple-subtle text-purple">
+                                    <i class="bi bi-droplet-half"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dual Layout split sections -->
+                <div class="row g-4">
+                    <!-- Left: Transfusion Logs -->
+                    <div class="col-12 col-xxl-7">
+                        <div class="data-panel shadow-sm border-0 bg-white h-100">
+                            <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+                                <div>
+                                    <h5 class="fw-bold text-dark m-0"><i class="bi bi-clock-history text-red me-2 text-danger"></i>রক্ত আদান-প্রদান রেজিস্ট্রি (Transfusion History)</h5>
+                                    <small class="text-muted">কে রক্ত দিল এবং কোন গর্ভবতী মাতা রক্ত গ্রহণ করলেন তার সম্পূর্ণ বিবরণী</small>
+                                </div>
+                                <button class="btn btn-danger rounded-pill px-4 btn-sm fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-add-blood-log">
+                                    <i class="bi bi-plus-circle me-1"></i> রক্তদান লগ করুন
+                                </button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table align-middle table-hover text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>রক্তগ্রহীতা (মাতা)</th>
+                                            <th>রক্তদাতা</th>
+                                            <th class="text-center">রক্তের গ্রুপ</th>
+                                            <th>তারিখ</th>
+                                            <th>হাসপাতাল / স্থান</th>
+                                            <th class="text-center">অবস্থা</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="blood-exchange-table-body">
+                                        <!-- Will be rendered dynamically via JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Active Donors Directory -->
+                    <div class="col-12 col-xxl-5">
+                        <div class="data-panel shadow-sm border-0 bg-white h-100">
+                            <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+                                <div>
+                                    <h5 class="fw-bold text-dark m-0"><i class="bi bi-person-heart text-red me-2 text-danger"></i>সক্রিয় রক্তদাতা ডিরেক্টরি (Donors Database)</h5>
+                                    <small class="text-muted">জরুরী মুহূর্তে যোগাযোগের জন্য প্রস্তুত এলাকার রক্তদাতাগণ</small>
+                                </div>
+                                <button class="btn btn-outline-danger rounded-pill px-4 btn-sm fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-add-donor">
+                                    <i class="bi bi-person-plus-fill me-1"></i> ডোনার যোগ করুন
+                                </button>
+                            </div>
+
+                            <!-- Search Filter bar -->
+                            <div class="row g-2 mb-3">
+                                <div class="col-sm-7 col-12">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                                        <input type="text" id="donor-search-input" class="form-control border-start-0" placeholder="নাম বা এলাকা দিয়ে খুঁজুন..." onkeyup="filterDonorTable()">
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-12">
+                                    <select id="donor-blood-filter" class="form-select" onchange="filterDonorTable()">
+                                        <option value="">সকল রক্তের গ্রুপ</option>
+                                        <option value="A+">A+ (এ পজিটিভ)</option>
+                                        <option value="A-">A- (এ নেগেটিভ)</option>
+                                        <option value="B+">B+ (বি পজিটিভ)</option>
+                                        <option value="B-">B- (বি নেগেটিভ)</option>
+                                        <option value="O+">O+ (ও পজিটিভ)</option>
+                                        <option value="O-">O- (ও নেগেটিভ)</option>
+                                        <option value="AB+">AB+ (এবি পজিটিভ)</option>
+                                        <option value="AB-">AB- (এবি নেগেটিভ)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+                                <table class="table align-middle table-hover text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>রক্তদাতা</th>
+                                            <th class="text-center">রক্তের গ্রুপ</th>
+                                            <th>এলাকা</th>
+                                            <th>যোগাযোগ</th>
+                                            <th class="text-center">অবস্থা</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="blood-donor-table-body">
+                                        <!-- Will be rendered dynamically via JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal: Log Blood Transfusion Transaction -->
+                <div class="modal fade" id="modal-add-blood-log" tabindex="-1" aria-labelledby="modalAddBloodLogLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+                            <div class="modal-header border-0 bg-red-subtle text-red p-4" style="border-radius: 16px 16px 0 0;">
+                                <h5 class="modal-title fw-bold text-danger" id="modalAddBloodLogLabel"><i class="bi bi-droplet-fill me-2"></i>রক্ত আদান-প্রদান রেকর্ড করুন</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form id="form-add-blood-log" onsubmit="handleAddBloodLog(event)">
+                                <div class="modal-body p-4">
+                                    <div class="mb-3">
+                                        <label for="log-recipient-select" class="form-label fw-bold text-dark">রক্তগ্রহীতা (গর্ভবতী মাতা) <span class="text-danger">*</span></label>
+                                        <select id="log-recipient-select" class="form-select" required onchange="handleRecipientSelectChange(this)">
+                                            <!-- Dynamically populated from mothersDB + option for Others -->
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- Visible if 'Others' is selected in Recipient -->
+                                    <div class="mb-3" id="log-custom-recipient-div" style="display: none;">
+                                        <label for="log-custom-recipient" class="form-label fw-bold text-dark">গ্রহীতার নাম ও বিবরণী (অন্যান্য)</label>
+                                        <input type="text" id="log-custom-recipient" class="form-control" placeholder="যেমন: রহিমা বেগম (বহিরাগত)">
+                                    </div>
+
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-sm-8 col-12">
+                                            <label for="log-donor-name" class="form-label fw-bold text-dark">রক্তদাতার নাম <span class="text-danger">*</span></label>
+                                            <input type="text" id="log-donor-name" class="form-control" placeholder="যেমন: রাশেদ হাসান" required>
+                                        </div>
+                                        <div class="col-sm-4 col-12">
+                                            <label for="log-blood-group" class="form-label fw-bold text-dark">রক্তের গ্রুপ <span class="text-danger">*</span></label>
+                                            <select id="log-blood-group" class="form-select" required>
+                                                <option value="">গ্রুপ...</option>
+                                                <option value="A+">A+</option>
+                                                <option value="A-">A-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="O+">O+</option>
+                                                <option value="O-">O-</option>
+                                                <option value="AB+">AB+</option>
+                                                <option value="AB-">AB-</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-sm-6 col-12">
+                                            <label for="log-date" class="form-label fw-bold text-dark">তারিখ <span class="text-danger">*</span></label>
+                                            <input type="date" id="log-date" class="form-control" required>
+                                        </div>
+                                        <div class="col-sm-6 col-12">
+                                            <label for="log-status" class="form-label fw-bold text-dark">অবস্থা <span class="text-danger">*</span></label>
+                                            <select id="log-status" class="form-select" required>
+                                                <option value="Completed">Completed (সম্পন্ন)</option>
+                                                <option value="Pending">Pending (অপেক্ষমান)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="log-location" class="form-label fw-bold text-dark">হাসপাতাল / রক্ত সঞ্চালনের স্থান <span class="text-danger">*</span></label>
+                                        <input type="text" id="log-location" class="form-control" placeholder="যেমন: ঢাকা মেডিকেল কলেজ হাসপাতাল" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer border-0 p-4 pt-0">
+                                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">বাতিল</button>
+                                    <button type="submit" class="btn btn-danger rounded-pill px-4">সংরক্ষণ করুন</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal: Register New Available Donor -->
+                <div class="modal fade" id="modal-add-donor" tabindex="-1" aria-labelledby="modalAddDonorLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+                            <div class="modal-header border-0 bg-red-subtle text-red p-4" style="border-radius: 16px 16px 0 0;">
+                                <h5 class="modal-title fw-bold text-danger" id="modalAddDonorLabel"><i class="bi bi-person-plus-fill me-2"></i>নতুন রক্তদাতা যুক্ত করুন</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form id="form-add-donor" onsubmit="handleAddDonor(event)">
+                                <div class="modal-body p-4">
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-sm-8 col-12">
+                                            <label for="donor-name" class="form-label fw-bold text-dark">রক্তদাতার নাম <span class="text-danger">*</span></label>
+                                            <input type="text" id="donor-name" class="form-control" placeholder="যেমন: শামীম রেজা" required>
+                                        </div>
+                                        <div class="col-sm-4 col-12">
+                                            <label for="donor-blood-group" class="form-label fw-bold text-dark">রক্তের গ্রুপ <span class="text-danger">*</span></label>
+                                            <select id="donor-blood-group" class="form-select" required>
+                                                <option value="">গ্রুপ...</option>
+                                                <option value="A+">A+</option>
+                                                <option value="A-">A-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="O+">O+</option>
+                                                <option value="O-">O-</option>
+                                                <option value="AB+">AB+</option>
+                                                <option value="AB-">AB-</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-sm-6 col-12">
+                                            <label for="donor-age" class="form-label fw-bold text-dark">বয়স <span class="text-danger">*</span></label>
+                                            <input type="number" id="donor-age" class="form-control" min="18" max="65" placeholder="যেমন: ২৮" required>
+                                        </div>
+                                        <div class="col-sm-6 col-12">
+                                            <label for="donor-mobile" class="form-label fw-bold text-dark">মোবাইল নম্বর <span class="text-danger">*</span></label>
+                                            <input type="tel" id="donor-mobile" class="form-control" placeholder="যেমন: 017xxxxxxxx" pattern="^01[3-9]\d{8}$" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="donor-area" class="form-label fw-bold text-dark">এলাকা / বর্তমান ঠিকানা <span class="text-danger">*</span></label>
+                                        <input type="text" id="donor-area" class="form-control" placeholder="যেমন: মিরপুর ১২, ঢাকা" required>
+                                    </div>
+
+                                    <div class="row g-3">
+                                        <div class="col-sm-6 col-12">
+                                            <label for="donor-last-date" class="form-label fw-bold text-dark">শেষ রক্তদানের তারিখ</label>
+                                            <input type="date" id="donor-last-date" class="form-control">
+                                        </div>
+                                        <div class="col-sm-6 col-12">
+                                            <label for="donor-status" class="form-label fw-bold text-dark">প্রস্তুত অবস্থা <span class="text-danger">*</span></label>
+                                            <select id="donor-status" class="form-select" required>
+                                                <option value="Available">Available (প্রস্তুত)</option>
+                                                <option value="Unavailable">Unavailable (অনুপস্থিত/অসুস্থ)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer border-0 p-4 pt-0">
+                                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">বাতিল</button>
+                                    <button type="submit" class="btn btn-danger rounded-pill px-4">যুক্ত করুন</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -3001,6 +3304,270 @@
         function saveMothersDatabase() {
             localStorage.setItem('nmhirs_mothers_db', JSON.stringify(mothersDB));
         }
+
+        // ================================================================
+        // BLOOD DONATION SYSTEM ENGINE
+        // ================================================================
+        
+        // --- Default Mock Donors Database ---
+        const defaultBloodDonors = [
+            { id: 'BD-101', name: 'রাশেদ হাসান', bloodGroup: 'O+', age: 28, mobile: '01812345678', area: 'মিরপুর, ঢাকা', lastDonation: '2026-02-15', status: 'Available' },
+            { id: 'BD-102', name: 'কামরুল ইসলাম', bloodGroup: 'B+', age: 32, mobile: '01712345679', area: 'উত্তরা, ঢাকা', lastDonation: '2026-03-01', status: 'Available' },
+            { id: 'BD-103', name: 'ফাতেমা ইয়াসমিন', bloodGroup: 'A+', age: 24, mobile: '01955443322', area: 'মোহাম্মদপুর, ঢাকা', lastDonation: '2026-01-10', status: 'Available' },
+            { id: 'BD-104', name: 'আরিফুর রহমান', bloodGroup: 'AB+', age: 29, mobile: '01511223344', area: 'ধানমন্ডি, ঢাকা', lastDonation: '2025-12-25', status: 'Available' },
+            { id: 'BD-105', name: 'সুজন চৌধুরী', bloodGroup: 'O-', age: 35, mobile: '01899887766', area: 'বাড্ডা, ঢাকা', lastDonation: '2026-04-05', status: 'Available' },
+            { id: 'BD-106', name: 'তানজিলা আক্তার', bloodGroup: 'B-', age: 27, mobile: '01799887755', area: 'খিলগাঁও, ঢাকা', lastDonation: '', status: 'Available' },
+            { id: 'BD-107', name: 'নাসির উদ্দিন', bloodGroup: 'A-', age: 31, mobile: '01655443311', area: 'যাত্রাবাড়ী, ঢাকা', lastDonation: '2026-02-28', status: 'Available' },
+            { id: 'BD-108', name: 'শরিফুল ইসলাম', bloodGroup: 'O+', age: 26, mobile: '01722334455', area: 'মিরপুর ১০, ঢাকা', lastDonation: '2026-05-10', status: 'Unavailable' }
+        ];
+
+        // --- Default Mock Transfusion History Log ---
+        const defaultBloodDonations = [
+            { id: 'TX-201', recipientId: 'NM-10031', recipientName: 'তাসনিয়া রহমান', donorName: 'রাশেদ হাসান', bloodGroup: 'O+', date: '2026-04-15', location: 'মিরপুর জেনারেল হাসপাতাল', status: 'Completed' },
+            { id: 'TX-202', recipientId: 'NM-10029', recipientName: 'সালমা সুলতানা', donorName: 'কামরুল ইসলাম', bloodGroup: 'B+', date: '2026-05-01', location: 'চট্টগ্রাম মেডিকেল কলেজ হাসপাতাল', status: 'Completed' },
+            { id: 'TX-203', recipientId: 'NM-10030', recipientName: 'ফারজানা হক', donorName: 'সুজন চৌধুরী', bloodGroup: 'O-', date: '2026-05-20', location: 'গাজীপুর সদর হাসপাতাল', status: 'Pending' }
+        ];
+
+        let bloodDonorsDB = [];
+        let bloodDonationsDB = [];
+
+        function loadBloodDonationDatabase() {
+            const storedDonors = localStorage.getItem('nmhirs_blood_donors');
+            const storedDonations = localStorage.getItem('nmhirs_blood_donations');
+            
+            if (storedDonors) {
+                try { bloodDonorsDB = JSON.parse(storedDonors); } catch(e) { bloodDonorsDB = JSON.parse(JSON.stringify(defaultBloodDonors)); }
+            } else {
+                bloodDonorsDB = JSON.parse(JSON.stringify(defaultBloodDonors));
+            }
+
+            if (storedDonations) {
+                try { bloodDonationsDB = JSON.parse(storedDonations); } catch(e) { bloodDonationsDB = JSON.parse(JSON.stringify(defaultBloodDonations)); }
+            } else {
+                bloodDonationsDB = JSON.parse(JSON.stringify(defaultBloodDonations));
+            }
+        }
+
+        function saveBloodDonationDatabase() {
+            localStorage.setItem('nmhirs_blood_donors', JSON.stringify(bloodDonorsDB));
+            localStorage.setItem('nmhirs_blood_donations', JSON.stringify(bloodDonationsDB));
+        }
+
+        // Render functions
+        function renderBloodExchangeTable() {
+            const tbody = document.getElementById('blood-exchange-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            bloodDonationsDB.forEach(log => {
+                let statusBadgeClass = 'blood-badge-completed';
+                let statusText = 'Completed (সম্পন্ন)';
+                if (log.status === 'Pending') {
+                    statusBadgeClass = 'blood-badge-pending';
+                    statusText = 'Pending (অপেক্ষমান)';
+                } else if (log.status === 'Critical') {
+                    statusBadgeClass = 'blood-badge-critical';
+                    statusText = 'Critical (জরুরী)';
+                }
+
+                let recipientText = log.recipientName;
+                if (log.recipientId && log.recipientId !== 'Other') {
+                    recipientText = `<strong>${log.recipientName}</strong> <span class="badge bg-light text-muted border ms-1" style="font-size:0.7rem;">ID: ${log.recipientId}</span>`;
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${recipientText}</td>
+                    <td><span class="fw-semibold">${log.donorName}</span></td>
+                    <td class="text-center"><span class="blood-group-tag">${log.bloodGroup}</span></td>
+                    <td class="en-text">${toBengaliNumber(log.date)}</td>
+                    <td><i class="bi bi-hospital text-danger me-1"></i>${log.location}</td>
+                    <td class="text-center"><span class="blood-badge ${statusBadgeClass}"><i class="bi bi-circle-fill" style="font-size: 6px;"></i> ${statusText}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderBloodDonorTable(donorsToRender = bloodDonorsDB) {
+            const tbody = document.getElementById('blood-donor-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            donorsToRender.forEach(donor => {
+                let statusBadge = donor.status === 'Available' 
+                    ? '<span class="badge bg-success-subtle text-success px-2 py-1 rounded-pill fw-semibold">Available</span>'
+                    : '<span class="badge bg-secondary-subtle text-muted px-2 py-1 rounded-pill fw-semibold">Busy</span>';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <div class="fw-semibold text-dark">${donor.name}</div>
+                        <div class="small text-muted" style="font-size:0.75rem;">বয়স: ${toBengaliNumber(donor.age)} বছর</div>
+                    </td>
+                    <td class="text-center"><span class="blood-group-tag">${donor.bloodGroup}</span></td>
+                    <td><i class="bi bi-geo-alt text-danger me-1"></i>${donor.area}</td>
+                    <td class="en-text"><i class="bi bi-telephone-fill text-muted me-1"></i>${donor.mobile}</td>
+                    <td class="text-center">${statusBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterDonorTable() {
+            const query = document.getElementById('donor-search-input').value.toLowerCase();
+            const groupFilter = document.getElementById('donor-blood-filter').value;
+
+            const filtered = bloodDonorsDB.filter(donor => {
+                const matchesSearch = donor.name.toLowerCase().includes(query) || donor.area.toLowerCase().includes(query);
+                const matchesGroup = groupFilter === '' || donor.bloodGroup === groupFilter;
+                return matchesSearch && matchesGroup;
+            });
+
+            renderBloodDonorTable(filtered);
+        }
+
+        function populateRecipientSelect() {
+            const select = document.getElementById('log-recipient-select');
+            if (!select) return;
+            select.innerHTML = '<option value="">গর্ভবতী মাতা নির্বাচন করুন...</option>';
+
+            mothersDB.forEach(m => {
+                const option = document.createElement('option');
+                option.value = m.id;
+                option.text = `${m.name} (ID: ${m.id} | রক্ত: ${m.bloodGroup})`;
+                select.appendChild(option);
+            });
+
+            // Option for others
+            const otherOpt = document.createElement('option');
+            otherOpt.value = 'Other';
+            otherOpt.text = 'অন্যান্য / বহিরাগত রোগী';
+            select.appendChild(otherOpt);
+        }
+
+        function handleRecipientSelectChange(select) {
+            const div = document.getElementById('log-custom-recipient-div');
+            if (!div) return;
+            if (select.value === 'Other') {
+                div.style.display = 'block';
+                document.getElementById('log-custom-recipient').required = true;
+            } else {
+                div.style.display = 'none';
+                document.getElementById('log-custom-recipient').required = false;
+            }
+        }
+
+        function handleAddBloodLog(event) {
+            event.preventDefault();
+            
+            const recipientId = document.getElementById('log-recipient-select').value;
+            let recipientName = '';
+            
+            if (recipientId === 'Other') {
+                recipientName = document.getElementById('log-custom-recipient').value;
+            } else {
+                const mother = getMotherById(recipientId);
+                recipientName = mother ? mother.name : '';
+            }
+
+            const donorName = document.getElementById('log-donor-name').value;
+            const bloodGroup = document.getElementById('log-blood-group').value;
+            const date = document.getElementById('log-date').value;
+            const status = document.getElementById('log-status').value;
+            const location = document.getElementById('log-location').value;
+
+            const newLog = {
+                id: 'TX-' + (200 + bloodDonationsDB.length + 1),
+                recipientId,
+                recipientName,
+                donorName,
+                bloodGroup,
+                date,
+                location,
+                status
+            };
+
+            bloodDonationsDB.unshift(newLog);
+            saveBloodDonationDatabase();
+            
+            // If the donor is from our registry list, update their last donation date
+            const matchedDonor = bloodDonorsDB.find(d => d.name === donorName);
+            if (matchedDonor) {
+                matchedDonor.lastDonation = date;
+                saveBloodDonationDatabase();
+            }
+
+            // Close Modal
+            const modalEl = document.getElementById('modal-add-blood-log');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+
+            // Refresh tables & KPIs
+            renderBloodExchangeTable();
+            renderBloodDonorTable();
+            updateBloodKPIs();
+
+            // Reset form
+            document.getElementById('form-add-blood-log').reset();
+            document.getElementById('log-custom-recipient-div').style.display = 'none';
+
+            alert('✅ রক্তদান আদান-প্রদান রেকর্ড সফলভাবে সংরক্ষণ করা হয়েছে!');
+        }
+
+        function handleAddDonor(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('donor-name').value;
+            const bloodGroup = document.getElementById('donor-blood-group').value;
+            const age = parseInt(document.getElementById('donor-age').value);
+            const mobile = document.getElementById('donor-mobile').value;
+            const area = document.getElementById('donor-area').value;
+            const lastDonation = document.getElementById('donor-last-date').value || '';
+            const status = document.getElementById('donor-status').value;
+
+            const newDonor = {
+                id: 'BD-' + (100 + bloodDonorsDB.length + 1),
+                name,
+                bloodGroup,
+                age,
+                mobile,
+                area,
+                lastDonation,
+                status
+            };
+
+            bloodDonorsDB.push(newDonor);
+            saveBloodDonationDatabase();
+
+            // Close Modal
+            const modalEl = document.getElementById('modal-add-donor');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+
+            // Refresh tables & KPIs
+            renderBloodDonorTable();
+            updateBloodKPIs();
+
+            // Reset form
+            document.getElementById('form-add-donor').reset();
+
+            alert('✅ নতুন রক্তদাতা সফলভাবে তালিকাভুক্ত করা হয়েছে!');
+        }
+
+        function updateBloodKPIs() {
+            // Count total donors
+            const totalDonors = bloodDonorsDB.length;
+            document.getElementById('blood-total-donors').textContent = toBengaliNumber(totalDonors) + ' জন';
+
+            // Count successful transfusions (status Completed)
+            const completedCount = bloodDonationsDB.filter(log => log.status === 'Completed').length;
+            document.getElementById('blood-total-transfusions').textContent = toBengaliNumber(completedCount) + ' বার';
+
+            // Count pending urgent requests (status Pending)
+            const pendingCount = bloodDonationsDB.filter(log => log.status === 'Pending').length;
+            document.getElementById('blood-urgent-requests').textContent = toBengaliNumber(pendingCount) + ' জন';
+        }
+
 
         function getMotherById(id) {
             return mothersDB.find(m => m.id === id);
@@ -3615,7 +4182,7 @@
             toggleRegistryView('list');
         }
 
-        // --- Extend switchMenu to load service card data ---
+        // --- Extend switchMenu to load service card data & blood donation data ---
         const _originalSwitchMenu = switchMenu;
         // Override already defined switchMenu - augment it
         (function() {
@@ -3628,6 +4195,12 @@
                 if (sectionId === 'section-registry') {
                     renderRegistryTable();
                 }
+                if (sectionId === 'section-blood') {
+                    renderBloodExchangeTable();
+                    renderBloodDonorTable();
+                    updateBloodKPIs();
+                    populateRecipientSelect();
+                }
             };
         })();
 
@@ -3635,6 +4208,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadMothersDatabase();
             renderRegistryTable();
+            
+            // Initialize Blood Donation module
+            loadBloodDonationDatabase();
+            renderBloodExchangeTable();
+            renderBloodDonorTable();
+            updateBloodKPIs();
+            populateRecipientSelect();
         });
 
     </script>

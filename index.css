@@ -5,8 +5,8 @@
     --primary-teal: #0d9488;
     --bg-body: #f8fafc;
     --border-color: #e2e8f0;
-    --text-dark: #475569;
-    --text-muted: #64748b;
+    --text-dark: #1e293b;
+    --text-muted: #475569;
     --font-bn: 'Noto Sans Bengali', sans-serif;
     --font-en: 'Poppins', sans-serif;
     --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
@@ -42,6 +42,18 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .en-text { font-family: var(--font-en); }
+
+/* Purple Badge and UI Utility Classes */
+.text-purple {
+    color: var(--primary-purple) !important;
+}
+.bg-purple-subtle {
+    background-color: #f3ebff !important;
+}
+.border-purple-subtle {
+    border-color: #ddd6fe !important;
+}
+
 
 /* Custom Vaccine Component Styling */
 .btn-purple {
@@ -897,3 +909,72 @@ h1, h2, h3, h4, h5, h6,
     font-size: 0.8rem;
     margin-right: 10px;
 }
+
+/* Blood Donation Module Styling */
+.blood-kpi-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
+}
+.blood-kpi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(225, 29, 72, 0.06);
+    border-color: #fecdd3;
+}
+.blood-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+.blood-badge {
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.blood-badge-completed {
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+.blood-badge-pending {
+    background-color: #fff7ed;
+    color: #9a3412;
+    border: 1px solid #fed7aa;
+}
+.blood-badge-critical {
+    background-color: #fff1f2;
+    color: #9f1239;
+    border: 1px solid #fecdd3;
+}
+.blood-group-tag {
+    background-color: #ffe4e6;
+    color: #e11d48;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    border: 1px solid #fecdd3;
+    text-align: center;
+}
+.bg-red-subtle {
+    background-color: #fff1f2 !important;
+}
+.text-red {
+    color: #e11d48 !important;
+}
+.border-red-subtle {
+    border-color: #fecdd3 !important;
+}
+
