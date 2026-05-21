@@ -60,16 +60,17 @@
             <li class="nav-item"><a class="nav-link" id="nav-profile" onclick="switchMenu('section-profile', this)"><i class="bi bi-person-lines-fill"></i> প্রোফাইল সেটআপ</a></li>
             
             <!-- NMHIRS Enterprise Features (Doc & Image 3) -->
-            <div class="nav-section-title mt-4">সিস্টেম ও মনিটরিং (NMHIRS)</div>
+            <div class="nav-section-title mt-4">সিস্টেম ও মনিটরিং</div>
             <li class="nav-item"><a class="nav-link" id="nav-national" onclick="switchMenu('section-national', this)"><i class="bi bi-speedometer2"></i> জাতীয় ড্যাশবোর্ড</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-registry" onclick="switchMenu('section-registry', this)"><i class="bi bi-card-list"></i> মাতৃ নিবন্ধন</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-anc" onclick="switchMenu('section-anc', this)"><i class="bi bi-clipboard-pulse"></i> ANC ট্র্যাকিং</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-risk" onclick="switchMenu('section-risk', this)"><i class="bi bi-exclamation-triangle"></i> রিস্ক ও অ্যালার্ট</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-referral" onclick="switchMenu('section-referral', this)"><i class="bi bi-ambulance"></i> রেফারেল ও ইমার্জেন্সি</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-facility" onclick="switchMenu('section-facility', this)"><i class="bi bi-hospital"></i> হাসপাতাল মডিউল</a></li>
-            <li class="nav-item"><a class="nav-link" id="nav-blood-donor-add" onclick="switchMenu('section-blood-donor-add', this)"><i class="bi bi-person-plus-fill text-danger"></i> রক্তদাতা যোগ</a></li>
-            <li class="nav-item"><a class="nav-link" id="nav-blood-donor-list" onclick="switchMenu('section-blood-donor-list', this)"><i class="bi bi-people-fill text-danger"></i> রক্তদাতা তালিকা</a></li>
-            <li class="nav-item"><a class="nav-link" id="nav-blood-recipient-list" onclick="switchMenu('section-blood-recipient-list', this)"><i class="bi bi-droplet-half text-danger"></i> রক্ত গ্রহীতা তালিকা</a></li>
+            <div class="nav-section-title">রক্ত ব্যবস্থাপনা</div>
+            <li class="nav-item"><a class="nav-link" id="nav-blood-donor-add" onclick="switchMenu('section-blood-donor-add', this)"><i class="bi bi-person-plus-fill"></i> রক্তদাতা যোগ</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-blood-donor-list" onclick="switchMenu('section-blood-donor-list', this)"><i class="bi bi-people-fill"></i> রক্তদাতা তালিকা</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-blood-recipient-list" onclick="switchMenu('section-blood-recipient-list', this)"><i class="bi bi-droplet-half"></i> রক্ত গ্রহীতা তালিকা</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-rbac" onclick="switchMenu('section-rbac', this)"><i class="bi bi-diagram-3-fill"></i> স্টেকহোল্ডার (RBAC)</a></li>
         </ul>
         <div class="sidebar-footer">
@@ -120,8 +121,8 @@
                 <div class="data-panel mb-4 p-0 overflow-hidden border-0 shadow-sm" style="background: linear-gradient(135deg, var(--primary-purple), #7c3aed); color: white;">
                     <div class="p-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
                         <div>
-                            <h3 class="fw-bold mb-1"><i class="bi bi-activity me-2"></i>একীভূত স্বাস্থ্য ড্যাশবোর্ড (Integrated Dashboard)</h3>
-                            <p class="mb-0 opacity-90 text-white-50">মাতৃত্ব এবং NMHIRS এন্টারপ্রাইজ সিস্টেমের রিয়েল-টাইম ওভারভিউ ও এআই বিশ্লেষণ</p>
+                            <h3 class="fw-bold mb-1"><i class="bi bi-activity me-2"></i>প্রধান ড্যাশবোর্ড</h3>
+                            <p class="mb-0 opacity-90 text-white-50">গর্ভবতীর আয়না — মাতৃ ও শিশু স্বাস্থ্য সেবার সারসংক্ষেপ</p>
                         </div>
                         <div class="px-3 py-2 rounded-pill d-flex align-items-center gap-2" style="background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
                             <span class="pulse-dot"></span>
@@ -183,7 +184,7 @@
                     <!-- Chart 1: Registration Trend (Line) -->
                     <div class="col-lg-6 col-xl-6">
                         <div class="data-panel h-100">
-                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-graph-up text-primary me-2"></i>নিবন্ধনের মাসিক প্রবণতা (Monthly Registration Trend)</h5>
+                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-graph-up text-primary me-2"></i>মাসিক নিবন্ধন প্রবণতা</h5>
                             <div style="position: relative; height: 260px;">
                                 <canvas id="chart-registration-trend"></canvas>
                             </div>
@@ -193,7 +194,7 @@
                     <!-- Chart 2: Risk Levels (Doughnut) -->
                     <div class="col-lg-6 col-xl-6">
                         <div class="data-panel h-100">
-                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-pie-chart text-danger me-2"></i>গর্ভবতী নারীদের ঝুঁকির মাত্রা (Pregnancy Risk Distribution)</h5>
+                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-pie-chart text-primary me-2"></i>ঝুঁকির মাত্রা বিতরণ</h5>
                             <div style="position: relative; height: 260px; display: flex; justify-content: center; align-items: center;">
                                 <canvas id="chart-risk-levels"></canvas>
                             </div>
@@ -205,7 +206,7 @@
                     <!-- Chart 3: ANC Compliance (Bar) -->
                     <div class="col-lg-6 col-xl-6">
                         <div class="data-panel h-100">
-                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-bar-chart-steps text-teal me-2"></i>ANC কমপ্লায়েন্স এবং মিসড ভিজিট (ANC Compliance vs Missed Visits)</h5>
+                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-bar-chart-steps text-teal me-2"></i>ANC কমপ্লায়েন্স ও মিসড ভিজিট</h5>
                             <div style="position: relative; height: 260px;">
                                 <canvas id="chart-anc-compliance"></canvas>
                             </div>
@@ -215,7 +216,7 @@
                     <!-- Chart 4: Delays Prediction (Radar or Polar Area) -->
                     <div class="col-lg-6 col-xl-6">
                         <div class="data-panel h-100">
-                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-hourglass-bottom text-purple me-2"></i>প্রসবকালীন ৩টি বিলম্বের কারণ (Three Delays Distribution)</h5>
+                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-hourglass-bottom text-purple me-2"></i>প্রসবকালীন বিলম্বের কারণ</h5>
                             <div style="position: relative; height: 260px; display: flex; justify-content: center; align-items: center;">
                                 <canvas id="chart-delays-prediction"></canvas>
                             </div>
@@ -1058,10 +1059,10 @@
             <!-- NEW: MATERNAL CLINICAL SERVICE CARD (Image 1)  -->
             <!-- ============================================== -->
             <div id="section-service-card" class="dashboard-section" style="display: none;">
-                <div class="sc-page-toolbar">
+                <div class="module-page-header sc-page-toolbar">
                     <div>
-                        <h4 class="fw-bold m-0 text-purple"><i class="bi bi-card-heading me-2"></i>গর্ভকালীন সেবা কার্ড</h4>
-                        <p class="text-muted small m-0 mt-1">মাতার ক্লিনিক্যাল রেকর্ড — ইতিহাস, টিকা, প্রসব ও PNC</p>
+                        <h4 class="module-page-title m-0"><i class="bi bi-card-heading me-2"></i>গর্ভকালীন সেবা কার্ড</h4>
+                        <p class="module-page-desc m-0 mt-1">মাতার ক্লিনিক্যাল রেকর্ড — ইতিহাস, টিকা, প্রসব ও প্রসবোত্তর যত্ন</p>
                     </div>
                     <button type="button" class="btn btn-outline-purple btn-sm rounded-pill" onclick="switchMenu('section-registry', document.getElementById('nav-registry'))">
                         <i class="bi bi-arrow-left me-1"></i> মাতৃ নিবন্ধন
@@ -1093,19 +1094,22 @@
                         </div>
                     </div>
 
-                    <!-- Service Card Tabs -->
-                    <div class="service-card-tabs">
+                    <div class="service-card-tabs tab-pill-group">
                         <button type="button" class="service-card-tab active" id="sc-tab-btn-history" onclick="switchScTab('sc-tab-history', this)">
-                            <i class="bi bi-journal-medical me-1"></i> ১. ইতিহাস ও সাধারণ তথ্য
+                            <span class="sc-tab-num">১</span>
+                            <span class="sc-tab-label">গর্ভধারণ ইতিহাস</span>
                         </button>
                         <button type="button" class="service-card-tab" id="sc-tab-btn-vaccine" onclick="switchScTab('sc-tab-vaccine', this)">
-                            <i class="bi bi-shield-plus me-1"></i> ২. প্রতিষেধক টিকা ও পরীক্ষা
+                            <span class="sc-tab-num">২</span>
+                            <span class="sc-tab-label">টিকা ও পরীক্ষা</span>
                         </button>
                         <button type="button" class="service-card-tab" id="sc-tab-btn-delivery" onclick="switchScTab('sc-tab-delivery', this)">
-                            <i class="bi bi-clipboard-pulse me-1"></i> ৩. প্রসব পরিকল্পনা ও তথ্যাবলী
+                            <span class="sc-tab-num">৩</span>
+                            <span class="sc-tab-label">প্রসব পরিকল্পনা</span>
                         </button>
                         <button type="button" class="service-card-tab" id="sc-tab-btn-pnc" onclick="switchScTab('sc-tab-pnc', this)">
-                            <i class="bi bi-heart-pulse me-1"></i> ৪. প্রসবোত্তর সেবা (PNC)
+                            <span class="sc-tab-num">৪</span>
+                            <span class="sc-tab-label">প্রসবোত্তর যত্ন</span>
                         </button>
                     </div>
 
@@ -1146,7 +1150,7 @@
                                 <div class="med-history-grid">
                                     <!-- cardiovascular -->
                                     <div class="med-category-card">
-                                        <div class="med-category-title"><i class="bi bi-heart-pulse-fill text-danger me-2"></i>হৃদরোগ ও রক্ত সংবহনতন্ত্র</div>
+                                        <div class="med-category-title"><i class="bi bi-heart-pulse-fill text-pink me-2"></i>হৃদরোগ ও রক্ত সংবহনতন্ত্র</div>
                                         <div class="med-item">
                                             <span class="med-item-label">উচ্চ রক্তচাপ (High Blood Pressure)</span>
                                             <div class="toggle-yn-container" data-med-key="high_bp">
@@ -1464,10 +1468,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="d-flex justify-content-start gap-4 mt-3 small text-muted">
-                                <div><span class="badge bg-light text-muted border border-light-subtle me-1">পরীক্ষা হয়নি</span> - চেক করা হয়নি বা কোনো ডেটা নেই</div>
-                                <div><span class="badge bg-success-subtle text-success border border-success-subtle me-1">স্বাভাবিক</span> - লক্ষণটি স্বাভাবিক অবস্থায় রয়েছে</div>
-                                <div><span class="badge bg-danger-subtle text-danger border border-danger-subtle me-1">অস্বাভাবিক</span> - লক্ষণটি মারাত্মক বা ঝুঁকিপূর্ণ</div>
+                            <div class="sc-legend-row">
+                                <span class="sc-legend-item"><span class="sc-legend-dot legend-none"></span> পরীক্ষা হয়নি</span>
+                                <span class="sc-legend-item"><span class="sc-legend-dot legend-ok"></span> স্বাভাবিক</span>
+                                <span class="sc-legend-item"><span class="sc-legend-dot legend-risk"></span> ঝুঁকিপূর্ণ</span>
                             </div>
                             </div>
                         </div>
@@ -1493,8 +1497,8 @@
             <div id="section-national" class="dashboard-section">
                 <!-- Premium Title -->
                 <div class="mb-4">
-                    <h3 class="fw-bold text-purple mb-1"><i class="bi bi-grid-3x3-gap-fill me-2"></i>জাতীয় মাতৃস্বাস্থ্য ওভারভিউ</h3>
-                    <p class="text-muted m-0">রিয়েল-টাইম ডাটা ট্র্যাকিং এবং এআই-চালিত ইন্টেলিজেন্স ড্যাশবোর্ড</p>
+                    <h3 class="module-page-title mb-1"><i class="bi bi-grid-3x3-gap-fill me-2"></i>জাতীয় মাতৃস্বাস্থ্য ওভারভিউ</h3>
+                    <p class="module-page-desc m-0">জেলা ও উপজেলা পর্যায়ের মাতৃস্বাস্থ্য সূচক ও পরিসংখ্যান</p>
                 </div>
 
                 <!-- 4 Premium KPI Cards in a row -->
@@ -1646,18 +1650,16 @@
                 <div class="data-panel mb-4">
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                         <div>
-                            <h4 class="fw-bold m-0 text-purple"><i class="bi bi-person-hearts me-2"></i>মাতৃ নিবন্ধন ও ট্র্যাকিং মডিউল</h4>
-                            <p class="text-muted small m-0 mt-1">জাতীয় মাতৃস্বাস্থ্য ডাটাবেস এন্ট্রি, প্রোফাইল কার্ড এবং এআই মনিটরিং</p>
+                            <h4 class="module-page-title m-0"><i class="bi bi-person-hearts me-2"></i>মাতৃ নিবন্ধন</h4>
+                            <p class="module-page-desc m-0 mt-1">গর্ভবতী মায়ের তথ্য নিবন্ধন, তালিকা ও ট্র্যাকিং</p>
                         </div>
-                        <div>
-                            <div class="service-card-tabs" style="border: 1px solid var(--border-color); border-radius: 12px; background: #fff; padding: 4px;">
-                                <button type="button" class="service-card-tab active" id="btn-registry-list" onclick="toggleRegistryView('list')" style="padding: 8px 16px; border-radius: 8px; border: none; font-size: 0.85rem;">
-                                    <i class="bi bi-card-list me-1"></i> নিবন্ধিত মায়েদের তালিকা
+                        <div class="tab-pill-group tab-pill-group--compact">
+                                <button type="button" class="service-card-tab active" id="btn-registry-list" onclick="toggleRegistryView('list')">
+                                    <i class="bi bi-card-list me-1"></i> নিবন্ধিত তালিকা
                                 </button>
-                                <button type="button" class="service-card-tab" id="btn-registry-new" onclick="toggleRegistryView('new')" style="padding: 8px 16px; border-radius: 8px; border: none; font-size: 0.85rem;">
-                                    <i class="bi bi-person-plus-fill me-1"></i> নতুন নিবন্ধন ফরম
+                                <button type="button" class="service-card-tab" id="btn-registry-new" onclick="toggleRegistryView('new')">
+                                    <i class="bi bi-person-plus-fill me-1"></i> নতুন নিবন্ধন
                                 </button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -1721,7 +1723,7 @@
 
                             <div class="row mch-form-row">
                                 <div class="col-md-6 mch-field">
-                                    <label class="mch-label">গর্ভবতীর নাম <span class="text-danger">*</span></label>
+                                    <label class="mch-label">গর্ভবতীর নাম <span class="req">*</span></label>
                                     <input type="text" id="reg-name" class="form-control mch-input" required>
                                 </div>
                                 <div class="col-md-6 mch-field">
@@ -1760,13 +1762,13 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6 mch-field">
-                                    <label class="mch-label">গর্ভবতীর মোবাইল নম্বর <span class="text-danger">*</span></label>
+                                    <label class="mch-label">গর্ভবতীর মোবাইল নম্বর <span class="req">*</span></label>
                                     <input type="tel" id="reg-mobile" class="form-control mch-input" required>
                                 </div>
                             </div>
                             <div class="row mch-form-row">
                                 <div class="col-md-6 mch-field">
-                                    <label class="mch-label">গর্ভবতীর বয়স <span class="text-danger">*</span></label>
+                                    <label class="mch-label">গর্ভবতীর বয়স <span class="req">*</span></label>
                                     <input type="number" id="reg-age" class="form-control mch-input" min="15" max="50" required>
                                 </div>
                                 <div class="col-md-6 mch-field">
@@ -1780,7 +1782,7 @@
                                     <input type="number" id="reg-weight" class="form-control mch-input" step="0.1">
                                 </div>
                                 <div class="col-md-6 mch-field">
-                                    <label class="mch-label">গর্ভবতীর রক্তের গ্রুপ <span class="text-danger">*</span></label>
+                                    <label class="mch-label">গর্ভবতীর রক্তের গ্রুপ <span class="req">*</span></label>
                                     <select id="reg-blood-group" class="form-select mch-input" required>
                                         <option value="">নির্বাচন করুন</option>
                                         <option value="A+">A+</option><option value="A-">A-</option>
@@ -1802,7 +1804,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6 mch-field">
-                                    <label class="mch-label">স্বামীর নাম <span class="text-danger">*</span></label>
+                                    <label class="mch-label">স্বামীর নাম <span class="req">*</span></label>
                                     <input type="text" id="reg-husband-name" class="form-control mch-input" required>
                                 </div>
                             </div>
@@ -1891,7 +1893,7 @@
                             </div>
                             <div class="row mch-form-row">
                                 <div class="col-md-6 mch-field">
-                                    <label class="mch-label">কত তম গর্ভধারণ <span class="text-danger">*</span></label>
+                                    <label class="mch-label">কত তম গর্ভধারণ <span class="req">*</span></label>
                                     <input type="number" id="reg-gravida" class="form-control mch-input" min="1" required>
                                 </div>
                                 <div class="col-md-6 mch-field">
@@ -1948,7 +1950,7 @@
                             </div>
                             <div class="row mch-form-row">
                                 <div class="col-md-6 mch-field">
-                                    <label class="mch-label">LMP (শেষ মাসিক) <span class="text-danger">*</span></label>
+                                    <label class="mch-label">LMP (শেষ মাসিক) <span class="req">*</span></label>
                                     <input type="date" id="reg-lmp" class="form-control mch-input font-en" onchange="calculateEDDFromLMP()" required>
                                 </div>
                                 <div class="col-md-6 mch-field">
@@ -2026,7 +2028,7 @@
                     <div class="col-lg-4"><div class="data-panel text-center border-warning"><h1 class="display-4 fw-bold text-warning en-text mb-0">12,450</h1><p class="text-muted fw-bold">মিসড ভিজিট (অ্যালার্ট)</p></div></div>
                 </div>
                 <div class="data-panel">
-                    <h5 class="fw-bold mb-4 text-purple">ANC ভিজিট শিডিউল ও ট্র্যাকিং</h5>
+                    <h5 class="module-page-title mb-4">ANC ভিজিট শিডিউল ও ট্র্যাকিং</h5>
                     <div class="table-responsive">
                         <table class="table table-custom">
                             <thead><tr><th>ID & নাম</th><th>ভিজিট নং</th><th>ব্লাড প্রেসার</th><th>হিমোগ্লোবিন</th><th>স্ট্যাটাস</th></tr></thead>
@@ -2044,7 +2046,7 @@
             <!-- ============================================== -->
             <div id="section-risk" class="dashboard-section">
                 <div class="data-panel">
-                    <h5 class="fw-bold mb-4 text-danger"><i class="bi bi-shield-exclamation me-2"></i> ক্রিটিক্যাল হাই-রিস্ক অ্যালার্ট (লাইভ)</h5>
+                    <h5 class="module-page-title mb-4"><i class="bi bi-shield-exclamation me-2"></i>ঝুঁকিপূর্ণ গর্ভবতী — জরুরি অ্যালার্ট</h5>
                     <div class="table-responsive">
                         <table class="table table-custom">
                             <thead><tr><th>মাতার নাম ও আইডি</th><th>রিস্ক ফ্যাক্টর (AI Detected)</th><th>অবস্থান</th><th>স্ট্যাটাস</th></tr></thead>
@@ -2109,10 +2111,9 @@
             <div id="section-rbac" class="dashboard-section">
                 <!-- Main Header Title matching the poster -->
                 <div class="mb-5 text-center">
-                    <h2 class="fw-bold text-purple mb-2" style="font-size: 1.8rem; color: var(--primary-purple);"><i class="bi bi-diagram-3-fill me-2"></i>গর্ভবতী নারী থেকে শিশুর জন্ম পর্যন্ত সহায়তা</h2>
-                    <h5 class="text-danger fw-semibold mb-3">সাপোর্ট মোবাইল অ্যাপ – সম্পূর্ণ ইকোসিস্টেম ও স্টেকহোল্ডারস ওভারভিউ</h5>
-                    <p class="text-muted mx-auto" style="max-width: 800px; font-size: 0.9rem;">
-                        পরিকল্পনা থেকে প্রসব পরবর্তী সময় এবং শিশুর স্বাস্থ্যসেবা পর্যন্ত প্রতিটি ধাপে নারীদের পাশে থাকবে আমাদের একীভূত ডিজিটাল প্ল্যাটফর্ম – যা যুক্ত থাকবে বিভিন্ন স্টেকহোল্ডার, ওডিবিসি/আরএবিসি রোল, কমিউনিটি সেবা ও জাতীয় সিস্টেমের সাথে।
+                    <h2 class="module-page-title mb-2 justify-content-center" style="font-size: 1.5rem;"><i class="bi bi-diagram-3-fill me-2"></i>সেবা ইকোসিস্টেম ও স্টেকহোল্ডার</h2>
+                    <p class="module-page-desc mx-auto text-center" style="max-width: 720px;">
+                        গর্ভবতী মা, স্বাস্থ্যকর্মী, কমিউনিটি ক্লিনিক ও হাসপাতাল — সকল স্তরের সেবা সমন্বয়।
                     </p>
                 </div>
 
@@ -2590,19 +2591,19 @@
             <!-- BLOOD DONOR ADD                                -->
             <!-- ============================================== -->
             <div id="section-blood-donor-add" class="dashboard-section" style="display: none;">
-                <div class="data-panel mb-4">
-                    <h4 class="fw-bold text-danger m-0"><i class="bi bi-person-plus-fill me-2"></i>রক্তদাতা যোগ করুন</h4>
-                    <p class="text-muted small m-0 mt-1">নতুন রক্তদাতার তথ্য সংরক্ষণ করুন</p>
+                <div class="module-page-header mb-4">
+                    <h4 class="module-page-title m-0"><i class="bi bi-person-plus-fill me-2"></i>রক্তদাতা যোগ</h4>
+                    <p class="module-page-desc m-0 mt-1">নতুন রক্তদাতার তথ্য নিবন্ধন করুন</p>
                 </div>
                 <div class="data-panel">
                     <form id="form-add-donor" onsubmit="handleAddDonor(event)">
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label for="donor-name" class="form-label fw-bold">রক্তদাতার নাম <span class="text-danger">*</span></label>
+                                <label for="donor-name" class="form-label fw-bold">রক্তদাতার নাম <span class="req">*</span></label>
                                 <input type="text" id="donor-name" class="form-control" required>
                             </div>
                             <div class="col-md-3">
-                                <label for="donor-blood-group" class="form-label fw-bold">রক্তের গ্রুপ <span class="text-danger">*</span></label>
+                                <label for="donor-blood-group" class="form-label fw-bold">রক্তের গ্রুপ <span class="req">*</span></label>
                                 <select id="donor-blood-group" class="form-select" required>
                                     <option value="">নির্বাচন...</option>
                                     <option value="A+">A+</option><option value="A-">A-</option>
@@ -2612,17 +2613,17 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <label for="donor-age" class="form-label fw-bold">বয়স <span class="text-danger">*</span></label>
+                                <label for="donor-age" class="form-label fw-bold">বয়স <span class="req">*</span></label>
                                 <input type="number" id="donor-age" class="form-control" min="18" max="65" required>
                             </div>
                         </div>
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label for="donor-mobile" class="form-label fw-bold">মোবাইল নম্বর <span class="text-danger">*</span></label>
+                                <label for="donor-mobile" class="form-label fw-bold">মোবাইল নম্বর <span class="req">*</span></label>
                                 <input type="tel" id="donor-mobile" class="form-control" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="donor-area" class="form-label fw-bold">এলাকা <span class="text-danger">*</span></label>
+                                <label for="donor-area" class="form-label fw-bold">এলাকা <span class="req">*</span></label>
                                 <input type="text" id="donor-area" class="form-control" required>
                             </div>
                         </div>
@@ -2632,14 +2633,14 @@
                                 <input type="date" id="donor-last-date" class="form-control">
                             </div>
                             <div class="col-md-6">
-                                <label for="donor-status" class="form-label fw-bold">অবস্থা <span class="text-danger">*</span></label>
+                                <label for="donor-status" class="form-label fw-bold">অবস্থা <span class="req">*</span></label>
                                 <select id="donor-status" class="form-select" required>
-                                    <option value="Available">প্রস্তুত (Available)</option>
-                                    <option value="Unavailable">অনুপলব্ধ (Unavailable)</option>
+                                    <option value="Available">প্রস্তুত</option>
+                                    <option value="Unavailable">অনুপলব্ধ</option>
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-danger rounded-pill px-5"><i class="bi bi-save me-2"></i>সংরক্ষণ করুন</button>
+                        <button type="submit" class="btn btn-purple rounded-pill px-5"><i class="bi bi-save me-2"></i>সংরক্ষণ করুন</button>
                     </form>
                 </div>
             </div>
@@ -2648,12 +2649,12 @@
             <!-- BLOOD DONOR LIST                               -->
             <!-- ============================================== -->
             <div id="section-blood-donor-list" class="dashboard-section" style="display: none;">
-                <div class="data-panel mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div class="module-page-header mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
                     <div>
-                        <h4 class="fw-bold text-danger m-0"><i class="bi bi-people-fill me-2"></i>রক্তদাতা তালিকা</h4>
-                        <p class="text-muted small m-0 mt-1">মোট: <span id="blood-donor-list-count">০</span> জন</p>
+                        <h4 class="module-page-title m-0"><i class="bi bi-people-fill me-2"></i>রক্তদাতা তালিকা</h4>
+                        <p class="module-page-desc m-0 mt-1">মোট নিবন্ধিত: <span id="blood-donor-list-count">০</span> জন</p>
                     </div>
-                    <button class="btn btn-outline-danger rounded-pill btn-sm" onclick="switchMenu('section-blood-donor-add', document.getElementById('nav-blood-donor-add'))">
+                    <button class="btn btn-outline-purple rounded-pill btn-sm" onclick="switchMenu('section-blood-donor-add', document.getElementById('nav-blood-donor-add'))">
                         <i class="bi bi-plus-lg me-1"></i> নতুন দাতা যোগ
                     </button>
                 </div>
@@ -2695,16 +2696,16 @@
             <!-- BLOOD RECIPIENT LIST                           -->
             <!-- ============================================== -->
             <div id="section-blood-recipient-list" class="dashboard-section" style="display: none;">
-                <div class="data-panel mb-4">
-                    <h4 class="fw-bold text-danger m-0"><i class="bi bi-droplet-half me-2"></i>রক্ত গ্রহীতা তালিকা</h4>
-                    <p class="text-muted small m-0 mt-1">যারা রক্ত গ্রহণ করেছেন — আদান-প্রদান রেকর্ড</p>
+                <div class="module-page-header mb-4">
+                    <h4 class="module-page-title m-0"><i class="bi bi-droplet-half me-2"></i>রক্ত গ্রহীতা তালিকা</h4>
+                    <p class="module-page-desc m-0 mt-1">রক্ত গ্রহণকারীর আদান-প্রদান রেকর্ড</p>
                 </div>
                 <div class="data-panel mb-4">
-                    <h5 class="fw-bold mb-3"><i class="bi bi-plus-circle text-danger me-2"></i>নতুন রক্ত গ্রহীতা রেকর্ড যোগ করুন</h5>
+                    <h5 class="sc-section-title mb-3"><i class="bi bi-plus-circle me-2"></i>নতুন রেকর্ড যোগ করুন</h5>
                     <form id="form-add-blood-log" onsubmit="handleAddBloodLog(event)">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="log-recipient-select" class="form-label fw-bold">রক্তগ্রহীতা (মাতা) <span class="text-danger">*</span></label>
+                                <label for="log-recipient-select" class="form-label fw-bold">রক্তগ্রহীতা (মাতা) <span class="req">*</span></label>
                                 <select id="log-recipient-select" class="form-select" required onchange="handleRecipientSelectChange(this)"></select>
                             </div>
                             <div class="col-md-6" id="log-custom-recipient-div" style="display: none;">
@@ -2712,11 +2713,11 @@
                                 <input type="text" id="log-custom-recipient" class="form-control">
                             </div>
                             <div class="col-md-4">
-                                <label for="log-donor-name" class="form-label fw-bold">রক্তদাতার নাম <span class="text-danger">*</span></label>
+                                <label for="log-donor-name" class="form-label fw-bold">রক্তদাতার নাম <span class="req">*</span></label>
                                 <input type="text" id="log-donor-name" class="form-control" required>
                             </div>
                             <div class="col-md-2">
-                                <label for="log-blood-group" class="form-label fw-bold">গ্রুপ <span class="text-danger">*</span></label>
+                                <label for="log-blood-group" class="form-label fw-bold">গ্রুপ <span class="req">*</span></label>
                                 <select id="log-blood-group" class="form-select" required>
                                     <option value="">...</option>
                                     <option value="A+">A+</option><option value="A-">A-</option>
@@ -2726,7 +2727,7 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <label for="log-date" class="form-label fw-bold">তারিখ <span class="text-danger">*</span></label>
+                                <label for="log-date" class="form-label fw-bold">তারিখ <span class="req">*</span></label>
                                 <input type="date" id="log-date" class="form-control" required>
                             </div>
                             <div class="col-md-3">
@@ -2737,11 +2738,11 @@
                                 </select>
                             </div>
                             <div class="col-md-8">
-                                <label for="log-location" class="form-label fw-bold">হাসপাতাল / স্থান <span class="text-danger">*</span></label>
+                                <label for="log-location" class="form-label fw-bold">হাসপাতাল / স্থান <span class="req">*</span></label>
                                 <input type="text" id="log-location" class="form-control" required>
                             </div>
                             <div class="col-md-4 d-flex align-items-end">
-                                <button type="submit" class="btn btn-danger w-100 rounded-pill"><i class="bi bi-save me-2"></i>সংরক্ষণ</button>
+                                <button type="submit" class="btn btn-purple w-100 rounded-pill"><i class="bi bi-save me-2"></i>সংরক্ষণ</button>
                             </div>
                         </div>
                     </form>
@@ -3285,14 +3286,14 @@
             tbody.innerHTML = '';
 
             bloodDonationsDB.forEach(log => {
-                let statusBadgeClass = 'blood-badge-completed';
-                let statusText = 'Completed (সম্পন্ন)';
+                let statusBadgeClass = 'status-normal';
+                let statusText = 'সম্পন্ন';
                 if (log.status === 'Pending') {
-                    statusBadgeClass = 'blood-badge-pending';
-                    statusText = 'Pending (অপেক্ষমান)';
+                    statusBadgeClass = 'status-high';
+                    statusText = 'অপেক্ষমান';
                 } else if (log.status === 'Critical') {
-                    statusBadgeClass = 'blood-badge-critical';
-                    statusText = 'Critical (জরুরী)';
+                    statusBadgeClass = 'status-critical';
+                    statusText = 'জরুরি';
                 }
 
                 let recipientText = log.recipientName;
@@ -3306,8 +3307,8 @@
                     <td><span class="fw-semibold">${log.donorName}</span></td>
                     <td class="text-center"><span class="blood-group-tag">${log.bloodGroup}</span></td>
                     <td class="en-text">${toBengaliNumber(log.date)}</td>
-                    <td><i class="bi bi-hospital text-danger me-1"></i>${log.location}</td>
-                    <td class="text-center"><span class="blood-badge ${statusBadgeClass}"><i class="bi bi-circle-fill" style="font-size: 6px;"></i> ${statusText}</span></td>
+                    <td><i class="bi bi-hospital text-purple me-1"></i>${log.location}</td>
+                    <td class="text-center"><span class="status-badge ${statusBadgeClass}">${statusText}</span></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -3320,8 +3321,8 @@
 
             donorsToRender.forEach(donor => {
                 let statusBadge = donor.status === 'Available' 
-                    ? '<span class="badge bg-success-subtle text-success px-2 py-1 rounded-pill fw-semibold">Available</span>'
-                    : '<span class="badge bg-secondary-subtle text-muted px-2 py-1 rounded-pill fw-semibold">Busy</span>';
+                    ? '<span class="status-badge status-normal">প্রস্তুত</span>'
+                    : '<span class="status-badge status-high">অনুপলব্ধ</span>';
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -3331,7 +3332,7 @@
                     </td>
                     <td class="text-center"><span class="blood-group-tag">${donor.bloodGroup}</span></td>
                     <td>${toBengaliNumber(donor.age)}</td>
-                    <td><i class="bi bi-geo-alt text-danger me-1"></i>${donor.area}</td>
+                    <td><i class="bi bi-geo-alt text-muted me-1"></i>${donor.area}</td>
                     <td class="en-text"><i class="bi bi-telephone-fill text-muted me-1"></i>${donor.mobile}</td>
                     <td class="text-center">${statusBadge}</td>
                 `;
@@ -3662,7 +3663,7 @@
 
             // Header
             document.getElementById('sc-mother-name').textContent = m.name;
-            document.getElementById('sc-mother-id').textContent = 'ID: ' + m.id;
+            document.getElementById('sc-mother-id').textContent = m.id;
             document.getElementById('sc-husband-name').textContent = m.husbandName;
             document.getElementById('sc-mother-mobile').textContent = m.mobile || '—';
             document.getElementById('sc-mother-blood').textContent = m.bloodGroup;
