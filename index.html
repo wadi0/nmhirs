@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>মাতৃত্ব ও NMHIRS - ইন্টিগ্রেটেড ড্যাশবোর্ড</title>
+    <title>গর্ভবতীর আয়না - MCH Service Management</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +18,20 @@
 </head>
 <body>
 
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-card">
+            <h1 class="login-brand-title">গর্ভবতীর আয়না</h1>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <input type="text" id="login-username" class="form-control login-input mb-3" placeholder="Username" autocomplete="username">
+                <input type="password" id="login-password" class="form-control login-input mb-4" placeholder="Password" autocomplete="current-password">
+                <button type="submit" class="btn login-btn w-100">লগ ইন করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-shell" style="display: none;">
+
     <!-- Sidebar overlay for mobile views -->
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 
@@ -28,8 +42,8 @@
         <a href="#" class="brand">
             <div class="brand-icon"><i class="bi bi-person-hearts"></i></div>
             <div>
-                মাতৃত্ব
-                <span style="display:block; font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-top: -3px;">Powered by NMHIRS</span>
+                গর্ভবতীর আয়না
+                <span style="display:block; font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-top: -3px;">MCH Service Management</span>
             </div>
         </a>
         <ul class="nav-menu">
@@ -53,9 +67,16 @@
             <li class="nav-item"><a class="nav-link" id="nav-risk" onclick="switchMenu('section-risk', this)"><i class="bi bi-exclamation-triangle"></i> রিস্ক ও অ্যালার্ট</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-referral" onclick="switchMenu('section-referral', this)"><i class="bi bi-ambulance"></i> রেফারেল ও ইমার্জেন্সি</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-facility" onclick="switchMenu('section-facility', this)"><i class="bi bi-hospital"></i> হাসপাতাল মডিউল</a></li>
-            <li class="nav-item"><a class="nav-link" id="nav-blood" onclick="switchMenu('section-blood', this)"><i class="bi bi-droplet-fill text-red"></i> রক্তদান মডিউল</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-blood-donor-add" onclick="switchMenu('section-blood-donor-add', this)"><i class="bi bi-person-plus-fill text-danger"></i> রক্তদাতা যোগ</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-blood-donor-list" onclick="switchMenu('section-blood-donor-list', this)"><i class="bi bi-people-fill text-danger"></i> রক্তদাতা তালিকা</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav-blood-recipient-list" onclick="switchMenu('section-blood-recipient-list', this)"><i class="bi bi-droplet-half text-danger"></i> রক্ত গ্রহীতা তালিকা</a></li>
             <li class="nav-item"><a class="nav-link" id="nav-rbac" onclick="switchMenu('section-rbac', this)"><i class="bi bi-diagram-3-fill"></i> স্টেকহোল্ডার (RBAC)</a></li>
         </ul>
+        <div class="sidebar-footer">
+            <button type="button" class="btn btn-logout w-100" onclick="handleLogout()">
+                <i class="bi bi-box-arrow-right me-2"></i> লগআউট
+            </button>
+        </div>
     </aside>
 
     <!-- ============================================== -->
@@ -71,11 +92,14 @@
                 </button>
                 <h2 class="header-title" id="page-title">ড্যাশবোর্ড</h2>
             </div>
-            <div class="d-flex align-items-center gap-4">
+            <div class="d-flex align-items-center gap-3">
                 <div class="position-relative clickable" onclick="alert('আপনার কোনো নতুন নোটিফিকেশন নেই।')">
                     <i class="bi bi-bell fs-5 text-muted"></i>
                     <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
                 </div>
+                <button type="button" class="btn btn-logout-header d-none d-md-inline-flex" onclick="handleLogout()" title="লগআউট">
+                    <i class="bi bi-box-arrow-right me-1"></i> লগআউট
+                </button>
                 <div class="user-profile">
                     <div class="user-avatar">মা</div>
                     <div class="d-none d-md-block text-start">
@@ -1034,50 +1058,38 @@
             <!-- NEW: MATERNAL CLINICAL SERVICE CARD (Image 1)  -->
             <!-- ============================================== -->
             <div id="section-service-card" class="dashboard-section" style="display: none;">
-                <!-- Header panel with Mother's active info -->
-                <div class="data-panel mb-4">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                        <div>
-                            <h4 class="fw-bold m-0 text-purple"><i class="bi bi-card-heading me-2"></i>গর্ভকালীন সেবা কার্ড (Maternal Service Card)</h4>
-                            <p class="text-muted small m-0 mt-1">Obstetric History, Medical Screenings, Vaccine Dates and PNC Trackings</p>
-                        </div>
-                        <div>
-                            <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-outline-purple btn-sm rounded-pill" onclick="switchMenu('section-registry', document.getElementById('nav-registry'))">
-                                    <i class="bi bi-arrow-left me-1"></i> মাতৃ নিবন্ধনে ফিরে যান
-                                </button>
-                            </div>
-                        </div>
+                <div class="sc-page-toolbar">
+                    <div>
+                        <h4 class="fw-bold m-0 text-purple"><i class="bi bi-card-heading me-2"></i>গর্ভকালীন সেবা কার্ড</h4>
+                        <p class="text-muted small m-0 mt-1">মাতার ক্লিনিক্যাল রেকর্ড — ইতিহাস, টিকা, প্রসব ও PNC</p>
                     </div>
+                    <button type="button" class="btn btn-outline-purple btn-sm rounded-pill" onclick="switchMenu('section-registry', document.getElementById('nav-registry'))">
+                        <i class="bi bi-arrow-left me-1"></i> মাতৃ নিবন্ধন
+                    </button>
                 </div>
 
-                <div class="service-card-wrapper mb-4">
-                    <!-- Service Card Info Cover Header -->
+                <div class="service-card-wrapper">
                     <div class="service-card-header">
-                        <div class="row align-items-center g-3">
-                            <div class="col-md-2 text-center text-md-start">
-                                <div id="sc-mother-avatar" class="rounded-circle bg-white text-purple d-inline-flex align-items-center justify-content-center fw-bold fs-1" style="width: 90px; height: 90px; border: 3px solid rgba(255,255,255,0.6);">মা</div>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="d-flex align-items-center gap-3 flex-wrap">
-                                    <h3 class="fw-bold m-0 text-white" id="sc-mother-name">তাসনিয়া রহমান</h3>
-                                    <span class="badge bg-white text-purple px-3 py-1 rounded-pill fw-semibold border border-purple-subtle" id="sc-mother-id">ID: NM-10031</span>
-                                    <span id="sc-mother-risk-badge" class="badge bg-success text-white px-3 py-1 rounded-pill">স্বাভাবিক</span>
+                        <div class="sc-header-inner">
+                            <div id="sc-mother-avatar" class="sc-avatar">মা</div>
+                            <div class="sc-header-main">
+                                <div class="sc-name-row">
+                                    <h3 class="sc-mother-name" id="sc-mother-name">তাসনিয়া রহমান</h3>
+                                    <span class="sc-badge-id" id="sc-mother-id">NM-10031</span>
+                                    <span class="sc-badge-risk" id="sc-mother-risk-badge">স্বাভাবিক</span>
                                 </div>
-                                <div class="row mt-3 text-white-50 g-2 small">
-                                    <div class="col-sm-4"><i class="bi bi-person-fill text-white me-1"></i> স্বামী: <span class="text-white fw-medium" id="sc-husband-name">মোহাম্মদ রকিবুল ইসলাম</span></div>
-                                    <div class="col-sm-4"><i class="bi bi-telephone-fill text-white me-1"></i> মোবাইল: <span class="text-white fw-medium" id="sc-mother-mobile">০১৭১১-১১২২৩৩</span></div>
-                                    <div class="col-sm-4"><i class="bi bi-droplet-fill text-danger-subtle me-1"></i> রক্ত: <span class="text-white fw-medium" id="sc-mother-blood">O+</span></div>
-                                    <div class="col-sm-4"><i class="bi bi-calendar-event text-white me-1"></i> LMP: <span class="text-white fw-medium" id="sc-mother-lmp">০৫-১১-২০২৫</span></div>
-                                    <div class="col-sm-4"><i class="bi bi-calendar-check text-white me-1"></i> EDD: <span class="text-white fw-medium" id="sc-mother-edd">১২-০৮-২০২৬</span></div>
-                                    <div class="col-sm-4"><i class="bi bi-egg-fill text-white me-1"></i> গর্ভকাল: <span class="text-white fw-medium" id="sc-mother-gestation">২৮ সপ্তাহ</span></div>
-                                </div>
+                                <ul class="sc-info-list">
+                                    <li><i class="bi bi-person-fill"></i> স্বামী: <span id="sc-husband-name">—</span></li>
+                                    <li><i class="bi bi-telephone-fill"></i> <span id="sc-mother-mobile">—</span></li>
+                                    <li><i class="bi bi-droplet-fill"></i> রক্ত: <span id="sc-mother-blood">—</span></li>
+                                    <li><i class="bi bi-calendar-event"></i> LMP: <span id="sc-mother-lmp">—</span></li>
+                                    <li><i class="bi bi-calendar-check"></i> EDD: <span id="sc-mother-edd">—</span></li>
+                                    <li><i class="bi bi-heart-pulse"></i> <span id="sc-mother-gestation">—</span></li>
+                                </ul>
                             </div>
-                            <div class="col-md-3 text-md-end text-center mt-3 mt-md-0">
-                                <button type="button" class="btn btn-white text-purple fw-bold shadow-sm rounded-pill px-4" onclick="saveMotherClinicalCard()">
-                                    <i class="bi bi-save2-fill me-2 text-pink"></i>সংরক্ষণ করুন
-                                </button>
-                            </div>
+                            <button type="button" class="btn sc-save-btn" onclick="saveMotherClinicalCard()">
+                                <i class="bi bi-save2-fill me-1"></i> সংরক্ষণ
+                            </button>
                         </div>
                     </div>
 
@@ -1097,15 +1109,11 @@
                         </button>
                     </div>
 
-                    <!-- Service Card Tab Contents -->
-                    <div class="p-4" style="background: #ffffff;">
-                        
-                        <!-- Tab 1: Obstetric History & Medical Checklist -->
+                    <div class="sc-tab-body">
                         <div id="sc-tab-history" class="sc-tab-content">
-                            <!-- Obstetric booklet table -->
-                            <div class="mb-4">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="fw-bold text-purple m-0"><i class="bi bi-book-half text-pink me-2"></i>পূর্ববর্তী গর্ভধারণের ইতিহাস (Obstetric History)</h5>
+                            <div class="sc-section-block">
+                                <div class="sc-section-head">
+                                    <h5 class="sc-section-title"><i class="bi bi-book-half me-2"></i>পূর্ববর্তী গর্ভধারণের ইতিহাস</h5>
                                     <button type="button" class="btn btn-outline-purple btn-sm rounded-pill" onclick="addNewObstetricRow()">
                                         <i class="bi bi-plus-lg me-1"></i> গর্ভধারণের সারি যোগ করুন
                                     </button>
@@ -1131,9 +1139,10 @@
                                 </div>
                             </div>
 
-                            <!-- General Medical Checklist -->
-                            <div>
-                                <h5 class="fw-bold text-purple mb-3"><i class="bi bi-shield-check text-pink me-2"></i>সাধারণ মেডিকেল তথ্যাবলী ও চেকলিস্ট</h5>
+                            <div class="sc-section-block">
+                                <div class="sc-section-head">
+                                    <h5 class="sc-section-title"><i class="bi bi-shield-check me-2"></i>মেডিকেল চেকলিস্ট</h5>
+                                </div>
                                 <div class="med-history-grid">
                                     <!-- cardiovascular -->
                                     <div class="med-category-card">
@@ -1242,12 +1251,13 @@
                             </div>
                         </div>
 
-                        <!-- Tab 2: Tetanus Vaccine & Lab Tests -->
                         <div id="sc-tab-vaccine" class="sc-tab-content" style="display: none;">
-                            <div class="row">
-                                <!-- Vaccine dose log -->
-                                <div class="col-lg-6 mb-4">
-                                    <h5 class="fw-bold text-purple mb-3"><i class="bi bi-shield-plus text-pink me-2"></i>ধনুষ্টংকার প্রতিষেধক টিকা (Tetanus Vaccine Logs)</h5>
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <div class="sc-section-block h-100">
+                                    <div class="sc-section-head">
+                                    <h5 class="sc-section-title"><i class="bi bi-shield-plus me-2"></i>টিটানাস টিকা (TT)</h5>
+                                    </div>
                                     <div class="table-responsive">
                                         <table class="table-booklet">
                                             <thead>
@@ -1286,12 +1296,15 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <small class="text-muted d-block mt-2">* পূর্ববর্তী ডোজ দেওয়া থাকলে তার তারিখ ও লট সঠিকভাবে সংরক্ষণ করুন।</small>
+                                    <small class="text-muted d-block mt-2 sc-hint">* পূর্ববর্তী ডোজের তারিখ ও লট নম্বর লিখুন।</small>
+                                    </div>
                                 </div>
 
-                                <!-- Lab screening results -->
-                                <div class="col-lg-6 mb-4">
-                                    <h5 class="fw-bold text-purple mb-3"><i class="bi bi-prescription2 text-pink me-2"></i>ল্যাবরেটরি ও ক্লিনিক্যাল পরীক্ষা</h5>
+                                <div class="col-lg-6">
+                                    <div class="sc-section-block h-100">
+                                    <div class="sc-section-head">
+                                    <h5 class="sc-section-title"><i class="bi bi-prescription2 me-2"></i>ল্যাব ও ক্লিনিক্যাল পরীক্ষা</h5>
+                                    </div>
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <label class="form-label small fw-bold text-muted mb-1">হিমোগ্লোবিনের মাত্রা (Hb% g/dL)</label>
@@ -1338,17 +1351,18 @@
                                             <input type="text" id="sc-lab-usg" class="form-control" placeholder="USG রিপোর্ট পর্যবেক্ষণ">
                                         </div>
                                     </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Tab 3: Delivery Plans & Outcomes -->
                         <div id="sc-tab-delivery" class="sc-tab-content" style="display: none;">
-                            <div class="row">
-                                <!-- Birth Preferences Booklet -->
-                                <div class="col-lg-6 mb-4">
-                                    <div class="p-3 border rounded-3 bg-light bg-opacity-30">
-                                        <h5 class="fw-bold text-purple mb-3"><i class="bi bi-pin-map text-pink me-2"></i>প্রসবের প্রস্তুতি ও পরিকল্পনা (Delivery Preferences)</h5>
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <div class="sc-section-block sc-panel-light">
+                                        <div class="sc-section-head">
+                                        <h5 class="sc-section-title"><i class="bi bi-pin-map me-2"></i>প্রসব পরিকল্পনা</h5>
+                                        </div>
                                         <div class="row g-3">
                                             <div class="col-md-12">
                                                 <label class="form-label small fw-bold text-muted mb-1">সম্ভাব্য প্রসবের স্থান</label>
@@ -1382,10 +1396,11 @@
                                     </div>
                                 </div>
 
-                                <!-- Actual Delivery Outcome Log -->
-                                <div class="col-lg-6 mb-4">
-                                    <div class="p-3 border rounded-3 bg-rose-subtle bg-opacity-10" style="border-color: #fecaca !important;">
-                                        <h5 class="fw-bold text-purple mb-3"><i class="bi bi-balloon-heart text-pink me-2"></i>প্রকৃত প্রসবের ফলাফল (Delivery Outcome Log)</h5>
+                                <div class="col-lg-6">
+                                    <div class="sc-section-block sc-panel-pink">
+                                        <div class="sc-section-head">
+                                        <h5 class="sc-section-title"><i class="bi bi-balloon-heart me-2"></i>প্রসবের ফলাফল</h5>
+                                        </div>
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <label class="form-label small fw-bold text-muted mb-1">প্রসবের তারিখ</label>
@@ -1427,11 +1442,12 @@
                             </div>
                         </div>
 
-                        <!-- Tab 4: PNC Matrix (4 visits x 9 parameters) -->
                         <div id="sc-tab-pnc" class="sc-tab-content" style="display: none;">
-                            <h5 class="fw-bold text-purple mb-3"><i class="bi bi-calendar3 text-pink me-2"></i>প্রসবোত্তর যত্ন ও স্বাস্থ্য চেকলিস্ট (Postnatal Care - PNC Matrix)</h5>
-                            <p class="text-muted small mb-4">নিচের ৯টি জটিলতার লক্ষণ প্রতিটি PNC পরিদর্শনে পরীক্ষা করে যথাযথ রেটিং সেট করুন। <strong>[পরীক্ষা হয়নি (গ্রে) ➜ স্বাভাবিক (সবুজ) ➜ অস্বাভাবিক/ঝুঁকিপূর্ণ (লাল)]</strong>। সেলগুলোতে ক্লিক করে রেটিং সাইকেল করুন।</p>
-                            
+                            <div class="sc-section-block">
+                                <div class="sc-section-head">
+                                    <h5 class="sc-section-title"><i class="bi bi-calendar3 me-2"></i>প্রসবোত্তর যত্ন (PNC)</h5>
+                                </div>
+                                <p class="sc-hint mb-3">সেলে ক্লিক করুন: পরীক্ষা হয়নি → স্বাভাবিক → ঝুঁকিপূর্ণ</p>
                             <div class="table-responsive">
                                 <table class="table-booklet">
                                     <thead>
@@ -1453,12 +1469,12 @@
                                 <div><span class="badge bg-success-subtle text-success border border-success-subtle me-1">স্বাভাবিক</span> - লক্ষণটি স্বাভাবিক অবস্থায় রয়েছে</div>
                                 <div><span class="badge bg-danger-subtle text-danger border border-danger-subtle me-1">অস্বাভাবিক</span> - লক্ষণটি মারাত্মক বা ঝুঁকিপূর্ণ</div>
                             </div>
+                            </div>
                         </div>
 
                     </div>
 
-                    <!-- Bottom Update Bar -->
-                    <div class="p-3 bg-light border-top d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <div class="sc-footer-bar">
                         <div class="text-muted small">
                             <i class="bi bi-clock-history me-1"></i> শেষ আপডেট: <span id="sc-last-updated" class="fw-semibold">কখনো নয়</span>
                         </div>
@@ -1639,7 +1655,7 @@
                                     <i class="bi bi-card-list me-1"></i> নিবন্ধিত মায়েদের তালিকা
                                 </button>
                                 <button type="button" class="service-card-tab" id="btn-registry-new" onclick="toggleRegistryView('new')" style="padding: 8px 16px; border-radius: 8px; border: none; font-size: 0.85rem;">
-                                    <i class="bi bi-person-plus-fill me-1"></i> নতুন নিবন্ধন ফরম (Image 2)
+                                    <i class="bi bi-person-plus-fill me-1"></i> নতুন নিবন্ধন ফরম
                                 </button>
                             </div>
                         </div>
@@ -1696,123 +1712,45 @@
                     </div>
                 </div>
 
-                <!-- Tab 2: New Registration Form View (Image 2) -->
+                <!-- Tab 2: New Registration Form View (MCH Image Form) -->
                 <div id="registry-new-view" style="display: none;">
                     <form id="new-mother-form" onsubmit="handleNewMotherSubmit(event)">
-                        <div class="form-card-wrapper">
-                            <h3 class="fw-bold text-center text-purple mb-1"><i class="bi bi-file-earmark-medical text-pink me-2"></i>গর্ভবতীর তথ্য ফরম (নিবন্ধন)</h3>
-                            <p class="text-center text-muted small mb-4">নিচের ৩৮টি ক্ষেত্র সঠিক তথ্য দিয়ে পূরণ করে মায়ের ডেটাবেস ভুক্তি সম্পন্ন করুন</p>
+                        <div class="mch-form-wrapper">
+                            <div class="mch-form-header-bar"></div>
+                            <div class="mch-form-body">
 
-                            <!-- Section 1 -->
-                            <div class="form-group-title"><i class="bi bi-person-vcard text-purple"></i> ১. ব্যক্তিগত পরিচিতি ও সনাক্তকরণ (Personal Identifiers)</div>
-                            <div class="row">
-                                <div class="col-md-5 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">গর্ভবতীর পূর্ণ নাম <span class="text-danger">*</span></label>
-                                    <input type="text" id="reg-name" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: সাবিনা আক্তার" required>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">গর্ভবতীর নাম <span class="text-danger">*</span></label>
+                                    <input type="text" id="reg-name" class="form-control mch-input" required>
                                 </div>
-                                <div class="col-md-2 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">বয়স <span class="text-danger">*</span></label>
-                                    <input type="number" id="reg-age" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: ২৫" min="15" max="50" required>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">এন আই ডি/ বি আর এন</label>
+                                    <input type="number" id="reg-nid-brn" class="form-control mch-input">
                                 </div>
-                                <div class="col-md-2 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">রক্তের গ্রুপ <span class="text-danger">*</span></label>
-                                    <select id="reg-blood-group" class="form-select border-light-subtle bg-light bg-opacity-50" required>
+                            </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">MCID</label>
+                                    <input type="text" id="reg-mcid" class="form-control mch-input">
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">গর্ভবতীর পেশা</label>
+                                    <select id="reg-mother-occ" class="form-select mch-input">
                                         <option value="">নির্বাচন করুন</option>
-                                        <option value="A+">A+</option>
-                                        <option value="A-">A-</option>
-                                        <option value="B+">B+</option>
-                                        <option value="B-">B-</option>
-                                        <option value="AB+">AB+</option>
-                                        <option value="AB-">AB-</option>
-                                        <option value="O+">O+</option>
-                                        <option value="O-">O-</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">ঝুঁকির মাত্রা <span class="text-danger">*</span></label>
-                                    <select id="reg-status" class="form-select border-light-subtle bg-light bg-opacity-50" required>
-                                        <option value="Active">স্বাভাবিক (Active)</option>
-                                        <option value="High Risk">উচ্চ ঝুঁকি (High Risk)</option>
-                                        <option value="Critical">ক্রিটিক্যাল (Critical)</option>
+                                        <option value="গৃহিণী">গৃহিণী</option>
+                                        <option value="চাকরিজীবী">চাকরিজীবী</option>
+                                        <option value="ব্যবসায়ী">ব্যবসায়ী</option>
+                                        <option value="দিনমজুর">দিনমজুর</option>
+                                        <option value="কৃষক">কৃষক</option>
+                                        <option value="অন্যান্য">অন্যান্য</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4 col-md-12 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1 d-block">জাতীয় পরিচয়পত্র নম্বর (NID)</label>
-                                    <div class="digit-box-container" id="reg-nid-boxes">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1 d-block">মোবাইল নম্বর <span class="text-danger">*</span></label>
-                                    <div class="digit-box-container" id="reg-mobile-boxes">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1 d-block">দম্পতি নম্বর (Couple No)</label>
-                                    <div class="digit-box-container" id="reg-couple-boxes">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                        <input type="text" class="digit-box" maxlength="1" onkeyup="autoTabDigit(this, event)">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">জন্ম নিবন্ধন নম্বর (BRN)</label>
-                                    <input type="text" id="reg-brn" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="১৭ ডিজিটের নম্বর দিন">
-                                </div>
-                                <div class="col-md-8 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">গর্ভবতীর শিক্ষাগত যোগ্যতা</label>
-                                    <input type="hidden" id="reg-education" value="">
-                                    <div class="badge-radio-group" id="group-reg-education">
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-education', this, 'অক্ষরজ্ঞানহীন')">অক্ষরজ্ঞানহীন</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-education', this, 'প্রাথমিক')">প্রাথমিক</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-education', this, 'মাধ্যমিক')">মাধ্যমিক</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-education', this, 'উচ্চ মাধ্যমিক')">উচ্চ মাধ্যমিক</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-education', this, 'স্নাতক/স্নাতকোত্তর')">স্নাতক/স্নাতকোত্তর</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Section 2 -->
-                            <div class="form-group-title"><i class="bi bi-people text-purple"></i> ২. স্বামীর বিবরণ ও পেশা</div>
-                            <div class="row">
-                                <div class="col-md-5 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">স্বামীর নাম <span class="text-danger">*</span></label>
-                                    <input type="text" id="reg-husband-name" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="স্বামীর পূর্ণ নাম লিখুন" required>
-                                </div>
-                                <div class="col-md-2 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">স্বামীর বয়স</label>
-                                    <input type="number" id="reg-husband-age" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: ৩০">
-                                </div>
-                                <div class="col-md-5 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">স্বামীর শিক্ষাগত যোগ্যতা</label>
-                                    <select id="reg-husband-edu" class="form-select border-light-subtle bg-light bg-opacity-50">
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">গর্ভবতীর শিক্ষাগত যোগ্যতা</label>
+                                    <select id="reg-education" class="form-select mch-input">
                                         <option value="">নির্বাচন করুন</option>
                                         <option value="অক্ষরজ্ঞানহীন">অক্ষরজ্ঞানহীন</option>
                                         <option value="প্রাথমিক">প্রাথমিক</option>
@@ -1821,177 +1759,261 @@
                                         <option value="স্নাতক/স্নাতকোত্তর">স্নাতক/স্নাতকোত্তর</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">স্বামীর পেশা</label>
-                                    <input type="text" id="reg-husband-occ" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: চাকরি, ব্যবসা">
-                                </div>
-                                <div class="col-md-8 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">গর্ভবতীর পেশা</label>
-                                    <input type="hidden" id="reg-occupation" value="">
-                                    <div class="badge-radio-group" id="group-reg-occupation">
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-occupation', this, 'গৃহিণী')">গৃহিণী</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-occupation', this, 'চাকরিজীবী')">চাকরিজীবী</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-occupation', this, 'ব্যবসায়ী')">ব্যবসায়ী</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-occupation', this, 'দিনমজুর')">দিনমজুর</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-occupation', this, 'অন্যান্য')">অন্যান্য</button>
-                                    </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">গর্ভবতীর মোবাইল নম্বর <span class="text-danger">*</span></label>
+                                    <input type="tel" id="reg-mobile" class="form-control mch-input" required>
                                 </div>
                             </div>
-
-                            <!-- Section 3 -->
-                            <div class="form-group-title"><i class="bi bi-geo-alt text-purple"></i> ৩. অবস্থান ও ঠিকানা (Location Details)</div>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">বিভাগ <span class="text-danger">*</span></label>
-                                    <select id="reg-division" class="form-select border-light-subtle bg-light bg-opacity-50" required>
-                                        <option value="ঢাকা">ঢাকা</option>
-                                        <option value="চট্টগ্রাম">চট্টগ্রাম</option>
-                                        <option value="রাজশাহী">রাজশাহী</option>
-                                        <option value="খুলনা">খুলনা</option>
-                                        <option value="বরিশাল">বরিশাল</option>
-                                        <option value="সিলেট">সিলেট</option>
-                                        <option value="রংপুর">রংপুর</option>
-                                        <option value="ময়মনসিংহ">ময়মনসিংহ</option>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">গর্ভবতীর বয়স <span class="text-danger">*</span></label>
+                                    <input type="number" id="reg-age" class="form-control mch-input" min="15" max="50" required>
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">উচ্চতা (ইঞ্চি)</label>
+                                    <input type="number" id="reg-height-inch" class="form-control mch-input" step="0.1">
+                                </div>
+                            </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">ওজন (কেজি)</label>
+                                    <input type="number" id="reg-weight" class="form-control mch-input" step="0.1">
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">গর্ভবতীর রক্তের গ্রুপ <span class="text-danger">*</span></label>
+                                    <select id="reg-blood-group" class="form-select mch-input" required>
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="A+">A+</option><option value="A-">A-</option>
+                                        <option value="B+">B+</option><option value="B-">B-</option>
+                                        <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                        <option value="O+">O+</option><option value="O-">O-</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">জেলা <span class="text-danger">*</span></label>
-                                    <input type="text" id="reg-district" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: ঢাকা, গাজীপুর" required>
+                            </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">স্বামী রক্তের গ্রুপ</label>
+                                    <select id="reg-husband-blood" class="form-select mch-input">
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="A+">A+</option><option value="A-">A-</option>
+                                        <option value="B+">B+</option><option value="B-">B-</option>
+                                        <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                        <option value="O+">O+</option><option value="O-">O-</option>
+                                    </select>
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">উপজেলা <span class="text-danger">*</span></label>
-                                    <input type="text" id="reg-upazila" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: মিরপুর, সাভার" required>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">স্বামীর নাম <span class="text-danger">*</span></label>
+                                    <input type="text" id="reg-husband-name" class="form-control mch-input" required>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">ইউনিয়ন/ওয়ার্ড</label>
-                                    <input type="text" id="reg-union" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: ওয়ার্ড নং ১২">
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">স্বামীর বয়স</label>
+                                    <input type="number" id="reg-husband-age" class="form-control mch-input" min="18" max="80">
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">গ্রাম/মহল্লা</label>
-                                    <input type="text" id="reg-village" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: পূর্ব কাজীপাড়া">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">ওয়ার্ড নম্বর</label>
-                                    <input type="text" id="reg-ward" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: ১২">
-                                </div>
-                            </div>
-
-                            <!-- Section 4 -->
-                            <div class="form-group-title"><i class="bi bi-clock-history text-purple"></i> ৪. গর্ভাবস্থার ইতিহাস ও লক্ষণসমূহ (Obstetric History)</div>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">শেষ মাসিকের তারিখ (LMP) <span class="text-danger">*</span></label>
-                                    <input type="date" id="reg-lmp" class="form-control border-light-subtle bg-light bg-opacity-50 font-en" onchange="calculateEDDFromLMP()" required>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">সম্ভাব্য প্রসবের তারিখ (EDD)</label>
-                                    <input type="date" id="reg-edd" class="form-control border-light-subtle bg-light bg-opacity-50 font-en" readonly>
-                                </div>
-                                <div class="col-md-2 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">গর্ভের সংখ্যা (Gravida) <span class="text-danger">*</span></label>
-                                    <input type="number" id="reg-gravida" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: ১" min="1" required>
-                                </div>
-                                <div class="col-md-2 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">জীবিত সন্তান সংখ্যা</label>
-                                    <input type="number" id="reg-living-children" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: ০" min="0">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">স্বামীর পেশা</label>
+                                    <select id="reg-husband-occ" class="form-select mch-input">
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="চাকরিজীবী">চাকরিজীবী</option>
+                                        <option value="ব্যবসায়ী">ব্যবসায়ী</option>
+                                        <option value="কৃষক">কৃষক</option>
+                                        <option value="দিনমজুর">দিনমজুর</option>
+                                        <option value="অন্যান্য">অন্যান্য</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">পূর্বের প্রসবকালীন জটিলতা</label>
-                                    <input type="text" id="reg-prev-complications" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: এক্লাম্পসিয়া, অতিরিক্ত রক্তপাত">
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">স্বামীর শিক্ষাগত যোগ্যতা</label>
+                                    <select id="reg-husband-edu" class="form-select mch-input">
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="অক্ষরজ্ঞানহীন">অক্ষরজ্ঞানহীন</option>
+                                        <option value="প্রাথমিক">প্রাথমিক</option>
+                                        <option value="মাধ্যমিক">মাধ্যমিক</option>
+                                        <option value="উচ্চ মাধ্যমিক">উচ্চ মাধ্যমিক</option>
+                                        <option value="স্নাতক/স্নাতকোত্তর">স্নাতক/স্নাতকোত্তর</option>
+                                    </select>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">বর্তমান গর্ভাবস্থার লক্ষণ/অসুবিধা</label>
-                                    <input type="text" id="reg-current-symptoms" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: পায়ে পানি, মাথা ঘোরা">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">উচ্চতা (সে.মি.)</label>
-                                    <input type="text" id="reg-height" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: ১৫২ সে.মি.">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">প্রারম্ভিক ওজন (কেজি)</label>
-                                    <input type="text" id="reg-weight" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: ৫৮ কেজি">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">স্বামীর মোবাইল নম্বর</label>
+                                    <input type="tel" id="reg-husband-mobile" class="form-control mch-input">
                                 </div>
                             </div>
-
-                            <!-- Section 5 -->
-                            <div class="form-group-title"><i class="bi bi-hospital text-purple"></i> ৫. প্রসব পরিকল্পনা ও কর্মী বিবরণ</div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1 font-bn">কোথায় প্রসব করাতে ইচ্ছুক</label>
-                                    <input type="hidden" id="reg-preferred-place" value="">
-                                    <div class="badge-radio-group mb-3" id="group-reg-preferred-place">
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-preferred-place', this, 'বাড়িতে')">বাড়িতে</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-preferred-place', this, 'উপজেলা স্বাস্থ্য কমপ্লেক্স')">উপজেলা স্বাস্থ্য কমপ্লেক্স</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-preferred-place', this, 'জেলা হাসপাতাল')">জেলা হাসপাতাল</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-preferred-place', this, 'মেডিকেল কলেজ ও হাসপাতাল')">মেডিকেল কলেজ</button>
-                                    </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">গ্রাম</label>
+                                    <input type="text" id="reg-village" class="form-control mch-input">
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">প্রসব পরিচালনাকারী</label>
-                                    <input type="hidden" id="reg-preferred-attendant" value="">
-                                    <div class="badge-radio-group mb-3" id="group-reg-preferred-attendant">
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-preferred-attendant', this, 'মিডওয়াইফ')">মিডওয়াইফ</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-preferred-attendant', this, 'নার্স')">নার্স</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-preferred-attendant', this, 'এমবিবিএস ডাক্তার')">এমবিবিএস ডাক্তার</button>
-                                        <button type="button" class="badge-radio-btn" onclick="selectFormBadgeRadio('reg-preferred-attendant', this, 'গাইনী বিশেষজ্ঞ')">গাইনী বিশেষজ্ঞ</button>
-                                    </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">ওয়ার্ড</label>
+                                    <select id="reg-ward" class="form-select mch-input">
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="১">১</option><option value="২">২</option><option value="৩">৩</option>
+                                        <option value="৪">৪</option><option value="৫">৫</option><option value="৬">৬</option>
+                                        <option value="৭">৭</option><option value="৮">৮</option><option value="৯">৯</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">রক্তদাতার নাম</label>
-                                    <input type="text" id="reg-donor-name" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="ডোনারের নাম">
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">ইউনিট</label>
+                                    <select id="reg-unit" class="form-select mch-input">
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="ইউনিট-১">ইউনিট-১</option>
+                                        <option value="ইউনিট-২">ইউনিট-২</option>
+                                        <option value="ইউনিট-৩">ইউনিট-৩</option>
+                                    </select>
                                 </div>
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">ডোনারের মোবাইল নম্বর</label>
-                                    <input type="text" id="reg-donor-mobile" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="ডোনারের মোবাইল">
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">জরুরি পরিবহনের ব্যবস্থা</label>
-                                    <input type="text" id="reg-transport" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: অটোরিকশা">
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">পরিবহনের মোবাইল নম্বর</label>
-                                    <input type="text" id="reg-transport-mobile" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="মোবাইল নম্বর">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">তথ্য সংগ্রহকারী স্বাস্থ্যকর্মীর নাম</label>
-                                    <input type="text" id="reg-hw-name" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: ফাতেমা বেগম (FWA)">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">স্বাস্থ্যকর্মীর আইডি</label>
-                                    <input type="text" id="reg-hw-id" class="form-control border-light-subtle bg-light bg-opacity-50" placeholder="যেমন: HW-1024">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">তথ্য সংগ্রহের তারিখ <span class="text-danger">*</span></label>
-                                    <input type="date" id="reg-collection-date" class="form-control border-light-subtle bg-light bg-opacity-50 font-en" required>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">ইউনিয়ন</label>
+                                    <select id="reg-union" class="form-select mch-input">
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="কাফিলাবাদ">কাফিলাবাদ</option>
+                                        <option value="সিন্দুরিয়া">সিন্দুরিয়া</option>
+                                        <option value="বারবারিয়া">বারবারিয়া</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-12 mb-3">
-                                    <label class="form-label fw-bold small text-muted mb-1">মন্তব্য</label>
-                                    <textarea id="reg-remarks" class="form-control border-light-subtle bg-light bg-opacity-50" rows="2" placeholder="অন্যান্য বিশেষ পর্যবেক্ষণ বা অতিরিক্ত তথ্য এখানে লিখুন..."></textarea>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">উপজেলা</label>
+                                    <select id="reg-upazila" class="form-select mch-input">
+                                        <option value="কাপাসিয়া" selected>কাপাসিয়া</option>
+                                        <option value="সাভার">সাভার</option>
+                                        <option value="কালিয়াকৈর">কালিয়াকৈর</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">জেলা</label>
+                                    <input type="text" id="reg-district" class="form-control mch-input" value="গাজীপুর" readonly>
                                 </div>
                             </div>
-
-                            <div class="text-center mt-4">
-                                <button type="submit" class="btn btn-purple px-5 py-3 rounded-pill fw-bold text-white shadow-sm"><i class="bi bi-save2-fill me-2"></i>নিবন্ধন সম্পন্ন ও ডাটাবেসে সংরক্ষণ করুন</button>
-                                <button type="button" class="btn btn-light px-4 py-3 rounded-pill border ms-2 text-dark" onclick="toggleRegistryView('list')">বাতিল করুন</button>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">কত তম গর্ভধারণ <span class="text-danger">*</span></label>
+                                    <input type="number" id="reg-gravida" class="form-control mch-input" min="1" required>
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">জীবিত সন্তানের সংখ্যা</label>
+                                    <input type="number" id="reg-living-children" class="form-control mch-input" min="0" value="0">
+                                </div>
                             </div>
-                        </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">শেষ সন্তানের বয়স</label>
+                                    <input type="number" id="reg-last-child-age" class="form-control mch-input" min="0">
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">পূর্বে সিজারের সংখ্যা</label>
+                                    <input type="number" id="reg-csection-count" class="form-control mch-input" min="0" value="0">
+                                </div>
+                            </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">পূর্বে নরমাল ডেলিভারির সংখ্যা</label>
+                                    <input type="number" id="reg-normal-delivery-count" class="form-control mch-input" min="0" value="0">
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">গর্ভবতী ভাতা পাওয়ার যোগ্য কিনা?</label>
+                                    <select id="reg-maternity-allowance" class="form-select mch-input">
+                                        <option value="হ্যাঁ" selected>হ্যাঁ</option>
+                                        <option value="না">না</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">কোথায় ডেলিভারি করাতে ইচ্ছুক?</label>
+                                    <select id="reg-delivery-place" class="form-select mch-input">
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="বাড়িতে">বাড়িতে</option>
+                                        <option value="উপজেলা স্বাস্থ্য কমপ্লেক্স">উপজেলা স্বাস্থ্য কমপ্লেক্স</option>
+                                        <option value="জেলা হাসপাতাল">জেলা হাসপাতাল</option>
+                                        <option value="মেডিকেল কলেজ হাসপাতাল">মেডিকেল কলেজ হাসপাতাল</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">প্রসব পরবর্তী পরিবার পরিকল্পনা পদ্ধতি</label>
+                                    <select id="reg-fp-method" class="form-select mch-input">
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="পিল">পিল</option>
+                                        <option value="ইনজেকশন">ইনজেকশন</option>
+                                        <option value="কনডোম">কনডোম</option>
+                                        <option value="IUD">IUD</option>
+                                        <option value="স্থায়ী">স্থায়ী পদ্ধতি</option>
+                                        <option value="নির্ধারিত নেই">নির্ধারিত নেই</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">LMP (শেষ মাসিক) <span class="text-danger">*</span></label>
+                                    <input type="date" id="reg-lmp" class="form-control mch-input font-en" onchange="calculateEDDFromLMP()" required>
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">EDD (সম্ভাব্য প্রসব)</label>
+                                    <input type="date" id="reg-edd" class="form-control mch-input mch-readonly font-en" readonly>
+                                </div>
+                            </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">পরিদর্শন- ১ (৩ মাস)</label>
+                                    <input type="date" id="reg-visit1" class="form-control mch-input mch-readonly font-en" readonly>
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">পরিদর্শন- ২ (৬ মাস)</label>
+                                    <input type="date" id="reg-visit2" class="form-control mch-input mch-readonly font-en" readonly>
+                                </div>
+                            </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">পরিদর্শন- ৩ (৮ মাস)</label>
+                                    <input type="date" id="reg-visit3" class="form-control mch-input mch-readonly font-en" readonly>
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">পরিদর্শন- ৪ (৯ মাস)</label>
+                                    <input type="date" id="reg-visit4" class="form-control mch-input mch-readonly font-en" readonly>
+                                </div>
+                            </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">মন্তব্য</label>
+                                    <input type="text" id="reg-remarks" class="form-control mch-input">
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">তথ্য সংগ্রহকারীর নাম</label>
+                                    <input type="text" id="reg-collector-name" class="form-control mch-input">
+                                </div>
+                            </div>
+                            <div class="row mch-form-row">
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">তথ্য সংগ্রহকারীর পদবী</label>
+                                    <select id="reg-collector-designation" class="form-select mch-input">
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="FWA">FWA</option>
+                                        <option value="FWV">FWV</option>
+                                        <option value="CHCP">CHCP</option>
+                                        <option value="HA">HA</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mch-field">
+                                    <label class="mch-label">তথ্য সংগ্রহকারীর মোবাইল নম্বর</label>
+                                    <input type="tel" id="reg-collector-mobile" class="form-control mch-input">
+                                </div>
+                            </div>
+                            <input type="hidden" id="reg-status" value="Active">
+                            <input type="hidden" id="reg-division" value="ঢাকা">
+                            <div class="text-center mt-4 pb-2">
+                                <button type="submit" class="btn mch-save-btn px-5 py-2"><i class="bi bi-check-circle-fill me-2"></i>সংরক্ষণ করুন</button>
+                                <button type="button" class="btn btn-light px-4 py-2 ms-2" onclick="toggleRegistryView('list')">বাতিল</button>
+                            </div>
+                            </div><!-- mch-form-body -->
+                        </div><!-- mch-form-wrapper -->
                     </form>
                 </div>
             </div>
+
 
             <!-- ============================================== -->
             <!-- ============================================== -->
@@ -2563,310 +2585,192 @@
                 </div>
             </div>
 
+
             <!-- ============================================== -->
-            <!-- BLOOD DONATION MODULE                          -->
+            <!-- BLOOD DONOR ADD                                -->
             <!-- ============================================== -->
-            <div id="section-blood" class="dashboard-section" style="display: none;">
-                <!-- Main Header Title -->
-                <div class="mb-5 text-center">
-                    <h2 class="fw-bold text-red mb-2" style="font-size: 1.8rem; color: #e11d48;"><i class="bi bi-droplet-fill me-2 animate-pulse text-danger"></i>রক্তদান ও ডোনার ডাটাবেজ (Blood Donation Hub)</h2>
-                    <h5 class="text-danger fw-semibold mb-3">নিরাপদ মাতৃত্ব ও জরুরী প্রসবকালীন রক্ত সঞ্চালন রেজিস্ট্রি</h5>
-                    <p class="text-muted mx-auto" style="max-width: 800px; font-size: 0.9rem;">
-                        জরুরী মুহূর্তে রক্তের প্রয়োজনের পূর্বাভাস, রক্তদাতাদের দ্রুত অনুসন্ধান এবং রক্ত আদান-প্রদান ট্র্যাকিংয়ের মাধ্যমে প্রসবকালীন রক্তপাতের জটিলতা কমানোর ডিজিটাল পোর্টাল।
-                    </p>
+            <div id="section-blood-donor-add" class="dashboard-section" style="display: none;">
+                <div class="data-panel mb-4">
+                    <h4 class="fw-bold text-danger m-0"><i class="bi bi-person-plus-fill me-2"></i>রক্তদাতা যোগ করুন</h4>
+                    <p class="text-muted small m-0 mt-1">নতুন রক্তদাতার তথ্য সংরক্ষণ করুন</p>
                 </div>
-
-                <!-- KPI Metrics Cards Grid -->
-                <div class="row g-4 mb-5">
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="blood-kpi-card shadow-sm border-0">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="kpi-info">
-                                    <p>মোট রক্তদাতা</p>
-                                    <h3 id="blood-total-donors">০ জন</h3>
-                                </div>
-                                <div class="blood-icon-box bg-red-subtle text-red">
-                                    <i class="bi bi-people-fill text-danger"></i>
-                                </div>
+                <div class="data-panel">
+                    <form id="form-add-donor" onsubmit="handleAddDonor(event)">
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="donor-name" class="form-label fw-bold">রক্তদাতার নাম <span class="text-danger">*</span></label>
+                                <input type="text" id="donor-name" class="form-control" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="donor-blood-group" class="form-label fw-bold">রক্তের গ্রুপ <span class="text-danger">*</span></label>
+                                <select id="donor-blood-group" class="form-select" required>
+                                    <option value="">নির্বাচন...</option>
+                                    <option value="A+">A+</option><option value="A-">A-</option>
+                                    <option value="B+">B+</option><option value="B-">B-</option>
+                                    <option value="O+">O+</option><option value="O-">O-</option>
+                                    <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="donor-age" class="form-label fw-bold">বয়স <span class="text-danger">*</span></label>
+                                <input type="number" id="donor-age" class="form-control" min="18" max="65" required>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="blood-kpi-card shadow-sm border-0">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="kpi-info">
-                                    <p>রক্তদান সম্পন্ন</p>
-                                    <h3 id="blood-total-transfusions">০ বার</h3>
-                                </div>
-                                <div class="blood-icon-box bg-success-subtle text-success" style="background:#ecfdf5 !important; color:#059669 !important;">
-                                    <i class="bi bi-check-circle-fill"></i>
-                                </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="donor-mobile" class="form-label fw-bold">মোবাইল নম্বর <span class="text-danger">*</span></label>
+                                <input type="tel" id="donor-mobile" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="donor-area" class="form-label fw-bold">এলাকা <span class="text-danger">*</span></label>
+                                <input type="text" id="donor-area" class="form-control" required>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="blood-kpi-card shadow-sm border-0">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="kpi-info">
-                                    <p>জরুরী রক্তের চাহিদা</p>
-                                    <h3 id="blood-urgent-requests" class="text-red">০ জন</h3>
-                                </div>
-                                <div class="blood-icon-box bg-danger-subtle text-danger" style="background:#fff1f2 !important; color:#e11d48 !important;">
-                                    <i class="bi bi-exclamation-triangle-fill"></i>
-                                </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="donor-last-date" class="form-label fw-bold">শেষ রক্তদানের তারিখ</label>
+                                <input type="date" id="donor-last-date" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="donor-status" class="form-label fw-bold">অবস্থা <span class="text-danger">*</span></label>
+                                <select id="donor-status" class="form-select" required>
+                                    <option value="Available">প্রস্তুত (Available)</option>
+                                    <option value="Unavailable">অনুপলব্ধ (Unavailable)</option>
+                                </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="blood-kpi-card shadow-sm border-0">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="kpi-info">
-                                    <p>শীর্ষ রক্তের গ্রুপ</p>
-                                    <h3 id="blood-top-group">O+, B+</h3>
-                                </div>
-                                <div class="blood-icon-box bg-purple-subtle text-purple">
-                                    <i class="bi bi-droplet-half"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-danger rounded-pill px-5"><i class="bi bi-save me-2"></i>সংরক্ষণ করুন</button>
+                    </form>
                 </div>
+            </div>
 
-                <!-- Dual Layout split sections -->
-                <div class="row g-4">
-                    <!-- Left: Transfusion Logs -->
-                    <div class="col-12 col-xxl-7">
-                        <div class="data-panel shadow-sm border-0 bg-white h-100">
-                            <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
-                                <div>
-                                    <h5 class="fw-bold text-dark m-0"><i class="bi bi-clock-history text-red me-2 text-danger"></i>রক্ত আদান-প্রদান রেজিস্ট্রি (Transfusion History)</h5>
-                                    <small class="text-muted">কে রক্ত দিল এবং কোন গর্ভবতী মাতা রক্ত গ্রহণ করলেন তার সম্পূর্ণ বিবরণী</small>
-                                </div>
-                                <button class="btn btn-danger rounded-pill px-4 btn-sm fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-add-blood-log">
-                                    <i class="bi bi-plus-circle me-1"></i> রক্তদান লগ করুন
-                                </button>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table align-middle table-hover text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th>রক্তগ্রহীতা (মাতা)</th>
-                                            <th>রক্তদাতা</th>
-                                            <th class="text-center">রক্তের গ্রুপ</th>
-                                            <th>তারিখ</th>
-                                            <th>হাসপাতাল / স্থান</th>
-                                            <th class="text-center">অবস্থা</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="blood-exchange-table-body">
-                                        <!-- Will be rendered dynamically via JS -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+            <!-- ============================================== -->
+            <!-- BLOOD DONOR LIST                               -->
+            <!-- ============================================== -->
+            <div id="section-blood-donor-list" class="dashboard-section" style="display: none;">
+                <div class="data-panel mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div>
+                        <h4 class="fw-bold text-danger m-0"><i class="bi bi-people-fill me-2"></i>রক্তদাতা তালিকা</h4>
+                        <p class="text-muted small m-0 mt-1">মোট: <span id="blood-donor-list-count">০</span> জন</p>
                     </div>
-
-                    <!-- Right: Active Donors Directory -->
-                    <div class="col-12 col-xxl-5">
-                        <div class="data-panel shadow-sm border-0 bg-white h-100">
-                            <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
-                                <div>
-                                    <h5 class="fw-bold text-dark m-0"><i class="bi bi-person-heart text-red me-2 text-danger"></i>সক্রিয় রক্তদাতা ডিরেক্টরি (Donors Database)</h5>
-                                    <small class="text-muted">জরুরী মুহূর্তে যোগাযোগের জন্য প্রস্তুত এলাকার রক্তদাতাগণ</small>
-                                </div>
-                                <button class="btn btn-outline-danger rounded-pill px-4 btn-sm fw-semibold" data-bs-toggle="modal" data-bs-target="#modal-add-donor">
-                                    <i class="bi bi-person-plus-fill me-1"></i> ডোনার যোগ করুন
-                                </button>
-                            </div>
-
-                            <!-- Search Filter bar -->
-                            <div class="row g-2 mb-3">
-                                <div class="col-sm-7 col-12">
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
-                                        <input type="text" id="donor-search-input" class="form-control border-start-0" placeholder="নাম বা এলাকা দিয়ে খুঁজুন..." onkeyup="filterDonorTable()">
-                                    </div>
-                                </div>
-                                <div class="col-sm-5 col-12">
-                                    <select id="donor-blood-filter" class="form-select" onchange="filterDonorTable()">
-                                        <option value="">সকল রক্তের গ্রুপ</option>
-                                        <option value="A+">A+ (এ পজিটিভ)</option>
-                                        <option value="A-">A- (এ নেগেটিভ)</option>
-                                        <option value="B+">B+ (বি পজিটিভ)</option>
-                                        <option value="B-">B- (বি নেগেটিভ)</option>
-                                        <option value="O+">O+ (ও পজিটিভ)</option>
-                                        <option value="O-">O- (ও নেগেটিভ)</option>
-                                        <option value="AB+">AB+ (এবি পজিটিভ)</option>
-                                        <option value="AB-">AB- (এবি নেগেটিভ)</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
-                                <table class="table align-middle table-hover text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th>রক্তদাতা</th>
-                                            <th class="text-center">রক্তের গ্রুপ</th>
-                                            <th>এলাকা</th>
-                                            <th>যোগাযোগ</th>
-                                            <th class="text-center">অবস্থা</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="blood-donor-table-body">
-                                        <!-- Will be rendered dynamically via JS -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="btn btn-outline-danger rounded-pill btn-sm" onclick="switchMenu('section-blood-donor-add', document.getElementById('nav-blood-donor-add'))">
+                        <i class="bi bi-plus-lg me-1"></i> নতুন দাতা যোগ
+                    </button>
                 </div>
-
-                <!-- Modal: Log Blood Transfusion Transaction -->
-                <div class="modal fade" id="modal-add-blood-log" tabindex="-1" aria-labelledby="modalAddBloodLogLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
-                            <div class="modal-header border-0 bg-red-subtle text-red p-4" style="border-radius: 16px 16px 0 0;">
-                                <h5 class="modal-title fw-bold text-danger" id="modalAddBloodLogLabel"><i class="bi bi-droplet-fill me-2"></i>রক্ত আদান-প্রদান রেকর্ড করুন</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <form id="form-add-blood-log" onsubmit="handleAddBloodLog(event)">
-                                <div class="modal-body p-4">
-                                    <div class="mb-3">
-                                        <label for="log-recipient-select" class="form-label fw-bold text-dark">রক্তগ্রহীতা (গর্ভবতী মাতা) <span class="text-danger">*</span></label>
-                                        <select id="log-recipient-select" class="form-select" required onchange="handleRecipientSelectChange(this)">
-                                            <!-- Dynamically populated from mothersDB + option for Others -->
-                                        </select>
-                                    </div>
-                                    
-                                    <!-- Visible if 'Others' is selected in Recipient -->
-                                    <div class="mb-3" id="log-custom-recipient-div" style="display: none;">
-                                        <label for="log-custom-recipient" class="form-label fw-bold text-dark">গ্রহীতার নাম ও বিবরণী (অন্যান্য)</label>
-                                        <input type="text" id="log-custom-recipient" class="form-control" placeholder="যেমন: রহিমা বেগম (বহিরাগত)">
-                                    </div>
-
-                                    <div class="row g-3 mb-3">
-                                        <div class="col-sm-8 col-12">
-                                            <label for="log-donor-name" class="form-label fw-bold text-dark">রক্তদাতার নাম <span class="text-danger">*</span></label>
-                                            <input type="text" id="log-donor-name" class="form-control" placeholder="যেমন: রাশেদ হাসান" required>
-                                        </div>
-                                        <div class="col-sm-4 col-12">
-                                            <label for="log-blood-group" class="form-label fw-bold text-dark">রক্তের গ্রুপ <span class="text-danger">*</span></label>
-                                            <select id="log-blood-group" class="form-select" required>
-                                                <option value="">গ্রুপ...</option>
-                                                <option value="A+">A+</option>
-                                                <option value="A-">A-</option>
-                                                <option value="B+">B+</option>
-                                                <option value="B-">B-</option>
-                                                <option value="O+">O+</option>
-                                                <option value="O-">O-</option>
-                                                <option value="AB+">AB+</option>
-                                                <option value="AB-">AB-</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="row g-3 mb-3">
-                                        <div class="col-sm-6 col-12">
-                                            <label for="log-date" class="form-label fw-bold text-dark">তারিখ <span class="text-danger">*</span></label>
-                                            <input type="date" id="log-date" class="form-control" required>
-                                        </div>
-                                        <div class="col-sm-6 col-12">
-                                            <label for="log-status" class="form-label fw-bold text-dark">অবস্থা <span class="text-danger">*</span></label>
-                                            <select id="log-status" class="form-select" required>
-                                                <option value="Completed">Completed (সম্পন্ন)</option>
-                                                <option value="Pending">Pending (অপেক্ষমান)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="log-location" class="form-label fw-bold text-dark">হাসপাতাল / রক্ত সঞ্চালনের স্থান <span class="text-danger">*</span></label>
-                                        <input type="text" id="log-location" class="form-control" placeholder="যেমন: ঢাকা মেডিকেল কলেজ হাসপাতাল" required>
-                                    </div>
-                                </div>
-                                <div class="modal-footer border-0 p-4 pt-0">
-                                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">বাতিল</button>
-                                    <button type="submit" class="btn btn-danger rounded-pill px-4">সংরক্ষণ করুন</button>
-                                </div>
-                            </form>
+                <div class="data-panel">
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-7">
+                            <input type="text" id="donor-search-input" class="form-control" placeholder="নাম বা এলাকা দিয়ে খুঁজুন..." onkeyup="filterDonorTable()">
+                        </div>
+                        <div class="col-md-5">
+                            <select id="donor-blood-filter" class="form-select" onchange="filterDonorTable()">
+                                <option value="">সকল রক্তের গ্রুপ</option>
+                                <option value="A+">A+</option><option value="A-">A-</option>
+                                <option value="B+">B+</option><option value="B-">B-</option>
+                                <option value="O+">O+</option><option value="O-">O-</option>
+                                <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                            </select>
                         </div>
                     </div>
-                </div>
-
-                <!-- Modal: Register New Available Donor -->
-                <div class="modal fade" id="modal-add-donor" tabindex="-1" aria-labelledby="modalAddDonorLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
-                            <div class="modal-header border-0 bg-red-subtle text-red p-4" style="border-radius: 16px 16px 0 0;">
-                                <h5 class="modal-title fw-bold text-danger" id="modalAddDonorLabel"><i class="bi bi-person-plus-fill me-2"></i>নতুন রক্তদাতা যুক্ত করুন</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <form id="form-add-donor" onsubmit="handleAddDonor(event)">
-                                <div class="modal-body p-4">
-                                    <div class="row g-3 mb-3">
-                                        <div class="col-sm-8 col-12">
-                                            <label for="donor-name" class="form-label fw-bold text-dark">রক্তদাতার নাম <span class="text-danger">*</span></label>
-                                            <input type="text" id="donor-name" class="form-control" placeholder="যেমন: শামীম রেজা" required>
-                                        </div>
-                                        <div class="col-sm-4 col-12">
-                                            <label for="donor-blood-group" class="form-label fw-bold text-dark">রক্তের গ্রুপ <span class="text-danger">*</span></label>
-                                            <select id="donor-blood-group" class="form-select" required>
-                                                <option value="">গ্রুপ...</option>
-                                                <option value="A+">A+</option>
-                                                <option value="A-">A-</option>
-                                                <option value="B+">B+</option>
-                                                <option value="B-">B-</option>
-                                                <option value="O+">O+</option>
-                                                <option value="O-">O-</option>
-                                                <option value="AB+">AB+</option>
-                                                <option value="AB-">AB-</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="row g-3 mb-3">
-                                        <div class="col-sm-6 col-12">
-                                            <label for="donor-age" class="form-label fw-bold text-dark">বয়স <span class="text-danger">*</span></label>
-                                            <input type="number" id="donor-age" class="form-control" min="18" max="65" placeholder="যেমন: ২৮" required>
-                                        </div>
-                                        <div class="col-sm-6 col-12">
-                                            <label for="donor-mobile" class="form-label fw-bold text-dark">মোবাইল নম্বর <span class="text-danger">*</span></label>
-                                            <input type="tel" id="donor-mobile" class="form-control" placeholder="যেমন: 017xxxxxxxx" pattern="^01[3-9]\d{8}$" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="donor-area" class="form-label fw-bold text-dark">এলাকা / বর্তমান ঠিকানা <span class="text-danger">*</span></label>
-                                        <input type="text" id="donor-area" class="form-control" placeholder="যেমন: মিরপুর ১২, ঢাকা" required>
-                                    </div>
-
-                                    <div class="row g-3">
-                                        <div class="col-sm-6 col-12">
-                                            <label for="donor-last-date" class="form-label fw-bold text-dark">শেষ রক্তদানের তারিখ</label>
-                                            <input type="date" id="donor-last-date" class="form-control">
-                                        </div>
-                                        <div class="col-sm-6 col-12">
-                                            <label for="donor-status" class="form-label fw-bold text-dark">প্রস্তুত অবস্থা <span class="text-danger">*</span></label>
-                                            <select id="donor-status" class="form-select" required>
-                                                <option value="Available">Available (প্রস্তুত)</option>
-                                                <option value="Unavailable">Unavailable (অনুপস্থিত/অসুস্থ)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer border-0 p-4 pt-0">
-                                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">বাতিল</button>
-                                    <button type="submit" class="btn btn-danger rounded-pill px-4">যুক্ত করুন</button>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-custom table-hover">
+                            <thead>
+                                <tr>
+                                    <th>আইডি</th>
+                                    <th>রক্তদাতা</th>
+                                    <th class="text-center">রক্তের গ্রুপ</th>
+                                    <th>বয়স</th>
+                                    <th>এলাকা</th>
+                                    <th>যোগাযোগ</th>
+                                    <th class="text-center">অবস্থা</th>
+                                </tr>
+                            </thead>
+                            <tbody id="blood-donor-table-body"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
+            <!-- ============================================== -->
+            <!-- BLOOD RECIPIENT LIST                           -->
+            <!-- ============================================== -->
+            <div id="section-blood-recipient-list" class="dashboard-section" style="display: none;">
+                <div class="data-panel mb-4">
+                    <h4 class="fw-bold text-danger m-0"><i class="bi bi-droplet-half me-2"></i>রক্ত গ্রহীতা তালিকা</h4>
+                    <p class="text-muted small m-0 mt-1">যারা রক্ত গ্রহণ করেছেন — আদান-প্রদান রেকর্ড</p>
+                </div>
+                <div class="data-panel mb-4">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-plus-circle text-danger me-2"></i>নতুন রক্ত গ্রহীতা রেকর্ড যোগ করুন</h5>
+                    <form id="form-add-blood-log" onsubmit="handleAddBloodLog(event)">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="log-recipient-select" class="form-label fw-bold">রক্তগ্রহীতা (মাতা) <span class="text-danger">*</span></label>
+                                <select id="log-recipient-select" class="form-select" required onchange="handleRecipientSelectChange(this)"></select>
+                            </div>
+                            <div class="col-md-6" id="log-custom-recipient-div" style="display: none;">
+                                <label for="log-custom-recipient" class="form-label fw-bold">গ্রহীতার নাম (অন্যান্য)</label>
+                                <input type="text" id="log-custom-recipient" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="log-donor-name" class="form-label fw-bold">রক্তদাতার নাম <span class="text-danger">*</span></label>
+                                <input type="text" id="log-donor-name" class="form-control" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="log-blood-group" class="form-label fw-bold">গ্রুপ <span class="text-danger">*</span></label>
+                                <select id="log-blood-group" class="form-select" required>
+                                    <option value="">...</option>
+                                    <option value="A+">A+</option><option value="A-">A-</option>
+                                    <option value="B+">B+</option><option value="B-">B-</option>
+                                    <option value="O+">O+</option><option value="O-">O-</option>
+                                    <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="log-date" class="form-label fw-bold">তারিখ <span class="text-danger">*</span></label>
+                                <input type="date" id="log-date" class="form-control" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="log-status" class="form-label fw-bold">অবস্থা</label>
+                                <select id="log-status" class="form-select" required>
+                                    <option value="Completed">সম্পন্ন</option>
+                                    <option value="Pending">অপেক্ষমান</option>
+                                </select>
+                            </div>
+                            <div class="col-md-8">
+                                <label for="log-location" class="form-label fw-bold">হাসপাতাল / স্থান <span class="text-danger">*</span></label>
+                                <input type="text" id="log-location" class="form-control" required>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button type="submit" class="btn btn-danger w-100 rounded-pill"><i class="bi bi-save me-2"></i>সংরক্ষণ</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="data-panel">
+                    <h5 class="fw-bold mb-3">রক্ত গ্রহীতাদের তালিকা</h5>
+                    <div class="table-responsive">
+                        <table class="table table-custom table-hover">
+                            <thead>
+                                <tr>
+                                    <th>রক্তগ্রহীতা</th>
+                                    <th>রক্তদাতা</th>
+                                    <th class="text-center">গ্রুপ</th>
+                                    <th>তারিখ</th>
+                                    <th>স্থান</th>
+                                    <th class="text-center">অবস্থা</th>
+                                </tr>
+                            </thead>
+                            <tbody id="blood-exchange-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
+
+    </div><!-- /app-shell -->
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -3119,6 +3023,27 @@
                 }
             });
         });
+
+        function handleLogin(event) {
+            event.preventDefault();
+            sessionStorage.setItem('gorbobotir_aynah_logged_in', '1');
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('app-shell').style.display = 'block';
+        }
+
+        function checkLoginState() {
+            if (sessionStorage.getItem('gorbobotir_aynah_logged_in') === '1') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('app-shell').style.display = 'block';
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('gorbobotir_aynah_logged_in');
+            document.getElementById('app-shell').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'flex';
+            document.getElementById('login-form').reset();
+        }
 
         function switchMenu(sectionId, element) {
             document.querySelectorAll('.dashboard-section').forEach(sec => sec.style.display = 'none');
@@ -3400,11 +3325,12 @@
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
+                    <td class="en-text small">${donor.id}</td>
                     <td>
                         <div class="fw-semibold text-dark">${donor.name}</div>
-                        <div class="small text-muted" style="font-size:0.75rem;">বয়স: ${toBengaliNumber(donor.age)} বছর</div>
                     </td>
                     <td class="text-center"><span class="blood-group-tag">${donor.bloodGroup}</span></td>
+                    <td>${toBengaliNumber(donor.age)}</td>
                     <td><i class="bi bi-geo-alt text-danger me-1"></i>${donor.area}</td>
                     <td class="en-text"><i class="bi bi-telephone-fill text-muted me-1"></i>${donor.mobile}</td>
                     <td class="text-center">${statusBadge}</td>
@@ -3497,11 +3423,6 @@
                 saveBloodDonationDatabase();
             }
 
-            // Close Modal
-            const modalEl = document.getElementById('modal-add-blood-log');
-            const modal = bootstrap.Modal.getInstance(modalEl);
-            if (modal) modal.hide();
-
             // Refresh tables & KPIs
             renderBloodExchangeTable();
             renderBloodDonorTable();
@@ -3539,33 +3460,16 @@
             bloodDonorsDB.push(newDonor);
             saveBloodDonationDatabase();
 
-            // Close Modal
-            const modalEl = document.getElementById('modal-add-donor');
-            const modal = bootstrap.Modal.getInstance(modalEl);
-            if (modal) modal.hide();
-
-            // Refresh tables & KPIs
             renderBloodDonorTable();
             updateBloodKPIs();
-
-            // Reset form
             document.getElementById('form-add-donor').reset();
-
             alert('✅ নতুন রক্তদাতা সফলভাবে তালিকাভুক্ত করা হয়েছে!');
+            switchMenu('section-blood-donor-list', document.getElementById('nav-blood-donor-list'));
         }
 
         function updateBloodKPIs() {
-            // Count total donors
-            const totalDonors = bloodDonorsDB.length;
-            document.getElementById('blood-total-donors').textContent = toBengaliNumber(totalDonors) + ' জন';
-
-            // Count successful transfusions (status Completed)
-            const completedCount = bloodDonationsDB.filter(log => log.status === 'Completed').length;
-            document.getElementById('blood-total-transfusions').textContent = toBengaliNumber(completedCount) + ' বার';
-
-            // Count pending urgent requests (status Pending)
-            const pendingCount = bloodDonationsDB.filter(log => log.status === 'Pending').length;
-            document.getElementById('blood-urgent-requests').textContent = toBengaliNumber(pendingCount) + ' জন';
+            const countEl = document.getElementById('blood-donor-list-count');
+            if (countEl) countEl.textContent = toBengaliNumber(bloodDonorsDB.length) + ' জন';
         }
 
 
@@ -3767,9 +3671,10 @@
             document.getElementById('sc-mother-gestation').textContent = toBengaliNumber(gestWeeks) + ' সপ্তাহ';
 
             const riskBadge = document.getElementById('sc-mother-risk-badge');
-            if (m.status === 'High Risk') { riskBadge.className = 'badge bg-warning text-dark px-3 py-1 rounded-pill'; riskBadge.textContent = 'উচ্চ ঝুঁকি'; }
-            else if (m.status === 'Critical') { riskBadge.className = 'badge bg-danger text-white px-3 py-1 rounded-pill'; riskBadge.textContent = 'ক্রিটিক্যাল'; }
-            else { riskBadge.className = 'badge bg-success text-white px-3 py-1 rounded-pill'; riskBadge.textContent = 'স্বাভাবিক'; }
+            riskBadge.className = 'sc-badge-risk';
+            if (m.status === 'High Risk') { riskBadge.classList.add('risk-high'); riskBadge.textContent = 'উচ্চ ঝুঁকি'; }
+            else if (m.status === 'Critical') { riskBadge.classList.add('risk-critical'); riskBadge.textContent = 'ক্রিটিক্যাল'; }
+            else { riskBadge.classList.add('risk-normal'); riskBadge.textContent = 'স্বাভাবিক'; }
 
             // Tab 1: Obstetric History
             renderObstetricRows(m);
@@ -4060,13 +3965,29 @@
         }
 
         // --- Calculate EDD from LMP ---
+        function addMonthsToDate(date, months) {
+            const d = new Date(date);
+            d.setMonth(d.getMonth() + months);
+            return d.toISOString().split('T')[0];
+        }
+
         function calculateEDDFromLMP() {
             const lmpInput = document.getElementById('reg-lmp');
             const eddInput = document.getElementById('reg-edd');
-            if (!lmpInput || !eddInput || !lmpInput.value) return;
+            if (!lmpInput || !lmpInput.value) return;
             const lmp = new Date(lmpInput.value);
-            const edd = new Date(lmp.getTime() + (280 * 24 * 60 * 60 * 1000));
-            eddInput.value = edd.toISOString().split('T')[0];
+            if (eddInput) {
+                const edd = new Date(lmp.getTime() + (280 * 24 * 60 * 60 * 1000));
+                eddInput.value = edd.toISOString().split('T')[0];
+            }
+            const v1 = document.getElementById('reg-visit1');
+            const v2 = document.getElementById('reg-visit2');
+            const v3 = document.getElementById('reg-visit3');
+            const v4 = document.getElementById('reg-visit4');
+            if (v1) v1.value = addMonthsToDate(lmp, 3);
+            if (v2) v2.value = addMonthsToDate(lmp, 6);
+            if (v3) v3.value = addMonthsToDate(lmp, 8);
+            if (v4) v4.value = addMonthsToDate(lmp, 9);
         }
 
         // --- Badge Radio Button Selection ---
@@ -4113,10 +4034,9 @@
             const name = document.getElementById('reg-name').value.trim();
             const age = parseInt(document.getElementById('reg-age').value) || 20;
             const bloodGroup = document.getElementById('reg-blood-group').value;
-            const status = document.getElementById('reg-status').value;
-            const nid = getDigitBoxValues('reg-nid-boxes');
-            const mobile = getDigitBoxValues('reg-mobile-boxes');
-            const coupleNo = getDigitBoxValues('reg-couple-boxes');
+            const status = document.getElementById('reg-status')?.value || 'Active';
+            const nid = document.getElementById('reg-nid-brn')?.value || '';
+            const mobile = document.getElementById('reg-mobile')?.value.trim() || '';
 
             if (!name || !bloodGroup || !mobile) {
                 alert('অনুগ্রহ করে সকল বাধ্যতামূলক (*) ক্ষেত্র পূরণ করুন।');
@@ -4128,36 +4048,46 @@
             const edd = document.getElementById('reg-edd').value || '';
 
             const newMother = {
-                id: newId, name, age, bloodGroup, status, nid, mobile, coupleNo,
-                brn: document.getElementById('reg-brn')?.value || '',
+                id: newId, name, age, bloodGroup, status, nid, mobile, coupleNo: '',
+                mcid: document.getElementById('reg-mcid')?.value || '',
+                brn: nid,
                 education: document.getElementById('reg-education')?.value || '',
                 husbandName: document.getElementById('reg-husband-name')?.value || '',
                 husbandAge: parseInt(document.getElementById('reg-husband-age')?.value) || 0,
                 husbandEdu: document.getElementById('reg-husband-edu')?.value || '',
                 husbandOcc: document.getElementById('reg-husband-occ')?.value || '',
-                occupation: document.getElementById('reg-occupation')?.value || '',
-                division: document.getElementById('reg-division')?.value || '',
-                district: document.getElementById('reg-district')?.value || '',
+                husbandBlood: document.getElementById('reg-husband-blood')?.value || '',
+                husbandMobile: document.getElementById('reg-husband-mobile')?.value || '',
+                occupation: document.getElementById('reg-mother-occ')?.value || '',
+                division: document.getElementById('reg-division')?.value || 'ঢাকা',
+                district: document.getElementById('reg-district')?.value || 'গাজীপুর',
                 upazila: document.getElementById('reg-upazila')?.value || '',
                 union: document.getElementById('reg-union')?.value || '',
+                unit: document.getElementById('reg-unit')?.value || '',
                 village: document.getElementById('reg-village')?.value || '',
                 ward: document.getElementById('reg-ward')?.value || '',
                 lmp, edd,
+                visit1: document.getElementById('reg-visit1')?.value || '',
+                visit2: document.getElementById('reg-visit2')?.value || '',
+                visit3: document.getElementById('reg-visit3')?.value || '',
+                visit4: document.getElementById('reg-visit4')?.value || '',
                 gravida: parseInt(document.getElementById('reg-gravida')?.value) || 1,
                 livingChildren: parseInt(document.getElementById('reg-living-children')?.value) || 0,
-                prevComplications: document.getElementById('reg-prev-complications')?.value || '',
-                currentSymptoms: document.getElementById('reg-current-symptoms')?.value || '',
-                height: document.getElementById('reg-height')?.value || '',
-                weight: document.getElementById('reg-weight')?.value || '',
-                preferredPlace: document.getElementById('reg-preferred-place')?.value || '',
-                preferredAttendant: document.getElementById('reg-preferred-attendant')?.value || '',
-                donorName: document.getElementById('reg-donor-name')?.value || '',
-                donorMobile: document.getElementById('reg-donor-mobile')?.value || '',
-                transport: document.getElementById('reg-transport')?.value || '',
-                transportMobile: document.getElementById('reg-transport-mobile')?.value || '',
-                hwName: document.getElementById('reg-hw-name')?.value || '',
-                hwId: document.getElementById('reg-hw-id')?.value || '',
-                collectionDate: document.getElementById('reg-collection-date')?.value || '',
+                lastChildAge: parseInt(document.getElementById('reg-last-child-age')?.value) || 0,
+                csectionCount: parseInt(document.getElementById('reg-csection-count')?.value) || 0,
+                normalDeliveryCount: parseInt(document.getElementById('reg-normal-delivery-count')?.value) || 0,
+                maternityAllowance: document.getElementById('reg-maternity-allowance')?.value || '',
+                prevComplications: '', currentSymptoms: '',
+                height: document.getElementById('reg-height-inch')?.value ? document.getElementById('reg-height-inch').value + ' ইঞ্চি' : '',
+                weight: document.getElementById('reg-weight')?.value ? document.getElementById('reg-weight').value + ' কেজি' : '',
+                preferredPlace: document.getElementById('reg-delivery-place')?.value || '',
+                fpMethod: document.getElementById('reg-fp-method')?.value || '',
+                preferredAttendant: '',
+                donorName: '', donorMobile: '', transport: '', transportMobile: '',
+                hwName: document.getElementById('reg-collector-name')?.value || '',
+                hwId: document.getElementById('reg-collector-designation')?.value || '',
+                hwMobile: document.getElementById('reg-collector-mobile')?.value || '',
+                collectionDate: new Date().toISOString().split('T')[0],
                 remarks: document.getElementById('reg-remarks')?.value || '',
                 photo: '',
                 medChecklist: { high_bp: false, heart_disease: false, pedal_edema: false, asthma: false, tuberculosis: false, diabetes: false, kidney_disease: false, prior_c_section: false, prior_stillbirth: false, anemia: false, pph_history: false, convulsion_history: false },
@@ -4174,9 +4104,9 @@
             saveMothersDatabase();
             renderRegistryTable();
 
-            // Reset form
             document.getElementById('new-mother-form').reset();
-            document.querySelectorAll('.badge-radio-btn.active').forEach(b => b.classList.remove('active'));
+            const dist = document.getElementById('reg-district');
+            if (dist) dist.value = 'গাজীপুর';
 
             alert('✅ নতুন মাতা "' + name + '" (ID: ' + newId + ') সফলভাবে নিবন্ধিত হয়েছে!');
             toggleRegistryView('list');
@@ -4195,10 +4125,12 @@
                 if (sectionId === 'section-registry') {
                     renderRegistryTable();
                 }
-                if (sectionId === 'section-blood') {
-                    renderBloodExchangeTable();
+                if (sectionId === 'section-blood-donor-list') {
                     renderBloodDonorTable();
                     updateBloodKPIs();
+                }
+                if (sectionId === 'section-blood-recipient-list') {
+                    renderBloodExchangeTable();
                     populateRecipientSelect();
                 }
             };
@@ -4206,10 +4138,9 @@
 
         // --- Initialize on Page Load ---
         document.addEventListener('DOMContentLoaded', function() {
+            checkLoginState();
             loadMothersDatabase();
             renderRegistryTable();
-            
-            // Initialize Blood Donation module
             loadBloodDonationDatabase();
             renderBloodExchangeTable();
             renderBloodDonorTable();
