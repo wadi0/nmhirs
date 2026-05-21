@@ -1403,3 +1403,252 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
+/* Dashboard: Image-style stat cards (3x3) */
+.stat-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+.stat-card {
+    position: relative;
+    min-height: 148px;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+.stat-card-bg-icon {
+    position: absolute;
+    left: 12px;
+    top: 8px;
+    font-size: 4.5rem;
+    color: rgba(255, 255, 255, 0.12);
+    line-height: 1;
+    pointer-events: none;
+}
+.stat-card-content {
+    flex: 1;
+    padding: 16px 18px 8px;
+    text-align: right;
+    color: #ffffff;
+    position: relative;
+    z-index: 1;
+}
+.stat-card-value {
+    font-size: 2.05rem;
+    font-weight: 800;
+    line-height: 1.15;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+.stat-card-unit {
+    font-size: 1.1rem;
+    font-weight: 600;
+    opacity: 0.95;
+}
+.stat-card-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 6px;
+    line-height: 1.4;
+    opacity: 1;
+    color: rgba(255, 255, 255, 0.96);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+}
+.stat-card-tag {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+}
+.stat-card-tag--up { background: rgba(255, 255, 255, 0.3); }
+.stat-card-tag--alert { background: rgba(0, 0, 0, 0.2); }
+.stat-card-tag--warn { background: rgba(0, 0, 0, 0.18); }
+.stat-card-tag--ok { background: rgba(255, 255, 255, 0.28); }
+.stat-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(0, 0, 0, 0.12);
+}
+.stat-card-arrow {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+}
+.stat-card--blue { background: #3498db; }
+.stat-card--blue .stat-card-footer { background: #2c80b8; }
+.stat-card--green { background: #27ae60; }
+.stat-card--green .stat-card-footer { background: #1f8c4d; }
+.stat-card--purple { background: #8e44ad; }
+.stat-card--purple .stat-card-footer { background: #6f3586; }
+.stat-card--rose { background: #c06c84; }
+.stat-card--rose .stat-card-footer { background: #9d5769; }
+.stat-card--orange { background: #e67e22; }
+.stat-card--orange .stat-card-footer { background: #c0651a; }
+.stat-card--amber { background: #f39c12; }
+.stat-card--amber .stat-card-footer { background: #c47e0e; }
+.stat-card--coral { background: #e74c3c; }
+.stat-card--coral .stat-card-footer { background: #b83c30; }
+.stat-card--red { background: #c0392b; }
+.stat-card--red .stat-card-footer { background: #962d22; }
+.stat-card--cyan { background: #16a085; }
+.stat-card--cyan .stat-card-footer { background: #11806a; }
+
+@media (max-width: 992px) {
+    .stat-card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 576px) {
+    .stat-card-grid { grid-template-columns: 1fr; }
+    .stat-card-value { font-size: 1.65rem; }
+}
+
+/* Dashboard: ANC chart legend */
+.anc-chart-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+.anc-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    display: inline-block;
+}
+.anc-legend-pos { background: #0d9488; }
+.anc-legend-neg { background: #f03e82; }
+
+/* Quick actions helpline */
+.quick-helpline {
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+/* Bangladesh map card */
+.bd-map-card {
+    padding: 24px 28px;
+}
+.bd-map-layout {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 28px;
+    align-items: start;
+}
+.bd-map-visual {
+    background: #f1f5f9;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    min-height: 460px;
+    overflow: hidden;
+}
+.bd-leaflet-map {
+    width: 100%;
+    height: 460px;
+    border-radius: 12px;
+    z-index: 1;
+    background: #e8eef4;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.bd-map-leaflet-label {
+    font-family: var(--font-bn);
+    font-weight: 600;
+    font-size: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--border-color);
+    color: var(--primary-purple);
+    padding: 4px 8px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.leaflet-container {
+    font-family: var(--font-bn);
+}
+.bd-map-tooltip {
+    background: #fff;
+    border: 1px solid #ddd6fe;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    color: var(--text-dark);
+    box-shadow: 0 4px 16px rgba(92, 53, 165, 0.12);
+    min-width: 200px;
+    text-align: left;
+    line-height: 1.55;
+}
+.bd-map-tooltip strong.text-purple {
+    color: var(--primary-purple);
+    font-size: 0.95rem;
+}
+.bd-map-sidebar {
+    font-size: 0.9rem;
+}
+.bd-division-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.bd-division-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    border: 1px solid transparent;
+}
+.bd-division-list li:hover,
+.bd-division-list li.active {
+    background: #f3ebff;
+    border-color: #ddd6fe;
+}
+.bd-division-list li span {
+    color: var(--text-dark);
+    font-weight: 500;
+}
+.bd-division-list li strong {
+    color: var(--primary-purple);
+    font-size: 0.82rem;
+}
+.bd-scale-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e0e7ff, #5c35a5, #f03e82);
+}
+
+@media (max-width: 992px) {
+    .bd-map-layout {
+        grid-template-columns: 1fr;
+    }
+    .bd-map-sidebar {
+        order: 2;
+    }
+}
+

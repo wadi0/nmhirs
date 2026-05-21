@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -131,51 +132,83 @@
                     </div>
                 </div>
 
-                <!-- KPI Grid -->
-                <div class="row g-4 mb-4">
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="data-panel py-3 px-4 h-100">
-                            <div class="kpi-card">
-                                <div class="kpi-icon kpi-blue"><i class="bi bi-people-fill"></i></div>
-                                <div class="kpi-info">
-                                    <p>মোট নিবন্ধিত গর্ভবতী</p>
-                                    <h3>৩.৫ মিলিয়ন <span class="fs-6 text-success fw-bold"><i class="bi bi-arrow-up-short"></i>৪.২%</span></h3>
-                                </div>
-                            </div>
+                <!-- KPI Stat Cards (Image-style grid) -->
+                <div class="stat-card-grid mb-4">
+                    <div class="stat-card stat-card--blue" onclick="document.getElementById('nav-registry').click()">
+                        <i class="bi bi-people-fill stat-card-bg-icon"></i>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value">৩.৫ <span class="stat-card-unit">মিলিয়ন</span></div>
+                            <div class="stat-card-label">মোট নিবন্ধিত গর্ভবতী</div>
+                            <span class="stat-card-tag stat-card-tag--up"><i class="bi bi-arrow-up-short"></i> ৪.২%</span>
                         </div>
+                        <div class="stat-card-footer"><span>আরো দেখুন</span><span class="stat-card-arrow"><i class="bi bi-arrow-right"></i></span></div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="data-panel py-3 px-4 h-100">
-                            <div class="kpi-card">
-                                <div class="kpi-icon kpi-pink"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                                <div class="kpi-info">
-                                    <p>ঝুঁকিপূর্ণ গর্ভাবস্থা</p>
-                                    <h3>৪৫,২৩০ <span class="fs-6 text-danger fw-bold"><i class="bi bi-exclamation-circle"></i> উচ্চ</span></h3>
-                                </div>
-                            </div>
+                    <div class="stat-card stat-card--green" onclick="document.getElementById('nav-overview').click()">
+                        <i class="bi bi-emoji-smile-fill stat-card-bg-icon"></i>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value">২,৪৫০</div>
+                            <div class="stat-card-label">মোট নবজাতক (০–৪৫ দিন)</div>
                         </div>
+                        <div class="stat-card-footer"><span>আরো দেখুন</span><span class="stat-card-arrow"><i class="bi bi-arrow-right"></i></span></div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="data-panel py-3 px-4 h-100">
-                            <div class="kpi-card">
-                                <div class="kpi-icon kpi-teal"><i class="bi bi-truck"></i></div>
-                                <div class="kpi-info">
-                                    <p>সক্রিয় রেফারেল</p>
-                                    <h3>১,২০৪ <span class="fs-6 text-warning fw-bold"><i class="bi bi-clock-history"></i> ট্রানজিটে</span></h3>
-                                </div>
-                            </div>
+                    <div class="stat-card stat-card--purple" onclick="document.getElementById('nav-national').click()">
+                        <i class="bi bi-person-vcard stat-card-bg-icon"></i>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value">২৭,৮৭০</div>
+                            <div class="stat-card-label">মোট মা ও শিশু (সংচিত)</div>
                         </div>
+                        <div class="stat-card-footer"><span>আরো দেখুন</span><span class="stat-card-arrow"><i class="bi bi-arrow-right"></i></span></div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="data-panel py-3 px-4 h-100">
-                            <div class="kpi-card">
-                                <div class="kpi-icon kpi-purple"><i class="bi bi-hospital"></i></div>
-                                <div class="kpi-info">
-                                    <p>কমিউনিটি ক্লিনিক লিংকড</p>
-                                    <h3>১৮,৪৫০ <span class="fs-6 text-primary fw-bold"><i class="bi bi-check-circle"></i> সক্রিয়</span></h3>
-                                </div>
-                            </div>
+                    <div class="stat-card stat-card--rose" onclick="document.getElementById('nav-blood-donor-list').click()">
+                        <i class="bi bi-heart-fill stat-card-bg-icon"></i>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value">১,২৩৭</div>
+                            <div class="stat-card-label">মোট রক্তদাতা</div>
                         </div>
+                        <div class="stat-card-footer"><span>আরো দেখুন</span><span class="stat-card-arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                    <div class="stat-card stat-card--orange" onclick="document.getElementById('nav-risk').click()">
+                        <i class="bi bi-exclamation-triangle-fill stat-card-bg-icon"></i>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value">৪৫,২৩০</div>
+                            <div class="stat-card-label">ঝুঁকিপূর্ণ গর্ভাবস্থা</div>
+                            <span class="stat-card-tag stat-card-tag--alert">উচ্চ</span>
+                        </div>
+                        <div class="stat-card-footer"><span>আরো দেখুন</span><span class="stat-card-arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                    <div class="stat-card stat-card--amber" onclick="document.getElementById('nav-registry').click()">
+                        <i class="bi bi-person-vcard stat-card-bg-icon"></i>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value">৮,৬২০</div>
+                            <div class="stat-card-label">দরিদ্র (ভাতা যোগ্য) গর্ভবতী</div>
+                        </div>
+                        <div class="stat-card-footer"><span>আরো দেখুন</span><span class="stat-card-arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                    <div class="stat-card stat-card--coral" onclick="document.getElementById('nav-referral').click()">
+                        <i class="bi bi-truck stat-card-bg-icon"></i>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value">১,২০৪</div>
+                            <div class="stat-card-label">সক্রিয় রেফারেল</div>
+                            <span class="stat-card-tag stat-card-tag--warn">ট্রানজিটে</span>
+                        </div>
+                        <div class="stat-card-footer"><span>আরো দেখুন</span><span class="stat-card-arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                    <div class="stat-card stat-card--red" onclick="document.getElementById('nav-risk').click()">
+                        <i class="bi bi-person-x-fill stat-card-bg-icon"></i>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value">১৩</div>
+                            <div class="stat-card-label">মোট মাতৃমৃত্যু</div>
+                        </div>
+                        <div class="stat-card-footer"><span>আরো দেখুন</span><span class="stat-card-arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                    <div class="stat-card stat-card--cyan" onclick="document.getElementById('nav-facility').click()">
+                        <i class="bi bi-hospital stat-card-bg-icon"></i>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value">১৮,৪৫০</div>
+                            <div class="stat-card-label">কমিউনিটি ক্লিনিক লিংকড</div>
+                            <span class="stat-card-tag stat-card-tag--ok">সক্রিয়</span>
+                        </div>
+                        <div class="stat-card-footer"><span>আরো দেখুন</span><span class="stat-card-arrow"><i class="bi bi-arrow-right"></i></span></div>
                     </div>
                 </div>
 
@@ -203,116 +236,83 @@
                 </div>
 
                 <div class="row g-4 mb-4">
-                    <!-- Chart 3: ANC Compliance (Bar) -->
                     <div class="col-lg-6 col-xl-6">
                         <div class="data-panel h-100">
-                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-bar-chart-steps text-teal me-2"></i>ANC কমপ্লায়েন্স ও মিসড ভিজিট</h5>
+                            <h5 class="fw-bold mb-2 text-dark"><i class="bi bi-bar-chart-steps text-teal me-2"></i>ANC কমপ্লায়েন্স ও মিসড ভিজিট</h5>
+                            <div class="d-flex flex-wrap gap-3 mb-3 small">
+                                <span class="anc-chart-legend"><span class="anc-legend-dot anc-legend-pos"></span> কমপ্লায়েন্স</span>
+                                <span class="anc-chart-legend"><span class="anc-legend-dot anc-legend-neg"></span> মিসড / ঘাটতি</span>
+                            </div>
                             <div style="position: relative; height: 260px;">
                                 <canvas id="chart-anc-compliance"></canvas>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Chart 4: Delays Prediction (Radar or Polar Area) -->
                     <div class="col-lg-6 col-xl-6">
-                        <div class="data-panel h-100">
-                            <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-hourglass-bottom text-purple me-2"></i>প্রসবকালীন বিলম্বের কারণ</h5>
-                            <div style="position: relative; height: 260px; display: flex; justify-content: center; align-items: center;">
-                                <canvas id="chart-delays-prediction"></canvas>
+                        <div class="data-panel h-100 d-flex flex-column">
+                            <h5 class="fw-bold mb-2 text-purple"><i class="bi bi-lightning-fill me-2"></i>কুইক অপারেশন</h5>
+                            <p class="text-muted small mb-3">দ্রুত মেনু — প্রয়োজনীয় মডিউলে সরাসরি যান</p>
+                            <div class="d-grid gap-2 flex-grow-1">
+                                <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-registry').click()">
+                                    <i class="bi bi-person-plus-fill me-2"></i> নতুন মাতৃ নিবন্ধন
+                                </button>
+                                <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-service-card').click()">
+                                    <i class="bi bi-card-heading me-2"></i> গর্ভকালীন সেবা কার্ড
+                                </button>
+                                <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-anc').click()">
+                                    <i class="bi bi-clipboard-pulse me-2"></i> ANC ট্র্যাকিং
+                                </button>
+                                <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-blood-donor-list').click()">
+                                    <i class="bi bi-droplet-half me-2"></i> রক্তদাতা তালিকা
+                                </button>
+                                <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-national').click()">
+                                    <i class="bi bi-speedometer2 me-2"></i> জাতীয় ড্যাশবোর্ড
+                                </button>
+                            </div>
+                            <div class="quick-helpline mt-3 text-center">
+                                <span class="d-block small fw-semibold text-muted mb-1"><i class="bi bi-telephone-fill me-1"></i> জরুরি হেল্পলাইন</span>
+                                <strong class="text-purple fs-5">১৬২৬৩</strong>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Recent Alerts & Quick Navigation Split -->
-                <div class="row g-4">
-                    <!-- Recent Alerts (Left) -->
-                    <div class="col-lg-7">
-                        <div class="data-panel h-100">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5 class="fw-bold m-0 text-danger"><i class="bi bi-bell-fill me-2"></i>সাম্প্রতিক জরুরি সংকেত (Live Critical Alerts)</h5>
-                                <span class="badge bg-danger rounded-pill px-2.5 py-1">লাইভ</span>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle">
-                                    <thead>
-                                        <tr class="text-muted small uppercase">
-                                            <th>মাতা ও আইডি</th>
-                                            <th>ঝুঁকির কারণ</th>
-                                            <th>অবস্থান</th>
-                                            <th>অ্যাকশন</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <span class="fw-bold d-block text-dark">রহিমা বেগম</span>
-                                                <small class="text-muted">NM-৮৪৭২৯১</small>
-                                            </td>
-                                            <td>
-                                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-semibold">Severe Pre-eclampsia</span>
-                                            </td>
-                                            <td>মিরপুর, ঢাকা</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-purple rounded-pill px-3" onclick="alert('সংশ্লিষ্ট স্বাস্থ্যকর্মীকে অবহিত করা হয়েছে।')">যোগাযোগ</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="fw-bold d-block text-dark">আয়েশা খাতুন</span>
-                                                <small class="text-muted">NM-৫৫৮২৯০</small>
-                                            </td>
-                                            <td>
-                                                <span class="badge bg-warning-subtle text-warning border border-warning-subtle fw-semibold text-dark">Severe Anemia</span>
-                                            </td>
-                                            <td>সাভার উপজেলা</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-purple rounded-pill px-3" onclick="alert('রেফারেল এন্ট্রি প্রক্রিয়াধীন।')">রেফার করুন</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="fw-bold d-block text-dark">ফারজানা হক</span>
-                                                <small class="text-muted">NM-১০০৩০</small>
-                                            </td>
-                                            <td>
-                                                <span class="badge bg-warning-subtle text-warning border border-warning-subtle fw-semibold text-dark">High BP (১৫০/৯৫)</span>
-                                            </td>
-                                            <td>টংগী, গাজীপুর</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-purple rounded-pill px-3" onclick="alert('ANC ফলো-আপ নোটিফিকেশন পাঠানো হয়েছে।')">ফলো-আপ</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quick Operations (Right) -->
-                    <div class="col-lg-5">
-                        <div class="data-panel h-100 d-flex flex-column justify-content-between">
-                            <div>
-                                <h5 class="fw-bold mb-3 text-purple"><i class="bi bi-lightning-fill me-2"></i>কুইক অপারেশন (Quick Actions)</h5>
-                                <p class="text-muted small">মাতৃত্ব ও NMHIRS ইকোসিস্টেমের গুরুত্বপূর্ণ ফিচারে সরাসরি প্রবেশ করুন:</p>
-                                <div class="d-flex flex-column gap-2 mt-3">
-                                    <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-overview').click()">
-                                        <i class="bi bi-grid-1x2-fill me-2 text-pink"></i> মায়ের ড্যাশবোর্ড ওভারভিউ
-                                    </button>
-                                    <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-national').click()">
-                                        <i class="bi bi-speedometer2 me-2 text-primary"></i> জাতীয় মাতৃস্বাস্থ্য ড্যাশবোর্ড
-                                    </button>
-                                    <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-registry').click()">
-                                        <i class="bi bi-card-list me-2 text-success"></i> মাতৃ নিবন্ধন ডাটাবেস
-                                    </button>
-                                    <button class="btn btn-outline-purple text-start py-2.5 px-3 rounded-3" onclick="document.getElementById('nav-rbac').click()">
-                                        <i class="bi bi-diagram-3-fill me-2 text-warning"></i> স্টেকহোল্ডার ও আরএবিসি (RBAC)
-                                    </button>
+                <!-- Bangladesh Map — Full Width -->
+                <div class="row g-4 mb-4">
+                    <div class="col-12">
+                        <div class="data-panel bd-map-card">
+                            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+                                <div>
+                                    <h5 class="fw-bold mb-1 text-dark"><i class="bi bi-geo-alt-fill text-purple me-2"></i>বাংলাদেশ — মাতৃস্বাস্থ্য কভারেজ মানচিত্র</h5>
+                                    <p class="text-muted small m-0">বিভাগভিত্তিক নিবন্ধিত গর্ভবতী মায়ের ঘনত্ব (প্রতি লক্ষ জনসংখ্যা)</p>
                                 </div>
+                                <div id="bd-map-tooltip" class="bd-map-tooltip"><strong class="text-purple">ঢাকা বিভাগ</strong><br><span class="text-muted">নিবন্ধিত গর্ভবতী:</span> <strong>৮.৪৫ লক্ষ</strong><br><span class="text-muted">ঝুঁকিপূর্ণ হার:</span> <strong>১৪%</strong></div>
                             </div>
-                            <div class="bg-light p-3 rounded-3 border mt-4 text-center">
-                                <span class="fw-bold text-dark d-block mb-1" style="font-size: 0.85rem;"><i class="bi bi-phone-fill me-1"></i> মাতৃত্ব হেল্পলাইন</span>
-                                <h6 class="text-danger fw-bold m-0 fs-5"><i class="bi bi-telephone-outbound-fill"></i> ১৬২৬৩</h6>
+                            <div class="bd-map-layout">
+                                <div class="bd-map-visual">
+                                    <div id="bd-leaflet-map" class="bd-leaflet-map" role="img" aria-label="বাংলাদেশ ভৌগোলিক মানচিত্র"></div>
+                                </div>
+                                <div class="bd-map-sidebar">
+                                    <h6 class="fw-bold text-purple mb-3">বিভাগভিত্তিক তথ্য</h6>
+                                    <ul class="bd-division-list" id="bd-division-list">
+                                        <li data-division="ঢাকা"><span>ঢাকা</span><strong>৮.৪৫ লক্ষ</strong></li>
+                                        <li data-division="চট্টগ্রাম"><span>চট্টগ্রাম</span><strong>৬.২০ লক্ষ</strong></li>
+                                        <li data-division="রাজশাহী"><span>রাজশাহী</span><strong>৫.১২ লক্ষ</strong></li>
+                                        <li data-division="রংপুর"><span>রংপুর</span><strong>৪.৮২ লক্ষ</strong></li>
+                                        <li data-division="খুলনা"><span>খুলনা</span><strong>৪.১০ লক্ষ</strong></li>
+                                        <li data-division="ময়মনসিংহ"><span>ময়মনসিংহ</span><strong>৩.৯৫ লক্ষ</strong></li>
+                                        <li data-division="বরিশাল"><span>বরিশাল</span><strong>৩.৬৫ লক্ষ</strong></li>
+                                        <li data-division="সিলেট"><span>সিলেট</span><strong>২.৭৮ লক্ষ</strong></li>
+                                    </ul>
+                                    <div class="bd-map-scale mt-3">
+                                        <span class="small text-muted d-block mb-2">নিবন্ধন ঘনত্ব</span>
+                                        <div class="bd-scale-bar"></div>
+                                        <div class="d-flex justify-content-between small text-muted mt-1">
+                                            <span>কম</span><span>বেশি</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2775,6 +2775,8 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js" crossorigin="anonymous"></script>
     
     <!-- Functional Scripts -->
     <script>
@@ -2900,38 +2902,48 @@
                 }
             });
 
-            // Chart 3: ANC Compliance
+            // Chart 3: ANC Compliance + Missed (positive & negative grouped)
             const ctxAnc = document.getElementById('chart-anc-compliance').getContext('2d');
-            const ancChart = new Chart(ctxAnc, {
+            new Chart(ctxAnc, {
                 type: 'bar',
                 data: {
-                    labels: ['ANC 1', 'ANC 2', 'ANC 3', 'ANC 4', 'মিসড ভিজিট'],
-                    datasets: [{
-                        label: 'কমপ্লায়েন্স শতকরা (%)',
-                        data: [82, 75, 70, 65, 12],
-                        backgroundColor: ['#3b82f6', '#0d9488', '#8b5cf6', '#10b981', '#ef4444'],
-                        borderRadius: 8,
-                        barThickness: 24
-                    }]
+                    labels: ['ANC 1', 'ANC 2', 'ANC 3', 'ANC 4'],
+                    datasets: [
+                        {
+                            label: 'কমপ্লায়েন্স (%)',
+                            data: [82, 75, 70, 65],
+                            backgroundColor: '#0d9488',
+                            borderRadius: 6,
+                            barPercentage: 0.75,
+                            categoryPercentage: 0.7
+                        },
+                        {
+                            label: 'মিসড / ঘাটতি (%)',
+                            data: [18, 25, 30, 35],
+                            backgroundColor: '#f03e82',
+                            borderRadius: 6,
+                            barPercentage: 0.75,
+                            categoryPercentage: 0.7
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: false
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 14,
+                                padding: 16,
+                                font: { family: "'Noto Sans Bengali', sans-serif", size: 12 }
+                            }
                         },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed.y !== null) {
-                                        label += toBengaliNumber(context.parsed.y) + '%';
-                                    }
-                                    return label;
+                                    return (context.dataset.label || '') + ': ' + toBengaliNumber(context.parsed.y) + '%';
                                 }
                             }
                         }
@@ -2940,90 +2952,197 @@
                         y: {
                             beginAtZero: true,
                             max: 100,
+                            stacked: false,
                             ticks: {
-                                callback: function(value) {
-                                    return toBengaliNumber(value) + '%';
-                                }
+                                callback: function(value) { return toBengaliNumber(value) + '%'; }
                             },
-                            grid: {
-                                color: '#f1f5f9'
-                            }
+                            grid: { color: '#f1f5f9' }
                         },
                         x: {
-                            grid: {
-                                display: false
-                            }
+                            grid: { display: false }
                         }
                     }
                 }
             });
 
-            // Chart 4: Delays Prediction
-            const ctxDelays = document.getElementById('chart-delays-prediction').getContext('2d');
-            const delaysChart = new Chart(ctxDelays, {
-                type: 'polarArea',
-                data: {
-                    labels: ['Delay-1: সিদ্ধান্ত নিতে দেরি', 'Delay-2: পৌঁছাতে দেরি', 'Delay-3: চিকিৎসায় দেরি', 'অন্যান্য কারণ'],
-                    datasets: [{
-                        data: [42, 35, 15, 8],
-                        backgroundColor: [
-                            'rgba(239, 68, 68, 0.7)',
-                            'rgba(245, 158, 11, 0.7)',
-                            'rgba(59, 130, 246, 0.7)',
-                            'rgba(148, 163, 184, 0.7)'
-                        ],
-                        borderColor: [
-                            '#ef4444',
-                            '#f59e0b',
-                            '#3b82f6',
-                            '#94a3b8'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                boxWidth: 12,
-                                padding: 10,
-                                font: {
-                                    family: "'Noto Sans Bengali', sans-serif",
-                                    size: 11
-                                }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.raw !== null) {
-                                        label += toBengaliNumber(context.raw) + '%';
-                                    }
-                                    return label;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        r: {
-                            ticks: {
-                                display: false
-                            },
-                            grid: {
-                                color: '#e2e8f0'
-                            }
-                        }
-                    }
-                }
-            });
+            initBangladeshMap();
         });
+
+        const BD_DIVISION_META = {
+            'Dhaka':       { bn: 'ঢাকা',       reg: '৮.৪৫ লক্ষ', risk: '১৪%', color: '#5c35a5' },
+            'Chittagong':  { bn: 'চট্টগ্রাম',  reg: '৬.২০ লক্ষ', risk: '১৩%', color: '#7c3aed' },
+            'Rajshahi':    { bn: 'রাজশাহী',    reg: '৫.১২ লক্ষ', risk: '১১%', color: '#8b5cf6' },
+            'Rangpur':     { bn: 'রংপুর',      reg: '৪.৮২ লক্ষ', risk: '১২%', color: '#a78bfa' },
+            'Khulna':      { bn: 'খুলনা',      reg: '৪.১০ লক্ষ', risk: '১১%', color: '#0d9488' },
+            'Mymensingh':  { bn: 'ময়মনসিংহ',  reg: '৩.৯৫ লক্ষ', risk: '১০%', color: '#14b8a6' },
+            'Barisal':     { bn: 'বরিশাল',     reg: '৩.৬৫ লক্ষ', risk: '১০%', color: '#f03e82' },
+            'Sylhet':      { bn: 'সিলেট',      reg: '২.৭৮ লক্ষ', risk: '৯%',  color: '#c084fc' }
+        };
+
+        let bdMapInstance = null;
+        let bdGeoLayer = null;
+        let bdMapActiveDivision = 'Dhaka';
+
+        function transformHcGeoJson(geo) {
+            const tr = geo['hc-transform'] && geo['hc-transform']['default'];
+            if (!tr || typeof proj4 === 'undefined') return geo;
+            const crsKey = 'BDHC';
+            proj4.defs(crsKey, tr.crs);
+
+            const s = tr.jsonmarginX || 0;
+            const r = tr.jsonmarginY || 0;
+            const n = tr.jsonres || 1;
+            const l = tr.scale || 1;
+            const h = tr.xoffset || 0;
+            const c = tr.yoffset || 0;
+            const xpan = tr.xpan || 0;
+            const ypan = tr.ypan || 0;
+
+            function toLonLat(pair) {
+                const px = (((pair[0] - s) / n) - xpan) / l + h;
+                const py = (((pair[1] - r) / n) + ypan) / l + c;
+                const out = proj4(crsKey, 'EPSG:4326', [px, py]);
+                return [out[0], out[1]];
+            }
+
+            function walkCoords(coords) {
+                if (typeof coords[0] === 'number') return toLonLat(coords);
+                return coords.map(walkCoords);
+            }
+
+            return {
+                type: 'FeatureCollection',
+                features: geo.features.map(function(feat) {
+                    const geom = feat.geometry;
+                    return {
+                        type: 'Feature',
+                        properties: feat.properties,
+                        geometry: {
+                            type: geom.type,
+                            coordinates: walkCoords(geom.coordinates)
+                        }
+                    };
+                })
+            };
+        }
+
+        async function initBangladeshMap() {
+            const mapEl = document.getElementById('bd-leaflet-map');
+            const tooltip = document.getElementById('bd-map-tooltip');
+            if (!mapEl || typeof L === 'undefined') return;
+
+            if (bdMapInstance) {
+                bdMapInstance.remove();
+                bdMapInstance = null;
+            }
+
+            bdMapInstance = L.map('bd-leaflet-map', {
+                scrollWheelZoom: true,
+                zoomControl: true,
+                attributionControl: true
+            }).setView([23.75, 90.4], 7);
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+                maxZoom: 12,
+                subdomains: 'abcd',
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
+            }).addTo(bdMapInstance);
+
+            function applyDivisionStyles(activeLayer) {
+                if (!bdGeoLayer) return;
+                bdGeoLayer.eachLayer(function(l) {
+                    const n = l.feature.properties.name;
+                    const m = BD_DIVISION_META[n];
+                    const isActive = l === activeLayer;
+                    l.setStyle({
+                        fillColor: m ? m.color : '#94a3b8',
+                        fillOpacity: isActive ? 0.88 : 0.62,
+                        color: isActive ? '#ffffff' : 'rgba(255,255,255,0.85)',
+                        weight: isActive ? 3 : 1.8
+                    });
+                });
+            }
+
+            function showDivision(nameEn, layer) {
+                const meta = BD_DIVISION_META[nameEn];
+                if (!meta || !tooltip) return;
+                bdMapActiveDivision = nameEn;
+                tooltip.innerHTML = '<strong class="text-purple">' + meta.bn + ' বিভাগ</strong><br><span class="text-muted">নিবন্ধিত গর্ভবতী:</span> <strong>' + meta.reg + '</strong><br><span class="text-muted">ঝুঁকিপূর্ণ হার:</span> <strong>' + meta.risk + '</strong>';
+                document.querySelectorAll('#bd-division-list li').forEach(li => li.classList.remove('active'));
+                const li = document.querySelector('#bd-division-list li[data-division="' + meta.bn + '"]');
+                if (li) li.classList.add('active');
+                applyDivisionStyles(layer || null);
+            }
+
+            try {
+                const resp = await fetch('assets/bd-all.geo.json');
+                const rawGeo = await resp.json();
+                const geo = transformHcGeoJson(rawGeo);
+
+                bdGeoLayer = L.geoJSON(geo, {
+                    style: function(feature) {
+                        const name = feature.properties.name;
+                        const meta = BD_DIVISION_META[name] || { color: '#94a3b8' };
+                        return {
+                            fillColor: meta.color,
+                            fillOpacity: 0.72,
+                            color: '#ffffff',
+                            weight: 2
+                        };
+                    },
+                    onEachFeature: function(feature, layer) {
+                        const name = feature.properties.name;
+                        const meta = BD_DIVISION_META[name];
+                        if (meta) {
+                            layer.bindTooltip(meta.bn, {
+                                permanent: true,
+                                direction: 'center',
+                                className: 'bd-map-leaflet-label',
+                                opacity: 0.95
+                            });
+                        }
+                        layer.on({
+                            mouseover: function(e) {
+                                showDivision(name, e.target);
+                            },
+                            mouseout: function() {
+                                const activeLayer = bdGeoLayer.getLayers().find(function(l) {
+                                    return l.feature.properties.name === bdMapActiveDivision;
+                                });
+                                showDivision(bdMapActiveDivision, activeLayer || null);
+                            },
+                            click: function(e) {
+                                showDivision(name, e.target);
+                                bdMapInstance.fitBounds(e.target.getBounds(), { padding: [28, 28], maxZoom: 8 });
+                            }
+                        });
+                    }
+                }).addTo(bdMapInstance);
+
+                bdMapInstance.fitBounds(bdGeoLayer.getBounds(), { padding: [20, 20] });
+                showDivision('Dhaka', null);
+            } catch (err) {
+                console.warn('Map data load failed', err);
+                if (tooltip) tooltip.textContent = 'মানচিত্র লোড করতে সমস্যা হয়েছে';
+            }
+
+            document.querySelectorAll('#bd-division-list li').forEach(li => {
+                li.addEventListener('mouseenter', function() {
+                    const bn = this.getAttribute('data-division');
+                    const entry = Object.entries(BD_DIVISION_META).find(([, m]) => m.bn === bn);
+                    if (entry && bdGeoLayer) {
+                        bdGeoLayer.eachLayer(function(layer) {
+                            if (layer.feature.properties.name === entry[0]) {
+                                showDivision(entry[0], layer);
+                                layer.fire('mouseover');
+                            }
+                        });
+                    }
+                });
+            });
+
+            setTimeout(function() { bdMapInstance.invalidateSize(); }, 300);
+        }
 
         function handleLogin(event) {
             event.preventDefault();
@@ -3067,6 +3186,10 @@
             }
             
             window.scrollTo(0,0);
+
+            if (sectionId === 'section-main-dashboard' && bdMapInstance) {
+                setTimeout(function() { bdMapInstance.invalidateSize(); }, 250);
+            }
         }
 
         function toggleSidebar() {
