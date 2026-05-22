@@ -721,10 +721,10 @@
 
         .chart-container {
             display: flex;
-            align-items: flex-end;
+            align-items: flex-start;
             justify-content: space-between;
             height: 180px;
-            padding-top: 20px;
+            padding-top: 70px;
             border-bottom: 1px solid #f1f5f9;
             padding-bottom: 10px;
         }
@@ -734,6 +734,7 @@
             flex-direction: column;
             align-items: center;
             width: 18%;
+            margin-top: 0;
         }
 
         .bar-wrap {
@@ -766,6 +767,7 @@
             font-weight: 600;
             font-family: var(--font-en);
             margin-bottom: 6px;
+            margin-top: 40px;
             color: var(--text-muted);
         }
 
@@ -2911,8 +2913,8 @@
                             <div class="data-panel text-center d-flex flex-column justify-content-center h-100"
                                 style="background: linear-gradient(135deg, var(--primary-teal), #0f766e); color: white; border: none;">
                                 <i class="bi bi-footprints-fill fs-1 opacity-75 mb-3"></i>
-                                <h3 class="fw-bold mb-1">কিক কাউন্টার</h3>
-                                <h1 class="display-1 fw-bold en-text mb-0 mt-3">16</h1>
+                                <h3 class="fw-bold mb-1">কিক কাউন্ট</h3>
+                                <h1 class="display-1 fw-bold en-text mb-0 mt-3">১৬</h1>
                                 <p class="opacity-75 fw-medium mb-5">আজকের মোট কিক (লক্ষ্য: ১০)</p>
                                 <button class="btn btn-light btn-lg rounded-pill fw-bold text-teal shadow clickable"
                                     style="color: var(--primary-teal);" onclick="alert('কিক রেকর্ড করা হয়েছে')"><i
@@ -2921,32 +2923,27 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="data-panel">
-                                <h4 class="fw-bold mb-4">কিক হিস্ট্রি চার্ট</h4>
+                                <h4 class="fw-bold mb-5">কিক হিস্ট্রি চার্ট</h4>
                                 <div class="chart-container">
-                                    <div class="chart-col"><span class="chart-val">6</span>
+                                    <div class="chart-col"><span class="chart-val">৬</span>
                                         <div class="bar-wrap">
                                             <div class="chart-bar" style="height: 40%;"></div>
-                                        </div><span class="chart-label">সকাল</span>
+                                        </div><span class="chart-label">রাত<br><small class="text-muted" style="font-size: 0.65rem;">12:01 AM-6:00 AM</small></span>
                                     </div>
-                                    <div class="chart-col"><span class="chart-val">10</span>
+                                    <div class="chart-col"><span class="chart-val">১০</span>
                                         <div class="bar-wrap">
                                             <div class="chart-bar" style="height: 60%;"></div>
-                                        </div><span class="chart-label">দুপুর</span>
+                                        </div><span class="chart-label">ভোর<br><small class="text-muted" style="font-size: 0.65rem;">6:01 AM-12:00 PM</small></span>
                                     </div>
-                                    <div class="chart-col active"><span class="chart-val">16</span>
+                                    <div class="chart-col active"><span class="chart-val">১৬</span>
                                         <div class="bar-wrap">
                                             <div class="chart-bar active" style="height: 100%;"></div>
-                                        </div><span class="chart-label fw-bold text-dark">বিকাল</span>
+                                        </div><span class="chart-label fw-bold text-dark">দুপুর<br><small class="text-muted" style="font-size: 0.65rem;">12:01 PM-6:00 PM</small></span>
                                     </div>
-                                    <div class="chart-col"><span class="chart-val">12</span>
+                                    <div class="chart-col"><span class="chart-val">১২</span>
                                         <div class="bar-wrap">
                                             <div class="chart-bar" style="height: 75%;"></div>
-                                        </div><span class="chart-label">সন্ধ্যা</span>
-                                    </div>
-                                    <div class="chart-col"><span class="chart-val">8</span>
-                                        <div class="bar-wrap">
-                                            <div class="chart-bar" style="height: 50%;"></div>
-                                        </div><span class="chart-label">রাত</span>
+                                        </div><span class="chart-label">সন্ধ্যা<br><small class="text-muted" style="font-size: 0.65rem;">6:01 PM-12:00 AM</small></span>
                                     </div>
                                 </div>
                             </div>
