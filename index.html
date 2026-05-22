@@ -4434,15 +4434,15 @@
                         </div>
                     </div>
 
-                    <!-- Delay Prediction Model Card -->
+                    <!-- AI Recommendation Engine -->
                     <div class="data-panel shadow-sm p-4 rounded-4 border-0 bg-white">
                         <div
                             class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-2 border-bottom">
                             <div>
-                                <h5 class="fw-bold text-dark m-0"><i class="bi bi-cpu-fill text-purple me-1"></i> ডিলে
-                                    (Delay) প্রেডিকশন মডেল</h5>
-                                <p class="text-muted small m-0 mt-1">প্রসবকালীন চিকিৎসা পেতে তিনটি স্তরের সম্ভাব্য
-                                    বিলম্ব পূর্বাভাস ও কভারেজ মডেল</p>
+                                <h5 class="fw-bold text-dark m-0"><i class="bi bi-lightning-charge-fill text-purple me-1"></i> এআই (AI)
+                                    রিকমেন্ডেশন ইঞ্জিন</h5>
+                                <p class="text-muted small m-0 mt-1">বিগত ৩০ দিনের রিয়েল-টাইম ডাটাবেস বিশ্লেষণ ভিত্তিক
+                                    স্বয়ংক্রিয় সুপারিশ</p>
                             </div>
                             <div class="mt-2 mt-md-0">
                                 <span
@@ -4452,103 +4452,32 @@
                             </div>
                         </div>
 
-                        <div class="row g-4">
-                            <!-- Left Side: Three Progress Bars -->
-                            <div class="col-lg-7">
-                                <div class="d-flex flex-column gap-3">
-                                    <!-- Progress 1 -->
-                                    <div class="premium-progress-wrapper">
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <span class="fw-bold text-dark small"><i
-                                                    class="bi bi-hourglass-split text-danger me-1"></i> Delay-1:
-                                                সিদ্ধান্ত নিতে দেরি</span>
-                                            <span class="en-text text-danger fw-bold">42%</span>
-                                        </div>
-                                        <div class="progress" style="height: 10px; border-radius: 6px;">
-                                            <div class="progress-bar bg-danger progress-bar-shiny" style="width: 42%;">
-                                            </div>
-                                        </div>
-                                        <p class="mt-2 mb-0"
-                                            style="font-size: 0.88rem; line-height: 1.5; color: #334155; font-weight: 500;">
-                                            পারিবারিক অসচেতনতা, প্রসব পরিকল্পনার অভাব, প্রসব ব্যথার লক্ষণ বুঝতে না পারা
-                                            ও জরুরি খরচের চিন্তাজনিত বিলম্ব।
-                                        </p>
-                                    </div>
-
-                                    <!-- Progress 2 -->
-                                    <div class="premium-progress-wrapper">
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <span class="fw-bold text-dark small"><i
-                                                    class="bi bi-geo-alt-fill text-warning me-1"></i> Delay-2: পৌঁছাতে
-                                                দেরি</span>
-                                            <span class="en-text text-warning fw-bold">35%</span>
-                                        </div>
-                                        <div class="progress" style="height: 10px; border-radius: 6px;">
-                                            <div class="progress-bar bg-warning progress-bar-shiny" style="width: 35%;">
-                                            </div>
-                                        </div>
-                                        <p class="mt-2 mb-0"
-                                            style="font-size: 0.88rem; line-height: 1.5; color: #334155; font-weight: 500;">
-                                            ভৌগোলিক দূরত্ব, যাতায়াতের জন্য যানবাহনের অভাব, অনুন্নত যোগাযোগ ব্যবস্থা ও
-                                            রাস্তাঘাটে বিলম্ব।
-                                        </p>
-                                    </div>
-
-                                    <!-- Progress 3 -->
-                                    <div class="premium-progress-wrapper">
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <span class="fw-bold text-dark small"><i
-                                                    class="bi bi-hospital-fill text-primary me-1"></i> Delay-3: চিকিৎসায়
-                                                দেরি</span>
-                                            <span class="en-text text-primary fw-bold">15%</span>
-                                        </div>
-                                        <div class="progress" style="height: 10px; border-radius: 6px;">
-                                            <div class="progress-bar bg-primary progress-bar-shiny" style="width: 15%;">
-                                            </div>
-                                        </div>
-                                        <p class="mt-2 mb-0"
-                                            style="font-size: 0.88rem; line-height: 1.5; color: #334155; font-weight: 500;">
-                                            হাসপাতালে পৌঁছানোর পর প্রশাসনিক প্রক্রিয়া, জরুরি সরঞ্জাম বা জীবনরক্ষাকারী
-                                            ওষুধের ঘাটতি ও বিশেষায়িত ডাক্তারের অপ্রাপ্যতা।
-                                        </p>
-                                    </div>
+                        <div class="ai-recommendation-box d-flex flex-column justify-content-between">
+                            <div>
+                                <p class="text-muted small mb-0" style="line-height: 1.6; font-size: 0.9rem;">
+                                    বিগত ৩০ দিনের সংগৃহীত রিয়েল-টাইম ডাটাবেস বিশ্লেষণ করে দেখা যাচ্ছে যে,
+                                    <strong>"Delay-1: সিদ্ধান্ত নিতে দেরি"</strong> বরিশাল বিভাগে সর্বাধিক (৪২%)
+                                    জটিলতার সৃষ্টি করেছে।
+                                </p>
+                                <div class="p-4 bg-white rounded-3 border border-purple-subtle mt-4" style="background: linear-gradient(135deg, #f5f3ff, #ede9fe);">
+                                    <span class="fw-bold text-purple d-block mb-2" style="font-size: 0.9rem;"><i
+                                            class="bi bi-check-circle-fill text-success me-1"></i> প্রস্তাবিত
+                                        এআই অ্যাকশন:</span>
+                                    <p class="text-muted small m-0"
+                                        style="font-size: 0.85rem; line-height: 1.6;">
+                                        বরিশাল বিভাগের ৪টি ঝুঁকিপূর্ণ ইউনিয়নে মাঠপর্যায়ের স্বাস্থ্যকর্মীদের
+                                        মাধ্যমে ঘরে ঘরে প্রসব পরিকল্পনা (Birth Plan) ক্যাম্পেইন জোরদার করুন এবং
+                                        কমিউনিটি ক্লিনিকগুলোতে জরুরি রক্তের গ্রুপ লিস্টিং সক্রিয় করার পরামর্শ
+                                        দেওয়া হলো।
+                                    </p>
                                 </div>
                             </div>
-
-                            <!-- Right Side: AI Analytics Recommendation Box -->
-                            <div class="col-lg-5">
-                                <div class="ai-recommendation-box d-flex flex-column justify-content-between">
-                                    <div>
-                                        <h6 class="fw-bold text-purple mb-3 d-flex align-items-center">
-                                            <i class="bi bi-lightning-charge-fill text-purple me-2"></i> এআই (AI)
-                                            রিকমেন্ডেশন ইঞ্জিন
-                                        </h6>
-                                        <p class="text-muted small mb-0" style="line-height: 1.6; font-size: 0.82rem;">
-                                            বিগত ৩০ দিনের সংগৃহীত রিয়েল-টাইম ডাটাবেস বিশ্লেষণ করে দেখা যাচ্ছে যে,
-                                            <strong>"Delay-1: সিদ্ধান্ত নিতে দেরি"</strong> বরিশাল বিভাগে সর্বাধিক (৪২%)
-                                            জটিলতার সৃষ্টি করেছে।
-                                        </p>
-                                        <div class="p-3 bg-white rounded-3 border border-purple-subtle mt-3">
-                                            <span class="fw-bold text-purple d-block mb-1" style="font-size: 0.8rem;"><i
-                                                    class="bi bi-check-circle-fill text-success me-1"></i> প্রস্তাবিত
-                                                এআই অ্যাকশন:</span>
-                                            <p class="text-muted small m-0"
-                                                style="font-size: 0.75rem; line-height: 1.4;">
-                                                বরিশাল বিভাগের ৪টি ঝুঁকিপূর্ণ ইউনিয়নে মাঠপর্যায়ের স্বাস্থ্যকর্মীদের
-                                                মাধ্যমে ঘরে ঘরে প্রসব পরিকল্পনা (Birth Plan) ক্যাম্পেইন জোরদার করুন এবং
-                                                কমিউনিটি ক্লিনিকগুলোতে জরুরি রক্তের গ্রুপ লিস্টিং সক্রিয় করার পরামর্শ
-                                                দেওয়া হলো।
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4">
-                                        <button
-                                            class="btn btn-purple btn-sm w-100 rounded-pill py-2.5 fw-bold text-white shadow-sm d-flex align-items-center justify-content-center gap-2">
-                                            <i class="bi bi-file-earmark-bar-graph-fill"></i> অ্যাকশন প্ল্যান জেনারেট
-                                            করুন (PDF)
-                                        </button>
-                                    </div>
-                                </div>
+                            <div class="mt-4">
+                                <button
+                                    class="btn btn-purple w-100 rounded-pill py-3 fw-bold text-white shadow-sm d-flex align-items-center justify-content-center gap-2">
+                                    <i class="bi bi-file-earmark-bar-graph-fill"></i> অ্যাকশন প্ল্যান জেনারেট
+                                    করুন (PDF)
+                                </button>
                             </div>
                         </div>
                     </div>
