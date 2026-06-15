@@ -490,23 +490,26 @@
         @media (max-width: 575px) { .stat-card-grid { grid-template-columns: 1fr; } }
 
         .stat-card {
-            position: relative; border-radius: 16px; overflow: hidden; cursor: pointer;
+            position: relative; border-radius: 16px; cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             padding: 18px 18px 16px; min-height: 128px;
-            display: flex; flex-direction: column; justify-content: space-between;
+            display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end;
             box-shadow: 0 6px 18px -6px rgba(0,0,0,0.12);
-            color: #fff;
+            color: #fff; overflow: visible;
         }
+        .stat-card-left { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
         .stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px -6px rgba(0,0,0,0.2); }
         .stat-card-icon-bg {
-            position: absolute; right: -8px; top: -8px; font-size: 4.2rem; opacity: 0.18; line-height: 1;
+            position: absolute; right: 12px; top: 10px; font-size: 3.8rem; opacity: 0.18; line-height: 1;
         }
         .stat-card-value { font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; position: relative; z-index: 1; }
-        .stat-card-label { font-size: 0.86rem; font-weight: 600; margin-top: 4px; opacity: 0.96; position: relative; z-index: 1; line-height: 1.35; }
+        .stat-card-label { font-size: 0.86rem; font-weight: 600; margin-top: 2px; opacity: 0.96; position: relative; z-index: 1; line-height: 1.35; }
         .stat-card-foot {
-            display: flex; align-items: center; justify-content: space-between;
-            margin-top: 10px; font-size: 0.78rem; font-weight: 600; opacity: 0.9; position: relative; z-index: 1;
+            font-size: 0.78rem; font-weight: 600; opacity: 0.9; position: relative; z-index: 1;
+            display: flex; flex-direction: column; align-items: flex-end; gap: 0; flex-shrink: 0;
         }
+        .stat-card-foot .foot-period { font-size: 0.7rem; opacity: 0.8; display: block; }
+        .stat-card-foot .foot-change { font-size: 0.88rem; font-weight: 700; }
         .stat-card--violet { background: linear-gradient(135deg, #8e44ad, #a569bd); }
         .stat-card--blue { background: linear-gradient(135deg, #2f80c4, #56a8e0); }
         .stat-card--cyan { background: linear-gradient(135deg, #0d9488, #14c7b8); }
@@ -1107,74 +1110,98 @@
                 <div class="stat-card-grid">
                     <div class="stat-card stat-card--violet" onclick="showSectionById('active-pregnant')">
                         <i class="bi bi-person-heart stat-card-icon-bg"></i>
-                        <div>
+                        <div class="stat-card-left">
                             <div class="stat-card-value">৪,৫৮২</div>
                             <div class="stat-card-label" data-i18n="kpi_active_pregnant">মোট চলমান গর্ভবতী</div>
                         </div>
-                        <div class="stat-card-foot"><span><i class="bi bi-arrow-up-short"></i> ৪.২%</span><span data-i18n="this_month">এই মাসে</span></div>
+                        <div class="stat-card-foot">
+                            <span class="foot-period" data-i18n="this_month">এই মাসে</span>
+                            <span class="foot-change"><i class="bi bi-arrow-up-short"></i> ৪.২%</span>
+                        </div>
                     </div>
 
                     <div class="stat-card stat-card--blue" onclick="showSectionById('newborn-list')">
                         <i class="bi bi-emoji-smile stat-card-icon-bg"></i>
-                        <div>
+                        <div class="stat-card-left">
                             <div class="stat-card-value">১,২৪০</div>
                             <div class="stat-card-label" data-i18n="kpi_newborn">মোট নবজাতক (১-৪২ দিন)</div>
                         </div>
-                        <div class="stat-card-foot"><span><i class="bi bi-arrow-up-short"></i> ২.৮%</span><span data-i18n="this_month">এই মাসে</span></div>
+                        <div class="stat-card-foot">
+                            <span class="foot-period" data-i18n="this_month">এই মাসে</span>
+                            <span class="foot-change"><i class="bi bi-arrow-up-short"></i> ২.৮%</span>
+                        </div>
                     </div>
 
                     <div class="stat-card stat-card--cyan" onclick="showSectionById('safe-delivery')">
                         <i class="bi bi-heart-pulse stat-card-icon-bg"></i>
-                        <div>
+                        <div class="stat-card-left">
                             <div class="stat-card-value">১,১৮৬</div>
                             <div class="stat-card-label" data-i18n="kpi_safe_delivery">মোট নিরাপদ প্রসব</div>
                         </div>
-                        <div class="stat-card-foot"><span><i class="bi bi-arrow-up-short"></i> ৩.৫%</span><span data-i18n="this_month">এই মাসে</span></div>
+                        <div class="stat-card-foot">
+                            <span class="foot-period" data-i18n="this_month">এই মাসে</span>
+                            <span class="foot-change"><i class="bi bi-arrow-up-short"></i> ৩.৫%</span>
+                        </div>
                     </div>
 
                     <div class="stat-card stat-card--yellow" onclick="showSectionById('risk-pregnant')">
                         <i class="bi bi-exclamation-triangle stat-card-icon-bg"></i>
-                        <div>
+                        <div class="stat-card-left">
                             <div class="stat-card-value">৬৭৩</div>
                             <div class="stat-card-label" data-i18n="kpi_risk_pregnant">মোট ঝুঁকিপূর্ণ গর্ভবতী</div>
                         </div>
-                        <div class="stat-card-foot"><span><i class="bi bi-arrow-down-short"></i> ১.১%</span><span data-i18n="this_month">এই মাসে</span></div>
+                        <div class="stat-card-foot">
+                            <span class="foot-period" data-i18n="this_month">এই মাসে</span>
+                            <span class="foot-change"><i class="bi bi-arrow-down-short"></i> ১.১%</span>
+                        </div>
                     </div>
 
                     <div class="stat-card stat-card--orange" onclick="showSectionById('allowance-pregnant')">
                         <i class="bi bi-cash-coin stat-card-icon-bg"></i>
-                        <div>
+                        <div class="stat-card-left">
                             <div class="stat-card-value">৮৯৫</div>
                             <div class="stat-card-label" data-i18n="kpi_allowance">ভাতা পাওয়ার উপযুক্ত গর্ভবতী</div>
                         </div>
-                        <div class="stat-card-foot"><span><i class="bi bi-arrow-up-short"></i> ৫.৬%</span><span data-i18n="this_month">এই মাসে</span></div>
+                        <div class="stat-card-foot">
+                            <span class="foot-period" data-i18n="this_month">এই মাসে</span>
+                            <span class="foot-change"><i class="bi bi-arrow-up-short"></i> ৫.৬%</span>
+                        </div>
                     </div>
 
                     <div class="stat-card stat-card--pink" onclick="showSectionById('blood-donor-list')">
                         <i class="bi bi-droplet stat-card-icon-bg"></i>
-                        <div>
+                        <div class="stat-card-left">
                             <div class="stat-card-value">৩,৪১৭</div>
                             <div class="stat-card-label" data-i18n="kpi_blood_donor">মোট রক্তদাতা</div>
                         </div>
-                        <div class="stat-card-foot"><span><i class="bi bi-arrow-up-short"></i> ৭.৩%</span><span data-i18n="this_month">এই মাসে</span></div>
+                        <div class="stat-card-foot">
+                            <span class="foot-period" data-i18n="this_month">এই মাসে</span>
+                            <span class="foot-change"><i class="bi bi-arrow-up-short"></i> ৭.৩%</span>
+                        </div>
                     </div>
 
                     <div class="stat-card stat-card--red" onclick="showSectionById('maternal-death')">
                         <i class="bi bi-clipboard2-x stat-card-icon-bg"></i>
-                        <div>
+                        <div class="stat-card-left">
                             <div class="stat-card-value">১২</div>
                             <div class="stat-card-label" data-i18n="kpi_maternal_death">মোট মাতৃমৃত্যু</div>
                         </div>
-                        <div class="stat-card-foot"><span><i class="bi bi-arrow-down-short"></i> ০.৪%</span><span data-i18n="this_year">এই বছরে</span></div>
+                        <div class="stat-card-foot">
+                            <span class="foot-period" data-i18n="this_year">এই বছরে</span>
+                            <span class="foot-change"><i class="bi bi-arrow-down-short"></i> ০.৪%</span>
+                        </div>
                     </div>
 
                     <div class="stat-card stat-card--lavender" onclick="showSectionById('child-death')">
                         <i class="bi bi-clipboard2-minus stat-card-icon-bg"></i>
-                        <div>
+                        <div class="stat-card-left">
                             <div class="stat-card-value">২৮</div>
                             <div class="stat-card-label" data-i18n="kpi_child_death">মোট শিশুমৃত্যু</div>
                         </div>
-                        <div class="stat-card-foot"><span><i class="bi bi-arrow-down-short"></i> ০.৯%</span><span data-i18n="this_year">এই বছরে</span></div>
+                        <div class="stat-card-foot">
+                            <span class="foot-period" data-i18n="this_year">এই বছরে</span>
+                            <span class="foot-change"><i class="bi bi-arrow-down-short"></i> ০.৯%</span>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -5060,7 +5087,7 @@ function convertStaticNumbers(lang) {
         el.textContent = convertDigits(el.textContent, lang);
     });
     // percentage figures inside stat-card-foot (text node alongside an <i> icon)
-    document.querySelectorAll('.stat-card-foot > span:first-child').forEach(el => {
+    document.querySelectorAll('.stat-card-foot .foot-change').forEach(el => {
         el.childNodes.forEach(node => {
             if (node.nodeType === 3) node.textContent = convertDigits(node.textContent, lang);
         });
