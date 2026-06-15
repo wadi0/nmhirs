@@ -285,7 +285,8 @@
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0;
         }
 
-        .nav-group-toggle:hover { background: var(--imche-purple-soft); color: var(--imche-purple); }
+        .nav-group.open .nav-group-toggle:hover { background: var(--imche-purple-soft); color: var(--imche-purple); }
+        .nav-group:not(.open) .nav-group-toggle:hover { background: #faf8ff; color: var(--imche-purple); }
 
         .nav-group.open .nav-caret { transform: rotate(90deg); }
         .nav-group.open .nav-group-toggle { background: var(--imche-purple-soft); color: var(--imche-purple); }
@@ -309,6 +310,7 @@
         }
 
         .nav-group.open .nav-submenu { max-height: 600px; }
+        .nav-group:not(.open) .nav-submenu { display: none; }
 
         .nav-sublink {
             display: flex;
