@@ -393,7 +393,8 @@
             gap: 16px;
         }
 
-        .header-title { font-size: 1.3rem; font-weight: 700; margin: 0; color: var(--text-dark); }
+        .header-title-wrap { flex: 1; min-width: 0; }
+        .header-title { font-size: 1.3rem; font-weight: 700; margin: 0; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .header-breadcrumb { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
 
         /* Language switcher (header) */
@@ -401,7 +402,7 @@
             display: flex; align-items: center; gap: 8px;
             border: 1px solid var(--border-color);
             background: #fff;
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 8px 14px;
             font-weight: 600;
             font-size: 0.85rem;
@@ -413,7 +414,7 @@
 
         .user-profile {
             display: flex; align-items: center; gap: 12px; cursor: pointer;
-            padding: 6px 14px; border-radius: 14px; border: 1px solid var(--border-color); background: #fff;
+            padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border-color); background: #fff;
             transition: var(--transition-smooth);
         }
         .user-profile:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.03); transform: translateY(-1px); }
@@ -426,7 +427,7 @@
         }
 
         .header-icon-btn {
-            position: relative; width: 42px; height: 42px; border-radius: 12px;
+            position: relative; width: 42px; height: 42px; border-radius: 8px;
             border: 1px solid var(--border-color); background: #fff;
             display: flex; align-items: center; justify-content: center;
             color: var(--text-muted); font-size: 1.1rem; cursor: pointer;
@@ -697,6 +698,72 @@
             .content-area { padding: 16px 12px; }
             .top-header { padding: 0 14px; }
             .header-title { font-size: 1.05rem; }
+        }
+
+        @media (max-width: 500px) {
+            .top-header {
+                height: 52px;
+                min-height: 52px;
+                padding: 0 10px;
+                gap: 6px;
+            }
+            .header-hamburger {
+                flex-shrink: 0;
+                width: 36px;
+                height: 36px;
+                font-size: 1.1rem;
+                border-radius: 6px;
+            }
+            .header-title-wrap {
+                flex: 1;
+                min-width: 0;
+                overflow: hidden;
+            }
+            .header-title {
+                font-size: 0.95rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .header-breadcrumb {
+                display: none;
+            }
+            .header-controls {
+                gap: 5px !important;
+                flex-shrink: 0;
+                align-items: center;
+            }
+            .lang-dropdown-toggle {
+                height: 36px;
+                padding: 0 10px;
+                font-size: 0.78rem;
+                border-radius: 6px;
+                gap: 4px;
+                display: flex;
+                align-items: center;
+            }
+            .lang-dropdown-toggle .bi-translate { display: none; }
+            .lang-dropdown-toggle .bi-chevron-down { display: none; }
+            .header-icon-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 0.92rem;
+                border-radius: 6px;
+            }
+            .user-profile {
+                height: 36px;
+                padding: 0 8px;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+            }
+            .user-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 0.78rem;
+            }
+            .user-profile > div.d-none.d-md-block { display: none !important; }
+            .user-profile > i.bi-chevron-down { display: none !important; }
         }
     </style>
 </head>
@@ -992,16 +1059,14 @@
 
     <div class="main-wrapper">
         <header class="top-header">
-            <div class="d-flex align-items-center gap-3">
-                <button class="header-icon-btn d-lg-none" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
-                <div>
-                    <h1 class="header-title" id="pageTitle" data-i18n="menu_dashboard">ড্যাশবোর্ড</h1>
-                    <p class="header-breadcrumb" id="pageBreadcrumb">
-                        <span data-i18n="menu_home">হোম</span> / <span id="pageBreadcrumbCurrent" data-i18n="menu_dashboard">ড্যাশবোর্ড</span>
-                    </p>
-                </div>
+            <button class="header-icon-btn d-lg-none header-hamburger" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+            <div class="header-title-wrap">
+                <h1 class="header-title" id="pageTitle" data-i18n="menu_dashboard">ড্যাশবোর্ড</h1>
+                <p class="header-breadcrumb" id="pageBreadcrumb">
+                    <span data-i18n="menu_home">হোম</span> / <span id="pageBreadcrumbCurrent" data-i18n="menu_dashboard">ড্যাশবোর্ড</span>
+                </p>
             </div>
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2 header-controls">
                 <div class="dropdown">
                     <div class="lang-dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-translate"></i>
