@@ -804,13 +804,14 @@
 
             <form onsubmit="return handleLogin(event)">
                 <div class="login-input-wrap">
-                    <i class="bi bi-person-fill login-input-icon"></i>
-                    <input type="text" class="form-control login-input" data-i18n-ph="login_username" placeholder="ইউজারনেইম" required>
+                    <i class="bi bi-envelope-fill login-input-icon"></i>
+                    <input type="email" class="form-control login-input" id="loginEmail" data-i18n-ph="login_email" placeholder="ইমেইল" required>
                 </div>
                 <div class="login-input-wrap">
                     <i class="bi bi-lock-fill login-input-icon"></i>
-                    <input type="password" class="form-control login-input" data-i18n-ph="login_password" placeholder="পাসওয়ার্ড" required>
+                    <input type="password" class="form-control login-input" id="loginPassword" data-i18n-ph="login_password" placeholder="পাসওয়ার্ড" required>
                 </div>
+                <div id="loginError" class="alert alert-danger d-none py-2 px-3 mb-3" style="border-radius:10px;font-size:0.88rem;"></div>
                 <div class="d-flex justify-content-between align-items-center mb-3" style="font-size:0.85rem;">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="rememberMe">
@@ -2361,7 +2362,7 @@ const I18N = {
     "child_death_sub": "নবজাতক ও শিশুমৃত্যুর তথ্য ও কারণ বিশ্লেষণ",
     "th_mother_brn": "মায়ের নাম / BRN",
     "showing_entries_child_death": "সর্বমোট ২৮ জনের মধ্যে ১-৬ দেখানো হচ্ছে",
-    "PH_login_username": "ইউজারনেইম",
+    "PH_login_email": "ইমেইল",
     "PH_login_password": "পাসওয়ার্ড",
     "PH_search_name_brn": "নাম বা BRN দিয়ে খুঁজুন",
     "PH_search_village_area": "গ্রাম / এলাকার নাম",
@@ -2619,7 +2620,7 @@ const I18N = {
     "child_death_sub": "Information and cause analysis of newborn and child deaths",
     "th_mother_brn": "Mother's Name / BRN",
     "showing_entries_child_death": "Showing 1-6 of 28 entries",
-    "PH_login_username": "Username",
+    "PH_login_email": "Email",
     "PH_login_password": "Password",
     "PH_search_name_brn": "Search by name or BRN",
     "PH_search_village_area": "Village / area name",
@@ -5351,12 +5352,36 @@ function toggleSidebar(forceState) {
 // ================================================================
 function handleLogin(e) {
     if (e && e.preventDefault) e.preventDefault();
-    const loginScreen = document.getElementById('loginScreen');
-    const appShell = document.getElementById('appShell');
-    if (loginScreen) loginScreen.style.display = 'none';
-    if (appShell) appShell.style.display = 'block';
-    showSection('dashboard', document.querySelector("[onclick*=\"showSection('dashboard'\"]"));
-    initChartsForSection('dashboard');
+
+    const emailInput = document.getElementById('loginEmail');
+    const passwordInput = document.getElementById('loginPassword');
+    const email = emailInput ? emailInput.value.trim() : '';
+    const password = passwordInput ? passwordInput.value.trim() : '';
+    const errorEl = document.getElementById('loginError');
+
+    if (!email || !password) {
+        if (errorEl) {
+            errorEl.textContent = typeof currentLang !== 'undefined' && currentLang === 'en' ? 'Please enter both email and password.' : 'দয়া করে ইমেইল এবং পাসওয়ার্ড উভয়ই দিন।';
+            errorEl.classList.remove('d-none');
+        }
+        return false;
+    }
+
+    if (email === 'admin@gmail.com' && password === 'admin123') {
+        if (errorEl) errorEl.classList.add('d-none');
+        const loginScreen = document.getElementById('loginScreen');
+        const appShell = document.getElementById('appShell');
+        if (loginScreen) loginScreen.style.display = 'none';
+        if (appShell) appShell.style.display = 'block';
+        showSection('dashboard', document.querySelector("[onclick*=\"showSection('dashboard'\"]"));
+        initChartsForSection('dashboard');
+    } else {
+        if (errorEl) {
+            errorEl.textContent = typeof currentLang !== 'undefined' && currentLang === 'en' ? 'Invalid email or password. Please provide valid credentials.' : 'ভুল ইমেইল বা পাসওয়ার্ড। সঠিক তথ্য দিন।';
+            errorEl.classList.remove('d-none');
+        }
+    }
+
     return false;
 }
 
