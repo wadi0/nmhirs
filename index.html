@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>IMCHE | Integrated Maternal and Child Health Echosystem</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -506,7 +509,7 @@
             position: absolute; right: 12px; top: 10px; font-size: 3.8rem; opacity: 0.18; line-height: 1;
         }
         .stat-card-value { font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; position: relative; z-index: 1; }
-        .stat-card-label { font-size: 0.86rem; font-weight: 600; margin-top: 2px; opacity: 0.96; position: relative; z-index: 1; line-height: 1.35; }
+        .stat-card-label { font-size: 0.92rem; font-weight: 600; margin-top: 2px; opacity: 0.96; position: relative; z-index: 1; line-height: 1.35; }
         .stat-card-foot {
             font-size: 0.78rem; font-weight: 600; opacity: 0.9; position: relative; z-index: 1;
             display: flex; flex-direction: column; align-items: flex-end; gap: 0; flex-shrink: 0;
@@ -516,12 +519,14 @@
         .stat-card--violet { background: linear-gradient(135deg, #8e44ad, #a569bd); }
         .stat-card--blue { background: linear-gradient(135deg, #2f80c4, #56a8e0); }
         .stat-card--cyan { background: linear-gradient(135deg, #0d9488, #14c7b8); }
-        .stat-card--yellow { background: linear-gradient(135deg, #d4a017, #f1c40f); color: #3a2e00; }
+        .stat-card--yellow { background: linear-gradient(135deg, #e6a817, #f5d020); color: #fff; }
+        .stat-card--yellow .stat-card-label { font-size: 0.92rem; font-weight: 700; color: #fff; }
+        .stat-card--yellow .stat-card-value { color: #fff; }
         .stat-card--orange { background: linear-gradient(135deg, #d9750b, #f39c12); }
         .stat-card--pink { background: linear-gradient(135deg, #c2185b, #ec6f9b); }
         .stat-card--red { background: linear-gradient(135deg, #b03a2e, #e74c3c); }
         .stat-card--lavender { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
-        .stat-card--yellow .stat-card-icon-bg, .stat-card--yellow .stat-card-foot { color: #3a2e00; opacity: 0.45; }
+        .stat-card--yellow .stat-card-icon-bg, .stat-card--yellow .stat-card-foot { color: #fff; opacity: 0.6; }
 
         /* === Data Panel === */
         .data-panel {
@@ -540,10 +545,18 @@
         /* === Section Header === */
         .section-header {
             display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
-            margin-bottom: 22px;
+            margin-bottom: 22px; background: linear-gradient(135deg, var(--imche-purple), #7c4dc4); color: #fff;
+            border-radius: 16px; padding: 20px 28px;
         }
-        .section-header h3 { margin: 0; font-size: 1.35rem; color: var(--imche-purple); display: flex; align-items: center; gap: 12px; }
-        .section-header p { margin: 4px 0 0; color: var(--text-muted); font-size: 0.88rem; }
+        .section-header h3 { margin: 0; font-size: 1.35rem; color: #fff; display: flex; align-items: center; gap: 12px; }
+        .section-header p { margin: 4px 0 0; color: rgba(255,255,255,0.8); font-size: 0.88rem; }
+        .section-header .section-icon-badge {
+            background: rgba(255,255,255,0.2); color: #fff;
+        }
+        .section-header .btn { background: rgba(255,255,255,0.2) !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.4) !important; }
+        .section-header .btn:hover { background: rgba(255,255,255,0.35) !important; }
+        .section-header .btn-outline-purple { background: transparent !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.4) !important; }
+        .section-header .btn-outline-purple:hover { background: rgba(255,255,255,0.2) !important; }
         .section-icon-badge {
             width: 46px; height: 46px; border-radius: 13px; background: var(--imche-purple-soft);
             color: var(--imche-purple); display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;
@@ -558,18 +571,19 @@
         @media (max-width: 480px) { .info-card-grid { grid-template-columns: 1fr; } }
 
         .info-card {
-            border-radius: 14px; padding: 16px 18px; position: relative; overflow: hidden;
-            display: flex; flex-direction: column; gap: 6px; min-height: 92px;
+            border-radius: 14px; padding: 18px 20px; position: relative; overflow: hidden;
+            display: flex; flex-direction: row; align-items: center; justify-content: space-between; min-height: 80px;
             border: 1px solid var(--border-color); transition: var(--transition-smooth);
             background: #fff;
         }
         .info-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px -8px rgba(74,45,131,0.18); }
+        .info-card-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
         .info-card-icon {
-            width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            font-size: 1.05rem; margin-bottom: 2px;
+            width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
         }
         .info-card-label { font-size: 0.84rem; font-weight: 600; color: var(--text-dark); line-height: 1.35; }
-        .info-card-value { font-size: 1.35rem; font-weight: 800; margin-top: auto; }
+        .info-card-value { font-size: 1.5rem; font-weight: 800; flex-shrink: 0; margin-left: 12px; }
         .info-card-sub { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
 
         /* color variants for info-card */
@@ -833,10 +847,7 @@
     <aside class="sidebar" id="sidebar">
         <a href="#" class="brand">
             <div class="brand-icon"><i class="bi bi-heart-pulse-fill"></i></div>
-            <div>
-                IMCHE
-                <div class="brand-sub" data-i18n="brand_sub">মাতৃ ও শিশু স্বাস্থ্য বাস্তুতন্ত্র</div>
-            </div>
+            <div data-i18n="brand_sub">সমন্বিত মাতৃ ও শিশুস্বাস্থ্য ইকোসিস্টেম</div>
         </a>
 
         <ul class="nav-menu">
@@ -858,7 +869,7 @@
                 <ul class="nav-submenu">
                     <li><a class="nav-sublink" onclick="showSection('new-pregnant', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_new_pregnant">নতুন গর্ভবতী</span></a></li>
                     <li><a class="nav-sublink" onclick="showSection('active-pregnant', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_active_pregnant">মোট চলমান গর্ভবতী</span></a></li>
-                    <li><a class="nav-sublink" onclick="showSection('risk-pregnant', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_risk_pregnant">মোট ঝুঁকিপূর্ণ গর্ভবতী</span></a></li>
+                    <li><a class="nav-sublink" onclick="showSection('risk-pregnant', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_risk_pregnant">ক্ষেত্র অনুযায়ী ঝুঁকিপূর্ণ গর্ভবতী</span></a></li>
                     <li><a class="nav-sublink" onclick="showSection('allowance-pregnant', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_allowance_pregnant">ভাতা পাওয়ার উপযুক্ত গর্ভবতী</span></a></li>
                 </ul>
             </li>
@@ -1174,7 +1185,7 @@
                 </div>
 
                 <div class="data-panel">
-                    <div class="filter-bar">
+                    <div class="filter-bar" style="display:none;">
                         <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম/মোবাইল নম্বর/ NID/BRN দিয়ে খুঁজুন">
                         <select id="npDivisionFilter" data-i18n-group="division_options"></select>
                         <select data-i18n-group="month_options"></select>
@@ -1274,35 +1285,41 @@
                     <div class="d-flex align-items-center gap-3">
                         <div class="section-icon-badge"><i class="bi bi-exclamation-triangle-fill"></i></div>
                         <div>
-                            <h3 data-i18n="menu_risk_pregnant">মোট ঝুঁকিপূর্ণ গর্ভবতী</h3>
-                            <p data-i18n="risk_pregnant_sub">ঝুঁকির কারণ অনুযায়ী চিহ্নিত গর্ভবতী মায়েদের সংখ্যা ও তালিকা</p>
+                            <h3 data-i18n="menu_risk_pregnant">ক্ষেত্র অনুযায়ী ঝুঁকিপূর্ণ গর্ভবতী</h3>
+                            <p data-i18n="risk_pregnant_sub">ঝুঁকির ক্ষেত্র অনুযায়ী চিহ্নিত গর্ভবতী মায়েদের সংখ্যা ও তালিকা</p>
                         </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span style="background:linear-gradient(135deg,#e6a817,#f5d020);color:#fff;padding:8px 18px;border-radius:10px;font-weight:700;font-size:0.92rem;display:flex;align-items:center;gap:8px;">
+                            <span>মোট ঝুঁকিপূর্ণ</span>
+                            <span style="font-weight:800;font-size:1.25rem;">৬৭৩</span>
+                        </span>
                     </div>
                 </div>
 
                 <div class="info-card-grid" id="riskFactorCardGrid">
-                    <div class="info-card ic-1"><div class="info-card-icon"><i class="bi bi-calendar3"></i></div><div class="info-card-label" data-i18n="risk_age">বয়স (২০ এর নিচে / ৩৫ এর বেশি)</div><div class="info-card-value">৮৪</div></div>
-                    <div class="info-card ic-2"><div class="info-card-icon"><i class="bi bi-rulers"></i></div><div class="info-card-label" data-i18n="risk_height">উচ্চতা (১৪৫ সেমি এর নিচে)</div><div class="info-card-value">৩৬</div></div>
-                    <div class="info-card ic-3"><div class="info-card-icon"><i class="bi bi-droplet-half"></i></div><div class="info-card-label" data-i18n="risk_anemia">রক্ত শূণ্যতা</div><div class="info-card-value">১১২</div></div>
-                    <div class="info-card ic-4"><div class="info-card-icon"><i class="bi bi-clipboard-data"></i></div><div class="info-card-label" data-i18n="risk_bmi">BMI (১৮.৫ এর নিচে / ৩০ এর বেশি)</div><div class="info-card-value">৬৭</div></div>
-                    <div class="info-card ic-5"><div class="info-card-icon"><i class="bi bi-heart-pulse"></i></div><div class="info-card-label" data-i18n="risk_hypertension">উচ্চ রক্তচাপ</div><div class="info-card-value">৫৮</div></div>
-                    <div class="info-card ic-6"><div class="info-card-icon"><i class="bi bi-egg-fried"></i></div><div class="info-card-label" data-i18n="risk_malnutrition">গুরুতর অপুষ্টি</div><div class="info-card-value">২৯</div></div>
-                    <div class="info-card ic-7"><div class="info-card-icon"><i class="bi bi-bandaid"></i></div><div class="info-card-label" data-i18n="risk_csection">পূর্বে সিজারিয়ান</div><div class="info-card-value">৭৫</div></div>
-                    <div class="info-card ic-8"><div class="info-card-icon"><i class="bi bi-arrow-repeat"></i></div><div class="info-card-label" data-i18n="risk_miscarriage">বারবার গর্ভপাত</div><div class="info-card-value">২২</div></div>
-                    <div class="info-card ic-1"><div class="info-card-icon"><i class="bi bi-activity"></i></div><div class="info-card-label" data-i18n="risk_convulsion">পূর্বে খিঁচুনির ইতিহাস</div><div class="info-card-value">১৪</div></div>
-                    <div class="info-card ic-2"><div class="info-card-icon"><i class="bi bi-people-fill"></i></div><div class="info-card-label" data-i18n="risk_grand_multipara">৫ বা তদূর্ধ্ব গর্ভ</div><div class="info-card-value">১৯</div></div>
-                    <div class="info-card ic-3"><div class="info-card-icon"><i class="bi bi-capsule"></i></div><div class="info-card-label" data-i18n="risk_gdm">গর্ভকালীন ডায়েবেটিস</div><div class="info-card-value">৪৪</div></div>
-                    <div class="info-card ic-4"><div class="info-card-icon"><i class="bi bi-virus"></i></div><div class="info-card-label" data-i18n="risk_complex_disease">গর্ভকালীন জটিল রোগ</div><div class="info-card-value">২১</div></div>
-                    <div class="info-card ic-5"><div class="info-card-icon"><i class="bi bi-cash-stack"></i></div><div class="info-card-label" data-i18n="risk_poverty">অত্যন্ত দরিদ্র</div><div class="info-card-value">৯৬</div></div>
-                    <div class="info-card ic-6"><div class="info-card-icon"><i class="bi bi-signpost-2"></i></div><div class="info-card-label" data-i18n="risk_remote_area">দুর্গম এলাকা</div><div class="info-card-value">৫২</div></div>
-                    <div class="info-card ic-7"><div class="info-card-icon"><i class="bi bi-droplet"></i></div><div class="info-card-label" data-i18n="risk_rare_blood">দুষ্প্রাপ্য রক্তের গ্রুপ</div><div class="info-card-value">১৮</div></div>
-                    <div class="info-card ic-8"><div class="info-card-icon"><i class="bi bi-shield-exclamation"></i></div><div class="info-card-label" data-i18n="risk_domestic_violence">পারিবারিক সহিংসতা</div><div class="info-card-value">২৬</div></div>
+                    <div class="info-card ic-1"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-calendar3"></i></div><div class="info-card-label" data-i18n="risk_age">বয়স (২০ এর নিচে / ৩৫ এর বেশি)</div></div><div class="info-card-value">৮৪</div></div>
+                    <div class="info-card ic-2"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-rulers"></i></div><div class="info-card-label" data-i18n="risk_height">উচ্চতা (১৪৫ সেমি এর নিচে)</div></div><div class="info-card-value">৩৬</div></div>
+                    <div class="info-card ic-3"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-droplet-half"></i></div><div class="info-card-label" data-i18n="risk_anemia">রক্ত শূণ্যতা</div></div><div class="info-card-value">১১২</div></div>
+                    <div class="info-card ic-4"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-clipboard-data"></i></div><div class="info-card-label" data-i18n="risk_bmi">BMI (১৮.৫ এর নিচে / ৩০ এর বেশি)</div></div><div class="info-card-value">৬৭</div></div>
+                    <div class="info-card ic-5"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-heart-pulse"></i></div><div class="info-card-label" data-i18n="risk_hypertension">উচ্চ রক্তচাপ</div></div><div class="info-card-value">৫৮</div></div>
+                    <div class="info-card ic-6"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-egg-fried"></i></div><div class="info-card-label" data-i18n="risk_malnutrition">গুরুতর অপুষ্টি</div></div><div class="info-card-value">২৯</div></div>
+                    <div class="info-card ic-7"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-bandaid"></i></div><div class="info-card-label" data-i18n="risk_csection">পূর্বে সিজারিয়ান</div></div><div class="info-card-value">৭৫</div></div>
+                    <div class="info-card ic-8"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-arrow-repeat"></i></div><div class="info-card-label" data-i18n="risk_miscarriage">বারবার গর্ভপাত</div></div><div class="info-card-value">২২</div></div>
+                    <div class="info-card ic-1"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-activity"></i></div><div class="info-card-label" data-i18n="risk_convulsion">পূর্বে খিঁচুনির ইতিহাস</div></div><div class="info-card-value">১৪</div></div>
+                    <div class="info-card ic-2"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-people-fill"></i></div><div class="info-card-label" data-i18n="risk_grand_multipara">৫ বা তদূর্ধ্ব গর্ভ</div></div><div class="info-card-value">১৯</div></div>
+                    <div class="info-card ic-3"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-capsule"></i></div><div class="info-card-label" data-i18n="risk_gdm">গর্ভকালীন ডায়েবেটিস</div></div><div class="info-card-value">৪৪</div></div>
+                    <div class="info-card ic-4"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-virus"></i></div><div class="info-card-label" data-i18n="risk_complex_disease">গর্ভকালীন জটিল রোগ</div></div><div class="info-card-value">২১</div></div>
+                    <div class="info-card ic-5"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-cash-stack"></i></div><div class="info-card-label" data-i18n="risk_poverty">অত্যন্ত দরিদ্র</div></div><div class="info-card-value">৯৬</div></div>
+                    <div class="info-card ic-6"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-signpost-2"></i></div><div class="info-card-label" data-i18n="risk_remote_area">দুর্গম এলাকা</div></div><div class="info-card-value">৫২</div></div>
+                    <div class="info-card ic-7"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-droplet"></i></div><div class="info-card-label" data-i18n="risk_rare_blood">দুষ্প্রাপ্য রক্তের গ্রুপ</div></div><div class="info-card-value">১৮</div></div>
+                    <div class="info-card ic-8"><div class="info-card-left"><div class="info-card-icon"><i class="bi bi-shield-exclamation"></i></div><div class="info-card-label" data-i18n="risk_domestic_violence">পারিবারিক সহিংসতা</div></div><div class="info-card-value">২৬</div></div>
                 </div>
 
                 <div class="row g-3">
                     <div class="col-lg-5">
                         <div class="data-panel h-100">
-                            <h3 class="panel-title"><i class="bi bi-pie-chart-fill text-purple"></i><span data-i18n="risk_pie_title">ঝুঁকির কারণ অনুযায়ী বিতরণ (পাইচার্ট)</span></h3>
+                            <h3 class="panel-title"><i class="bi bi-pie-chart-fill text-purple"></i><span data-i18n="risk_pie_title">ঝুঁকির ক্ষেত্র অনুযায়ী (পাইচার্ট)</span></h3>
                             <div class="chart-box"><canvas id="riskFactorPieChart"></canvas></div>
                         </div>
                     </div>
@@ -1342,17 +1359,29 @@
                         <div class="section-icon-badge"><i class="bi bi-cash-coin"></i></div>
                         <div>
                             <h3 data-i18n="menu_allowance_pregnant">ভাতা পাওয়ার উপযুক্ত গর্ভবতী</h3>
-                            <p data-i18n="allowance_pregnant_sub">মাতৃত্বকালীন ভাতা পাওয়ার উপযুক্ত মায়েদের তালিকা</p>
                         </div>
                     </div>
-                    <button class="btn btn-purple btn-pill" onclick="sendNotification('allowance')"><i class="bi bi-envelope-fill me-1"></i><span data-i18n="btn_send_email">ইমেইল পাঠান</span></button>
+                    <button class="btn btn-pill" onclick="sendNotification('allowance')"><i class="bi bi-envelope-fill me-1"></i><span data-i18n="btn_send_email">ইমেইল করুন</span></button>
                 </div>
 
-                <div class="notify-card">
-                    <div class="ni-icon"><i class="bi bi-info-circle-fill"></i></div>
-                    <div>
-                        <div style="font-weight:700; margin-bottom:4px;" data-i18n="allowance_notify_title">এলাকাভিত্তিক ইমেইল বিজ্ঞপ্তি</div>
-                        <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="allowance_notify_desc">নির্দিষ্ট বিভাগ, জেলা, উপজেলা, ইউনিয়ন বা গ্রাম/এলাকা নির্বাচন করে ভাতা পাওয়ার উপযুক্ত গর্ভবতী মায়েদের তথ্য সংশ্লিষ্ট স্বাস্থ্য কর্মকর্তাদের ইমেইলে স্বয়ংক্রিয়ভাবে পাঠানো যাবে।</div>
+                <div class="info-card-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 22px;">
+                    <div class="info-card ic-1" style="min-height:110px;">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <div class="info-card-label" style="font-size:0.9rem;">মাতৃত্বকালীন ভাতার জন্য উপযুক্ত গর্ভবতী</div>
+                                <div class="info-card-value" style="font-size:1.8rem;margin-top:4px;">৮৯৫</div>
+                            </div>
+                            <div class="info-card-icon" style="width:52px;height:52px;border-radius:14px;font-size:1.3rem;"><i class="bi bi-cash-stack"></i></div>
+                        </div>
+                    </div>
+                    <div class="info-card ic-4" style="min-height:110px;">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <div class="info-card-label" style="font-size:0.9rem;">দরিদ্র গর্ভবতী</div>
+                                <div class="info-card-value" style="font-size:1.8rem;margin-top:4px;">৯৬</div>
+                            </div>
+                            <div class="info-card-icon" style="width:52px;height:52px;border-radius:14px;font-size:1.3rem;"><i class="bi bi-cash-coin"></i></div>
+                        </div>
                     </div>
                 </div>
 
@@ -1547,7 +1576,7 @@
                             <p data-i18n="newborn_sub">জন্ম থেকে ৪২ দিন বয়স পর্যন্ত নবজাতকের তথ্য</p>
                         </div>
                     </div>
-                    <button class="btn btn-purple btn-pill" onclick="sendNotification('newborn')"><i class="bi bi-envelope-fill me-1"></i><span data-i18n="btn_send_email">ইমেইল পাঠান</span></button>
+                    <button class="btn btn-purple btn-pill" onclick="sendNotification('newborn')"><i class="bi bi-envelope-fill me-1"></i><span data-i18n="btn_send_email">ইমেইল করুন</span></button>
                 </div>
 
                 <div class="data-panel">
@@ -2161,13 +2190,13 @@ const I18N = {
     "login_forgot": "পাসওয়ার্ড ভুলে গেছেন?",
     "login_button": "লগ ইন করুন",
     "login_footer": "© ২০২৬ IMCHE — সমন্বিত মাতৃ ও শিশু স্বাস্থ্য বাস্তুতন্ত্র। সর্বস্বত্ব সংরক্ষিত।",
-    "brand_sub": "মাতৃ ও শিশু স্বাস্থ্য বাস্তুতন্ত্র",
+    "brand_sub": "সমন্বিত মাতৃ ও শিশুস্বাস্থ্য ইকোসিস্টেম",
     "menu_home": "হোম",
     "menu_dashboard": "ড্যাশবোর্ড",
     "menu_pregnant": "গর্ভবতী",
     "menu_new_pregnant": "নতুন গর্ভবতী",
     "menu_active_pregnant": "মোট চলমান গর্ভবতী",
-    "menu_risk_pregnant": "মোট ঝুঁকিপূর্ণ গর্ভবতী",
+    "menu_risk_pregnant": "ক্ষেত্র অনুযায়ী ঝুঁকিপূর্ণ গর্ভবতী",
     "menu_allowance_pregnant": "ভাতা পাওয়ার উপযুক্ত গর্ভবতী",
     "menu_anc_pnc": "প্রসবপূর্ব ও প্রসবোত্তর সেবা",
     "menu_anc": "প্রসবপূর্ব (ANC) সেবা",
@@ -2229,7 +2258,7 @@ const I18N = {
     "th_edd": "প্রত্যাশিত প্রসবের তারিখ",
     "th_risk_status": "ঝুঁকি অবস্থা",
     "showing_entries_active": "সর্বমোট ৪,৫৮২ জনের মধ্যে ১-৬ দেখানো হচ্ছে",
-    "risk_pregnant_sub": "ঝুঁকির কারণ অনুযায়ী চিহ্নিত গর্ভবতী মায়েদের সংখ্যা ও তালিকা",
+    "risk_pregnant_sub": "ঝুঁকির ক্ষেত্র অনুযায়ী চিহ্নিত গর্ভবতী মায়েদের সংখ্যা ও তালিকা",
     "risk_age": "বয়স (২০ এর নিচে / ৩৫ এর বেশি)",
     "risk_height": "উচ্চতা (১৪৫ সেমি এর নিচে)",
     "risk_anemia": "রক্ত শূণ্যতা",
@@ -2246,12 +2275,12 @@ const I18N = {
     "risk_remote_area": "দুর্গম এলাকা",
     "risk_rare_blood": "দুষ্প্রাপ্য রক্তের গ্রুপ",
     "risk_domestic_violence": "পারিবারিক সহিংসতা",
-    "risk_pie_title": "ঝুঁকির কারণ অনুযায়ী বিতরণ (পাইচার্ট)",
+    "risk_pie_title": "ঝুঁকির ক্ষেত্র অনুযায়ী (পাইচার্ট)",
     "risk_list_title": "ঝুঁকিপূর্ণ গর্ভবতী মায়েদের তালিকা",
     "th_risk_factor": "ঝুঁকির কারণ",
     "th_risk_level": "ঝুঁকির মাত্রা",
     "allowance_pregnant_sub": "মাতৃত্বকালীন ভাতা পাওয়ার উপযুক্ত মায়েদের তালিকা",
-    "btn_send_email": "ইমেইল পাঠান",
+    "btn_send_email": "ইমেইল করুন",
     "allowance_notify_title": "এলাকাভিত্তিক ইমেইল বিজ্ঞপ্তি",
     "allowance_notify_desc": "নির্দিষ্ট বিভাগ, জেলা, উপজেলা, ইউনিয়ন বা গ্রাম/এলাকা নির্বাচন করে ভাতা পাওয়ার উপযুক্ত গর্ভবতী মায়েদের তথ্য সংশ্লিষ্ট স্বাস্থ্য কর্মকর্তাদের ইমেইলে স্বয়ংক্রিয়ভাবে পাঠানো যাবে।",
     "th_allowance_type": "ভাতার ধরন",
@@ -2986,7 +3015,7 @@ const OPTION_GROUPS = {
   ],
   "risk_factor_options": [
     {
-      "bn": "সব ঝুঁকির কারণ",
+      "bn": "ঝুঁকির ক্ষেত্র (সকল)",
       "en": "All Risk Factors"
     },
     {
@@ -3056,7 +3085,7 @@ const OPTION_GROUPS = {
   ],
   "risk_level_options": [
     {
-      "bn": "সব মাত্রা",
+      "bn": "সকল মাত্রা",
       "en": "All Levels"
     },
     {
