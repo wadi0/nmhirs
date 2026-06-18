@@ -570,6 +570,9 @@
         @media (max-width: 767px) { .info-card-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 480px) { .info-card-grid { grid-template-columns: 1fr; } }
 
+        .info-card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+        @media (max-width: 767px) { .info-card-grid-2 { grid-template-columns: 1fr; } }
+
         .info-card {
             border-radius: 14px; padding: 18px 20px; position: relative; overflow: hidden;
             display: flex; flex-direction: row; align-items: center; justify-content: space-between; min-height: 80px;
@@ -1365,7 +1368,7 @@
                     <button class="btn btn-pill" onclick="sendNotification('allowance')"><i class="bi bi-envelope-fill me-1"></i><span data-i18n="btn_send_email">ইমেইল করুন</span></button>
                 </div>
 
-                <div class="info-card-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 22px;">
+                <div class="info-card-grid info-card-grid-2" style="margin-bottom: 22px;">
                     <div class="info-card ic-1">
                         <div class="info-card-left">
                             <div class="info-card-icon"><i class="bi bi-cash-stack"></i></div>
