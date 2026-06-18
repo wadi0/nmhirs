@@ -659,12 +659,12 @@
         .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
         .filter-bar select, .filter-bar input {
             border: 1px solid var(--border-color); border-radius: 10px; padding: 9px 14px; font-size: 0.85rem;
-            background: #fff; color: var(--text-dark); min-width: 140px;
+            background: #fff; color: var(--text-dark); min-width: 320px;
         }
         .filter-bar select:focus, .filter-bar input:focus { outline: none; border-color: var(--imche-purple-2); box-shadow: 0 0 0 3px rgba(107,63,160,0.1); }
 
         /* === Buttons === */
-        .btn-pill { border-radius: 30px !important; padding: 8px 18px !important; font-size: 0.85rem !important; font-weight: 600 !important; }
+        .btn-pill { border-radius: 10px !important; padding: 8px 18px !important; font-size: 0.85rem !important; font-weight: 600 !important; }
 
         /* === Chart container === */
         .chart-box { position: relative; height: 280px; }
@@ -777,7 +777,7 @@
 <!-- ============================================================ -->
 <!-- LOGIN SCREEN                                                  -->
 <!-- ============================================================ -->
-<div class="login-screen" id="loginScreen">
+<div class="login-screen" id="loginScreen" style="display:none;">
     <div class="login-card">
         <div class="login-illustration">
             <div class="login-silhouette-wrap">
@@ -829,7 +829,7 @@
 <!-- ============================================================ -->
 <!-- APP SHELL                                                      -->
 <!-- ============================================================ -->
-<div class="app-shell" id="appShell" style="display:none;">
+<div class="app-shell" id="appShell">
     <aside class="sidebar" id="sidebar">
         <a href="#" class="brand">
             <div class="brand-icon"><i class="bi bi-heart-pulse-fill"></i></div>
@@ -1175,7 +1175,7 @@
 
                 <div class="data-panel">
                     <div class="filter-bar">
-                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম বা BRN দিয়ে খুঁজুন">
+                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম/মোবাইল নম্বর/ NID/BRN দিয়ে খুঁজুন">
                         <select id="npDivisionFilter" data-i18n-group="division_options"></select>
                         <select data-i18n-group="month_options"></select>
                         <button class="btn btn-outline-purple btn-pill"><i class="bi bi-funnel me-1"></i><span data-i18n="filter">ফিল্টার</span></button>
@@ -1228,7 +1228,7 @@
 
                 <div class="data-panel">
                     <div class="filter-bar">
-                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম বা BRN দিয়ে খুঁজুন">
+                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম/মোবাইল নম্বর/ NID/BRN দিয়ে খুঁজুন">
                         <select data-i18n-group="division_options"></select>
                         <select data-i18n-group="trimester_options"></select>
                         <select data-i18n-group="risk_status_options"></select>
@@ -1552,7 +1552,7 @@
 
                 <div class="data-panel">
                     <div class="filter-bar">
-                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম বা BRN দিয়ে খুঁজুন">
+                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম/মোবাইল নম্বর/ NID/BRN দিয়ে খুঁজুন">
                         <select data-i18n-group="division_options"></select>
                         <select data-i18n-group="gender_options"></select>
                         <select data-i18n-group="age_days_options"></select>
@@ -1606,7 +1606,7 @@
 
                 <div class="data-panel">
                     <div class="filter-bar">
-                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম বা BRN দিয়ে খুঁজুন">
+                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম/মোবাইল নম্বর/ NID/BRN দিয়ে খুঁজুন">
                         <select data-i18n-group="division_options"></select>
                         <select data-i18n-group="delivery_type_options"></select>
                         <select data-i18n-group="month_options"></select>
@@ -1823,7 +1823,7 @@
 
                 <div class="data-panel">
                     <div class="filter-bar">
-                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম বা BRN দিয়ে খুঁজুন">
+                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম/মোবাইল নম্বর/ NID/BRN দিয়ে খুঁজুন">
                         <select data-i18n-group="vaccine_dose_options"></select>
                         <select data-i18n-group="vaccine_status_options"></select>
                         <button class="btn btn-outline-purple btn-pill"><i class="bi bi-funnel me-1"></i><span data-i18n="filter">ফিল্টার</span></button>
@@ -1883,7 +1883,7 @@
 
                 <div class="data-panel">
                     <div class="filter-bar">
-                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম বা BRN দিয়ে খুঁজুন">
+                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম/মোবাইল নম্বর/ NID/BRN দিয়ে খুঁজুন">
                         <select data-i18n-group="child_vaccine_options"></select>
                         <select data-i18n-group="vaccine_status_options"></select>
                         <button class="btn btn-outline-purple btn-pill"><i class="bi bi-funnel me-1"></i><span data-i18n="filter">ফিল্টার</span></button>
@@ -1994,7 +1994,7 @@
 
                 <div class="data-panel">
                     <div class="filter-bar">
-                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম বা BRN দিয়ে খুঁজুন">
+                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম/মোবাইল নম্বর/ NID/BRN দিয়ে খুঁজুন">
                         <select data-i18n-group="division_options"></select>
                         <select data-i18n-group="maternal_death_cause_options"></select>
                         <select data-i18n-group="year_options"></select>
@@ -2047,7 +2047,7 @@
 
                 <div class="data-panel">
                     <div class="filter-bar">
-                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম বা BRN দিয়ে খুঁজুন">
+                        <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম/মোবাইল নম্বর/ NID/BRN দিয়ে খুঁজুন">
                         <select data-i18n-group="division_options"></select>
                         <select data-i18n-group="child_death_cause_options"></select>
                         <select data-i18n-group="year_options"></select>
@@ -2364,7 +2364,7 @@ const I18N = {
     "showing_entries_child_death": "সর্বমোট ২৮ জনের মধ্যে ১-৬ দেখানো হচ্ছে",
     "PH_login_email": "ইমেইল",
     "PH_login_password": "পাসওয়ার্ড",
-    "PH_search_name_brn": "নাম বা BRN দিয়ে খুঁজুন",
+    "PH_search_name_brn": "নাম/মোবাইল নম্বর/ NID/BRN দিয়ে খুঁজুন",
     "PH_search_village_area": "গ্রাম / এলাকার নাম",
     "PH_search_name_mobile": "নাম বা মোবাইল দিয়ে খুঁজুন",
     "PH_search_center_name": "কেন্দ্রের নাম দিয়ে খুঁজুন",
@@ -5576,6 +5576,8 @@ function updateAllCharts() {
 // ================================================================
 document.addEventListener('DOMContentLoaded', function () {
     setLanguage('bn');
+    showSection('dashboard', document.querySelector("[onclick*=\"showSection('dashboard'\"]"));
+    initChartsForSection('dashboard');
 });
     </script>
 </body>
