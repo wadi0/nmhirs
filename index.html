@@ -651,6 +651,7 @@
         table.app-table tbody td { padding: 11px 14px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
         table.app-table tbody tr:hover { background: #faf8ff; }
         table.app-table tbody tr:last-child td { border-bottom: none; }
+        table.app-table thead th:nth-child(2), table.app-table thead th:nth-child(3) { min-width: 140px; }
 
         .badge-risk { background: #fdecef; color: #d6336c; border-radius: 8px; padding: 4px 9px; font-size: 0.72rem; font-weight: 700; margin: 2px; display: inline-block; }
         .badge-ok { background: #eafaf0; color: #1f9d55; border-radius: 8px; padding: 4px 9px; font-size: 0.72rem; font-weight: 700; }
@@ -1029,7 +1030,7 @@
             <button class="header-icon-btn d-lg-none header-hamburger" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
             <div class="header-title-wrap">
                 <h1 class="header-title" id="pageTitle" data-i18n="menu_dashboard">ড্যাশবোর্ড</h1>
-                <p class="header-breadcrumb" id="pageBreadcrumb">
+                <p class="header-breadcrumb" id="pageBreadcrumb" style="display:none;">
                     <span data-i18n="menu_home">হোম</span> / <span id="pageBreadcrumbCurrent" data-i18n="menu_dashboard">ড্যাশবোর্ড</span>
                 </p>
             </div>
@@ -1395,7 +1396,7 @@
                         <table class="app-table">
                             <thead>
                                 <tr>
-                                    <th>ক্রম</th>
+                                    <th>ক্রমিক</th>
                                     <th>গর্ভবতীর নাম</th>
                                     <th>স্বামীর নাম</th>
                                     <th>BRN/NID/Health ID</th>
@@ -1472,7 +1473,7 @@
                         <div class="section-icon-badge"><i class="bi bi-clipboard2-pulse-fill"></i></div>
                         <div>
                             <h3 data-i18n="menu_anc">প্রসবপূর্ব (ANC) সেবা</h3>
-                            <p data-i18n="anc_sub">গর্ভকালীন চারটি নির্ধারিত চেকআপের অগ্রগতি ও সময়সূচি পর্যবেক্ষণ</p>
+                            <p data-i18n="anc_sub">গর্ভকালীন চার বার নির্ধারিত চেকআপের অগ্রগতি ও সময়সূচি পর্যবেক্ষণ</p>
                         </div>
                     </div>
                 </div>
@@ -1523,7 +1524,7 @@
                         <div class="section-icon-badge"><i class="bi bi-clipboard2-heart-fill"></i></div>
                         <div>
                             <h3 data-i18n="menu_pnc">প্রসব পরবর্তী (PNC) সেবা</h3>
-                            <p data-i18n="pnc_sub">প্রসব পরবর্তী চারটি নির্ধারিত চেকআপের অগ্রগতি ও সময়সূচি পর্যবেক্ষণ</p>
+                            <p data-i18n="pnc_sub">প্রসব পরবর্তী চার বার নির্ধারিত চেকআপের অগ্রগতি ও সময়সূচি পর্যবেক্ষণ</p>
                         </div>
                     </div>
                 </div>
@@ -2298,7 +2299,7 @@ const I18N = {
     "form_edd": "প্রত্যাশিত প্রসবের তারিখ (EDD)",
     "btn_cancel": "বাতিল",
     "btn_save": "সংরক্ষণ করুন",
-    "anc_sub": "গর্ভকালীন চারটি নির্ধারিত চেকআপের অগ্রগতি ও সময়সূচি পর্যবেক্ষণ",
+    "anc_sub": "গর্ভকালীন চার বার নির্ধারিত চেকআপের অগ্রগতি ও সময়সূচি পর্যবেক্ষণ",
     "anc1_label": "ANC-1",
     "anc1_month": "৪ মাস",
     "total_checkup": "মোট চেকআপ",
@@ -2312,7 +2313,7 @@ const I18N = {
     "anc4_month": "৯ মাস",
     "anc_bar_title": "ANC সেবা তুলনা (বারচার্ট)",
     "anc_bar_sub": "ANC-1 থেকে ANC-4 পর্যন্ত মোট, যথাসময়ে ও অতিক্রান্ত চেকআপের তুলনা",
-    "pnc_sub": "প্রসব পরবর্তী চারটি নির্ধারিত চেকআপের অগ্রগতি ও সময়সূচি পর্যবেক্ষণ",
+    "pnc_sub": "প্রসব পরবর্তী চার বার নির্ধারিত চেকআপের অগ্রগতি ও সময়সূচি পর্যবেক্ষণ",
     "pnc1_label": "PNC-1",
     "pnc1_time": "২৪ ঘণ্টার মধ্যে",
     "pnc2_label": "PNC-2",
