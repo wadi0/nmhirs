@@ -1365,23 +1365,19 @@
                 </div>
 
                 <div class="info-card-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 22px;">
-                    <div class="info-card ic-1" style="min-height:110px;">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <div class="info-card-label" style="font-size:0.9rem;">মাতৃত্বকালীন ভাতার জন্য উপযুক্ত গর্ভবতী</div>
-                                <div class="info-card-value" style="font-size:1.8rem;margin-top:4px;">৮৯৫</div>
-                            </div>
-                            <div class="info-card-icon" style="width:52px;height:52px;border-radius:14px;font-size:1.3rem;"><i class="bi bi-cash-stack"></i></div>
+                    <div class="info-card ic-1">
+                        <div class="info-card-left">
+                            <div class="info-card-icon"><i class="bi bi-cash-stack"></i></div>
+                            <div class="info-card-label">মাতৃত্বকালীন ভাতার জন্য উপযুক্ত গর্ভবতী</div>
                         </div>
+                        <div class="info-card-value">৮৯৫</div>
                     </div>
-                    <div class="info-card ic-4" style="min-height:110px;">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <div class="info-card-label" style="font-size:0.9rem;">দরিদ্র গর্ভবতী</div>
-                                <div class="info-card-value" style="font-size:1.8rem;margin-top:4px;">৯৬</div>
-                            </div>
-                            <div class="info-card-icon" style="width:52px;height:52px;border-radius:14px;font-size:1.3rem;"><i class="bi bi-cash-coin"></i></div>
+                    <div class="info-card ic-4">
+                        <div class="info-card-left">
+                            <div class="info-card-icon"><i class="bi bi-cash-coin"></i></div>
+                            <div class="info-card-label">দরিদ্র গর্ভবতী</div>
                         </div>
+                        <div class="info-card-value">৯৬</div>
                     </div>
                 </div>
 
@@ -1399,15 +1395,19 @@
                         <table class="app-table">
                             <thead>
                                 <tr>
-                                    <th data-i18n="th_sl">ক্রমিক</th>
-                                    <th data-i18n="th_name">নাম</th>
-                                    <th data-i18n="th_brn">BRN</th>
-                                    <th data-i18n="th_mobile">মোবাইল</th>
-                                    <th data-i18n="th_address">ঠিকানা</th>
-                                    <th data-i18n="th_pregnancy_week">গর্ভকালীন সপ্তাহ</th>
-                                    <th data-i18n="th_allowance_type">ভাতার ধরন</th>
-                                    <th data-i18n="th_status">অবস্থা</th>
-                                    <th data-i18n="th_action">অ্যাকশন</th>
+                                    <th>ক্রম</th>
+                                    <th>গর্ভবতীর নাম</th>
+                                    <th>স্বামীর নাম</th>
+                                    <th>BRN/NID/Health ID</th>
+                                    <th>গর্ভবতীর মোবাইল</th>
+                                    <th>স্বামীর মোবাইল</th>
+                                    <th>সর্বশেষ মাসিক (LMP)</th>
+                                    <th>গর্ভাবস্থার সময়কাল (সপ্তাহ)</th>
+                                    <th>১ম চেকআপ (ANC-1)</th>
+                                    <th>২য় চেকআপ (ANC-2)</th>
+                                    <th>৩য় চেকআপ (ANC-3)</th>
+                                    <th>৪র্থ চেকআপ (ANC-4)</th>
+                                    <th>প্রসবের সম্ভাব্য তারিখ (EDD)</th>
                                 </tr>
                             </thead>
                             <tbody id="allowancePregnantTableBody"></tbody>
@@ -2703,7 +2703,7 @@ const I18N = {
 const OPTION_GROUPS = {
   "division_options": [
     {
-      "bn": "সব বিভাগ",
+      "bn": "সকল বিভাগ",
       "en": "All Divisions"
     },
     {
@@ -2741,7 +2741,7 @@ const OPTION_GROUPS = {
   ],
   "district_options": [
     {
-      "bn": "সব জেলা",
+      "bn": "সকল জেলা",
       "en": "All Districts"
     },
     {
@@ -2791,7 +2791,7 @@ const OPTION_GROUPS = {
   ],
   "upazila_options": [
     {
-      "bn": "সব উপজেলা",
+      "bn": "সকল উপজেলা",
       "en": "All Upazilas"
     },
     {
@@ -2825,7 +2825,7 @@ const OPTION_GROUPS = {
   ],
   "union_options": [
     {
-      "bn": "সব ইউনিয়ন",
+      "bn": "সকল ইউনিয়ন",
       "en": "All Unions"
     },
     {
@@ -2855,7 +2855,7 @@ const OPTION_GROUPS = {
   ],
   "gender_options": [
     {
-      "bn": "সব",
+      "bn": "সকল",
       "en": "All"
     },
     {
@@ -2869,7 +2869,7 @@ const OPTION_GROUPS = {
   ],
   "blood_group_options": [
     {
-      "bn": "সব গ্রুপ",
+      "bn": "সকল গ্রুপ",
       "en": "All Groups"
     },
     {
@@ -2907,7 +2907,7 @@ const OPTION_GROUPS = {
   ],
   "month_options": [
     {
-      "bn": "সব মাস",
+      "bn": "সকল মাস",
       "en": "All Months"
     },
     {
@@ -2961,7 +2961,7 @@ const OPTION_GROUPS = {
   ],
   "year_options": [
     {
-      "bn": "সব বছর",
+      "bn": "সকল বছর",
       "en": "All Years"
     },
     {
@@ -2983,7 +2983,7 @@ const OPTION_GROUPS = {
   ],
   "trimester_options": [
     {
-      "bn": "সব ট্রাইমেস্টার",
+      "bn": "সকল ট্রাইমেস্টার",
       "en": "All Trimesters"
     },
     {
@@ -3001,7 +3001,7 @@ const OPTION_GROUPS = {
   ],
   "risk_status_options": [
     {
-      "bn": "সব",
+      "bn": "সকল",
       "en": "All"
     },
     {
@@ -3103,7 +3103,7 @@ const OPTION_GROUPS = {
   ],
   "allowance_type_options": [
     {
-      "bn": "সব ধরন",
+      "bn": "সকল ধরন",
       "en": "All Types"
     },
     {
@@ -3121,7 +3121,7 @@ const OPTION_GROUPS = {
   ],
   "delivery_type_options": [
     {
-      "bn": "সব ধরন",
+      "bn": "সকল ধরন",
       "en": "All Types"
     },
     {
@@ -3135,7 +3135,7 @@ const OPTION_GROUPS = {
   ],
   "donor_status_options": [
     {
-      "bn": "সব",
+      "bn": "সকল",
       "en": "All"
     },
     {
@@ -3149,7 +3149,7 @@ const OPTION_GROUPS = {
   ],
   "request_status_options": [
     {
-      "bn": "সব",
+      "bn": "সকল",
       "en": "All"
     },
     {
@@ -3167,7 +3167,7 @@ const OPTION_GROUPS = {
   ],
   "facility_type_options": [
     {
-      "bn": "সব ধরন",
+      "bn": "সকল ধরন",
       "en": "All Types"
     },
     {
@@ -3205,7 +3205,7 @@ const OPTION_GROUPS = {
   ],
   "age_days_options": [
     {
-      "bn": "সব",
+      "bn": "সকল",
       "en": "All"
     },
     {
@@ -3223,7 +3223,7 @@ const OPTION_GROUPS = {
   ],
   "vaccine_dose_options": [
     {
-      "bn": "সব ডোজ",
+      "bn": "সকল ডোজ",
       "en": "All Doses"
     },
     {
@@ -3249,7 +3249,7 @@ const OPTION_GROUPS = {
   ],
   "child_vaccine_options": [
     {
-      "bn": "সব টিকা",
+      "bn": "সকল টিকা",
       "en": "All Vaccines"
     },
     {
@@ -3303,7 +3303,7 @@ const OPTION_GROUPS = {
   ],
   "vaccine_status_options": [
     {
-      "bn": "সব",
+      "bn": "সকল",
       "en": "All"
     },
     {
@@ -3321,7 +3321,7 @@ const OPTION_GROUPS = {
   ],
   "maternal_death_cause_options": [
     {
-      "bn": "সব কারণ",
+      "bn": "সকল কারণ",
       "en": "All Causes"
     },
     {
@@ -3347,7 +3347,7 @@ const OPTION_GROUPS = {
   ],
   "child_death_cause_options": [
     {
-      "bn": "সব কারণ",
+      "bn": "সকল কারণ",
       "en": "All Causes"
     },
     {
@@ -3760,124 +3760,88 @@ const TABLE_DATA = {
   ],
   "allowancePregnantTableBody": [
     [
-      {
-        "bn": "রহিমা বেগম",
-        "en": "Rohima Begum"
-      },
-      "19980445678903456",
+      { "bn": "রহিমা বেগম", "en": "Rohima Begum" },
+      { "bn": "আব্দুল করিম", "en": "Abdul Karim" },
+      "BRN-456789 / NID-19980445678903456",
       "01934567890",
-      {
-        "bn": "শান্তিনগর, কোতোয়ালী, রাজশাহী",
-        "en": "Shantinagar, Kotwali, Rajshahi"
-      },
-      30,
-      {
-        "bn": "মাতৃত্বকালীন ভাতা",
-        "en": "Maternity Allowance"
-      },
-      {
-        "i18n": "status_pending"
-      }
+      "01812345678",
+      "2026-01-15",
+      "30",
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "বাকি", "en": "Pending" },
+      "2026-08-20"
     ],
     [
-      {
-        "bn": "সালমা আক্তার",
-        "en": "Salma Akter"
-      },
-      "19990556789014567",
+      { "bn": "সালমা আক্তার", "en": "Salma Akter" },
+      { "bn": "মোঃ রফিকুল ইসলাম", "en": "Md. Rafiqul Islam" },
+      "BRN-567890 / NID-19990556789014567",
       "01645678901",
-      {
-        "bn": "বাজারপাড়া, বোয়ালখালী, খুলনা",
-        "en": "Bazarpara, Boalkhali, Khulna"
-      },
-      34,
-      {
-        "bn": "দরিদ্র মাতা ভাতা",
-        "en": "Poor Mother Allowance"
-      },
-      {
-        "i18n": "status_approved"
-      }
+      "01723456789",
+      "2025-12-20",
+      "34",
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "সম্পন্ন", "en": "Done" },
+      "2026-07-15"
     ],
     [
-      {
-        "bn": "ফাতেমা খাতুন",
-        "en": "Fatema Khatun"
-      },
-      "20000667890125678",
+      { "bn": "ফাতেমা খাতুন", "en": "Fatema Khatun" },
+      { "bn": "মোঃ হাসান আলী", "en": "Md. Hasan Ali" },
+      "BRN-678901 / NID-20000667890125678",
       "01556789012",
-      {
-        "bn": "উত্তরপাড়া, পাবনা সদর, বরিশাল",
-        "en": "Uttarpara, Pabna Sadar, Barishal"
-      },
-      26,
-      {
-        "bn": "মাতৃত্বকালীন ভাতা",
-        "en": "Maternity Allowance"
-      },
-      {
-        "i18n": "status_approved"
-      }
+      "01634567890",
+      "2026-02-10",
+      "26",
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "বাকি", "en": "Pending" },
+      { "bn": "বাকি", "en": "Pending" },
+      "2026-09-10"
     ],
     [
-      {
-        "bn": "নাজমা বেগম",
-        "en": "Nazma Begum"
-      },
-      "20010778901236789",
+      { "bn": "নাজমা বেগম", "en": "Nazma Begum" },
+      { "bn": "মোঃ শাহজাহান আলী", "en": "Md. Shahjahan Ali" },
+      "BRN-789012 / NID-20010778901236789",
       "01767890123",
-      {
-        "bn": "নয়াবাজার, সাভার, সিলেট",
-        "en": "Noyabazar, Savar, Sylhet"
-      },
-      38,
-      {
-        "bn": "ভিজিডি",
-        "en": "VGD"
-      },
-      {
-        "i18n": "status_pending"
-      }
+      "01545678901",
+      "2025-11-05",
+      "38",
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "সম্পন্ন", "en": "Done" },
+      "2026-06-25"
     ],
     [
-      {
-        "bn": "রোকেয়া সুলতানা",
-        "en": "Rokeya Sultana"
-      },
-      "20020889012347890",
+      { "bn": "রোকেয়া সুলতানা", "en": "Rokeya Sultana" },
+      { "bn": "মোঃ আব্দুর রহিম", "en": "Md. Abdur Rahim" },
+      "BRN-890123 / NID-20020889012347890",
       "01878901234",
-      {
-        "bn": "চরপাড়া, ধামরাই, রংপুর",
-        "en": "Charpara, Dhamrai, Rangpur"
-      },
-      22,
-      {
-        "bn": "মাতৃত্বকালীন ভাতা",
-        "en": "Maternity Allowance"
-      },
-      {
-        "i18n": "status_approved"
-      }
+      "01956789012",
+      "2026-03-01",
+      "22",
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "বাকি", "en": "Pending" },
+      { "bn": "বাকি", "en": "Pending" },
+      { "bn": "বাকি", "en": "Pending" },
+      "2026-10-05"
     ],
     [
-      {
-        "bn": "শিরিন আক্তার",
-        "en": "Shirin Akter"
-      },
-      "20030990123458901",
+      { "bn": "শিরিন আক্তার", "en": "Shirin Akter" },
+      { "bn": "মোঃ কামাল হোসেন", "en": "Md. Kamal Hossain" },
+      "BRN-901234 / NID-20030990123458901",
       "01989012345",
-      {
-        "bn": "কাজীবাড়ি, মিরপুর, ময়মনসিংহ",
-        "en": "Kazibari, Mirpur, Mymensingh"
-      },
-      32,
-      {
-        "bn": "দরিদ্র মাতা ভাতা",
-        "en": "Poor Mother Allowance"
-      },
-      {
-        "i18n": "status_pending"
-      }
+      "01867890123",
+      "2026-01-25",
+      "32",
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "সম্পন্ন", "en": "Done" },
+      { "bn": "বাকি", "en": "Pending" },
+      "2026-08-30"
     ]
   ],
   "newbornTableBody": [
@@ -5156,7 +5120,7 @@ const TABLE_RENDER_CONFIG = {
     riskPregnantTableBody: { selector: '#riskPregnantTableBody',
         columns: ['sl', 0, 1, 2, { type: 'badge', idx: 3 }, 'action'] },
     allowancePregnantTableBody: { selector: '#allowancePregnantTableBody',
-        columns: ['sl', 0, 1, 2, 3, 4, 5, { type: 'badge', idx: 6 }, 'action'] },
+        columns: ['sl', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
     newbornTableBody: { selector: '#newbornTableBody',
         columns: ['sl', 0, 1, 2, 3, 4, 5, 6, 7, 'action'] },
     safeDeliveryTableBody: { selector: '#safeDeliveryTableBody',
