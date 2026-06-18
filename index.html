@@ -795,7 +795,7 @@
 <!-- ============================================================ -->
 <!-- LOGIN SCREEN                                                  -->
 <!-- ============================================================ -->
-<div class="login-screen" id="loginScreen" style="display:none;">
+<div class="login-screen" id="loginScreen">
     <div class="login-card">
         <div class="login-illustration">
             <div class="login-silhouette-wrap">
@@ -847,7 +847,7 @@
 <!-- ============================================================ -->
 <!-- APP SHELL                                                      -->
 <!-- ============================================================ -->
-<div class="app-shell" id="appShell">
+<div class="app-shell" id="appShell" style="display:none;">
     <aside class="sidebar" id="sidebar">
         <a href="#" class="brand">
             <div class="brand-icon"><i class="bi bi-heart-pulse-fill"></i></div>
@@ -5635,8 +5635,6 @@ function updateAllCharts() {
 // ================================================================
 document.addEventListener('DOMContentLoaded', function () {
     setLanguage('bn');
-    showSection('dashboard', document.querySelector("[onclick*=\"showSection('dashboard'\"]"));
-    initChartsForSection('dashboard');
 });
     </script>
 </body>
