@@ -1214,10 +1214,8 @@
                         <input type="text" data-i18n-ph="search_name_brn" placeholder="নাম/মোবাইল নম্বর/ NID/BRN দিয়ে খুঁজুন">
                         <select data-i18n-group="division_options"></select>
                         <select data-i18n-group="district_options"></select>
-                        <select data-i18n-group="city_corporation_options"></select>
-                        <select data-i18n-group="municipality_options"></select>
-                        <select data-i18n-group="upazila_options"></select>
-                        <select data-i18n-group="thana_options"></select>
+                        <select data-i18n-group="upazila_thana_options"></select>
+                        <select data-i18n-group="city_corporation_municipality_options"></select>
                         <select data-i18n-group="union_options"></select>
                         <select data-i18n-group="ward_options"></select>
                         <select data-i18n-group="village_options"></select>
@@ -1280,10 +1278,8 @@
                     <div class="filter-bar">
                         <select data-i18n-group="division_options"></select>
                         <select data-i18n-group="district_options"></select>
-                        <select data-i18n-group="city_corporation_options"></select>
-                        <select data-i18n-group="municipality_options"></select>
-                        <select data-i18n-group="upazila_options"></select>
-                        <select data-i18n-group="thana_options"></select>
+                        <select data-i18n-group="upazila_thana_options"></select>
+                        <select data-i18n-group="city_corporation_municipality_options"></select>
                         <select data-i18n-group="union_options"></select>
                         <select data-i18n-group="ward_options"></select>
                         <select data-i18n-group="village_options"></select>
@@ -1379,9 +1375,11 @@
                     <div class="filter-bar">
                         <select data-i18n-group="division_options"></select>
                         <select data-i18n-group="district_options"></select>
-                        <select data-i18n-group="upazila_options"></select>
+                        <select data-i18n-group="upazila_thana_options"></select>
+                        <select data-i18n-group="city_corporation_municipality_options"></select>
                         <select data-i18n-group="union_options"></select>
-                        <input type="text" data-i18n-ph="search_village_area" placeholder="গ্রাম / এলাকার নাম">
+                        <select data-i18n-group="ward_options"></select>
+                        <select data-i18n-group="village_options"></select>
                         <select data-i18n-group="allowance_type_options"></select>
                         <button class="btn btn-outline-purple btn-pill"><i class="bi bi-funnel me-1"></i><span data-i18n="filter">ফিল্টার</span></button>
                     </div>
@@ -2838,6 +2836,52 @@ const OPTION_GROUPS = {
       "en": "Pabna Sadar"
     }
   ],
+  "upazila_thana_options": [
+    {
+      "bn": "সকল উপজেলা/থানা",
+      "en": "All Upazila/Thana"
+    },
+    {
+      "bn": "সাভার",
+      "en": "Savar"
+    },
+    {
+      "bn": "ধামরাই",
+      "en": "Dhamrai"
+    },
+    {
+      "bn": "মিরপুর",
+      "en": "Mirpur"
+    },
+    {
+      "bn": "সদর",
+      "en": "Sadar"
+    },
+    {
+      "bn": "কোতোয়ালী",
+      "en": "Kotwali"
+    },
+    {
+      "bn": "বোয়ালখালী",
+      "en": "Boalkhali"
+    },
+    {
+      "bn": "পাবনা সদর",
+      "en": "Pabna Sadar"
+    },
+    {
+      "bn": "হাটহাজারী",
+      "en": "Hathazari"
+    },
+    {
+      "bn": "মীরসরাই",
+      "en": "Mirsharai"
+    },
+    {
+      "bn": "বন্দর",
+      "en": "Bandar"
+    }
+  ],
   "union_options": [
     {
       "bn": "সকল ইউনিয়ন",
@@ -2912,6 +2956,96 @@ const OPTION_GROUPS = {
     {
       "bn": "ময়মনসিংহ সিটি কর্পোরেশন",
       "en": "Mymensingh City Corporation"
+    }
+  ],
+  "city_corporation_municipality_options": [
+    {
+      "bn": "সকল সিটি কর্পোরেশন/পৌরসভা",
+      "en": "All City Corp/Municipality"
+    },
+    {
+      "bn": "ঢাকা উত্তর সিটি কর্পোরেশন",
+      "en": "Dhaka North City Corporation"
+    },
+    {
+      "bn": "ঢাকা দক্ষিণ সিটি কর্পোরেশন",
+      "en": "Dhaka South City Corporation"
+    },
+    {
+      "bn": "চট্টগ্রাম সিটি কর্পোরেশন",
+      "en": "Chittagong City Corporation"
+    },
+    {
+      "bn": "রাজশাহী সিটি কর্পোরেশন",
+      "en": "Rajshahi City Corporation"
+    },
+    {
+      "bn": "খুলনা সিটি কর্পোরেশন",
+      "en": "Khulna City Corporation"
+    },
+    {
+      "bn": "সিলেট সিটি কর্পোরেশন",
+      "en": "Sylhet City Corporation"
+    },
+    {
+      "bn": "বরিশাল সিটি কর্পোরেশন",
+      "en": "Barishal City Corporation"
+    },
+    {
+      "bn": "রংপুর সিটি কর্পোরেশন",
+      "en": "Rangpur City Corporation"
+    },
+    {
+      "bn": "কুমিল্লা সিটি কর্পোরেশন",
+      "en": "Comilla City Corporation"
+    },
+    {
+      "bn": "ময়মনসিংহ সিটি কর্পোরেশন",
+      "en": "Mymensingh City Corporation"
+    },
+    {
+      "bn": "গুলশান পৌরসভা",
+      "en": "Gulshan Municipality"
+    },
+    {
+      "bn": "মিরপুর পৌরসভা",
+      "en": "Mirpur Municipality"
+    },
+    {
+      "bn": "উত্তরা পৌরসভা",
+      "en": "Uttara Municipality"
+    },
+    {
+      "bn": "ধানমন্ডি পৌরসভা",
+      "en": "Dhanmondi Municipality"
+    },
+    {
+      "bn": "মোহাম্মদপুর পৌরসভা",
+      "en": "Mohammadpur Municipality"
+    },
+    {
+      "bn": "তেজগাঁও পৌরসভা",
+      "en": "Tejgaon Municipality"
+    },
+    {
+      "bn": "বাড্ডা পৌরসভা",
+      "en": "Badda Municipality"
+    },
+    {
+      "bn": "বিমানবন্দর পৌরসভা",
+      "en": "Airport Municipality"
+    },
+    {
+      "bn": "কেরানীগঞ্জ পৌরসভা",
+      "en": "Keraniganj Municipality"
+    },
+    {
+      "bn": "সাভার পৌরসভা",
+      "en": "Savar Municipality"
+    },
+    {
+      "bn": "আশুলিয়া পৌরসভা",
+      "en": "Ashulia Municipality"
     }
   ],
   "municipality_options": [
@@ -3294,14 +3428,6 @@ const OPTION_GROUPS = {
     {
       "bn": "মাতৃত্বকালীন ভাতা",
       "en": "Maternity Allowance"
-    },
-    {
-      "bn": "দরিদ্র মাতা ভাতা",
-      "en": "Poor Mother Allowance"
-    },
-    {
-      "bn": "ভিজিডি",
-      "en": "VGD"
     }
   ],
   "delivery_type_options": [
