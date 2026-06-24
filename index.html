@@ -902,7 +902,7 @@
                 <ul class="nav-submenu">
                     <li><a class="nav-sublink" onclick="showSection('blood-donor-list', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_blood_donor_list">রক্তদাতার তালিকা</span></a></li>
                     <li><a class="nav-sublink" onclick="showSection('new-blood-donor', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_new_blood_donor">নতুন রক্তদাতা</span></a></li>
-                    <li><a class="nav-sublink" onclick="showSection('blood-recipient-list', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_blood_recipient_list">রক্ত গ্রহীতার তালিকা</span></a></li>
+                    <li><a class="nav-sublink" onclick="showSection('blood-recipient-list', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_blood_recipient_list">রক্তদানের রেকর্ড</span></a></li>
                 </ul>
             </li>
 
@@ -1798,25 +1798,29 @@
             </section>
 
             <!-- ============================================================ -->
-            <!-- রক্ত গ্রহীতার তালিকা                                           -->
+            <!-- রক্তদানের রেকর্ড                                           -->
             <!-- ============================================================ -->
             <section class="dashboard-section" id="section-blood-recipient-list">
                 <div class="section-header">
                     <div class="d-flex align-items-center gap-3">
                         <div class="section-icon-badge"><i class="bi bi-droplet"></i></div>
                         <div>
-                            <h3 data-i18n="menu_blood_recipient_list">রক্ত গ্রহীতার তালিকা</h3>
-                            <p data-i18n="blood_recipient_sub">রক্তের জন্য আবেদনকারী এবং সরবরাহের অবস্থা</p>
+                            <h3 data-i18n="menu_blood_recipient_list">রক্তদানের রেকর্ড</h3>
                         </div>
                     </div>
-                    <button class="btn btn-purple btn-pill"><i class="bi bi-plus-lg me-1"></i><span data-i18n="btn_add_request">নতুন চাহিদা যুক্ত করুন</span></button>
                 </div>
 
                 <div class="data-panel">
                     <div class="filter-bar">
                         <input type="text" data-i18n-ph="search_name_mobile" placeholder="নাম বা মোবাইল দিয়ে খুঁজুন">
                         <select data-i18n-group="blood_group_options"></select>
-                        <select data-i18n-group="request_status_options"></select>
+                        <select data-i18n-group="division_options"></select>
+                        <select data-i18n-group="district_options"></select>
+                        <select data-i18n-group="upazila_thana_options"></select>
+                        <select data-i18n-group="city_corporation_municipality_options"></select>
+                        <select data-i18n-group="union_options"></select>
+                        <select data-i18n-group="ward_options"></select>
+                        <select data-i18n-group="village_options"></select>
                         <button class="btn btn-outline-purple btn-pill"><i class="bi bi-funnel me-1"></i><span data-i18n="filter">ফিল্টার</span></button>
                     </div>
                     <div class="table-responsive-panel">
@@ -2228,7 +2232,7 @@ const I18N = {
     "menu_blood_group": "রক্ত ব্যবস্থাপনা",
     "menu_blood_donor_list": "রক্তদাতার তালিকা",
     "menu_new_blood_donor": "নতুন রক্তদাতা",
-    "menu_blood_recipient_list": "রক্ত গ্রহীতার তালিকা",
+    "menu_blood_recipient_list": "রক্তদানের রেকর্ড",
     "menu_vaccine_group": "টিকাদান কর্মসূচি",
     "menu_vaccine_pregnancy": "গর্ভকালীন টিকার রেকর্ড",
     "menu_vaccine_child": "শিশুর টিকার রেকর্ড",
@@ -2486,7 +2490,7 @@ const I18N = {
     "menu_blood_group": "Blood Management",
     "menu_blood_donor_list": "Blood Donor List",
     "menu_new_blood_donor": "New Blood Donor",
-    "menu_blood_recipient_list": "Blood Recipient List",
+    "menu_blood_recipient_list": "Blood Donation Records",
     "menu_vaccine_group": "Vaccination Program",
     "menu_vaccine_pregnancy": "Pregnancy Vaccination Records",
     "menu_vaccine_child": "Child Vaccination Records",
