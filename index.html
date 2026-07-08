@@ -677,10 +677,23 @@
         /* === Filter bar === */
         .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
         .filter-bar select, .filter-bar input {
-            border: 1px solid var(--border-color); border-radius: 10px; padding: 9px 14px; font-size: 0.85rem;
+            border: 1px solid var(--border-color); border-radius: 10px; padding: 9px 36px 9px 14px; font-size: 0.85rem;
             background: #fff; color: var(--text-dark); min-width: 320px;
         }
         .filter-bar select:focus, .filter-bar input:focus { outline: none; border-color: var(--imche-purple-2); box-shadow: 0 0 0 3px rgba(107,63,160,0.1); }
+        .filter-bar select, .form-select {
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%236b3fa0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+            background-repeat: no-repeat; background-position: right 14px center; background-size: 12px 8px;
+        }
+        .filter-bar select { padding-right: 36px; }
+
+        /* === Area-selection sub-panel (optional location filters inside compose forms) === */
+        .area-select-panel {
+            background: var(--imche-purple-soft); border-radius: 14px; padding: 16px 16px 4px;
+        }
+        .area-select-panel .filter-bar { margin-bottom: 12px; }
+        .area-select-panel .filter-bar select { background-color: #fff; }
 
         /* === Buttons === */
         .btn-pill { border-radius: 10px !important; padding: 8px 18px !important; font-size: 0.85rem !important; font-weight: 600 !important; }
@@ -696,8 +709,11 @@
         .form-label { font-weight: 600; font-size: 0.85rem; color: var(--text-dark); }
         .form-control, .form-select {
             border-radius: 10px; border: 1px solid var(--border-color); padding: 9px 12px; font-size: 0.88rem;
+            color: var(--text-dark); background-color: #fff;
         }
+        .form-select { padding-right: 36px; }
         .form-control:focus, .form-select:focus { border-color: var(--imche-purple-2); box-shadow: 0 0 0 3px rgba(107,63,160,0.1); }
+        input[type="radio"], input[type="checkbox"] { accent-color: var(--imche-purple-2); }
 
         /* === Legend dots === */
         .legend-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; margin-right: 6px; }
@@ -2225,15 +2241,17 @@
                                     <label class="channel-toggle-btn"><input type="radio" name="channel_pregnant" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
                                 </div>
                             </div>
-                            <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_pregnant_recipient_options"></select></div>
+                            <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_pregnant_recipient_options"></select></div>
                             <div class="col-12">
-                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
-                                <div class="filter-bar" style="margin-bottom:0;">
-                                    <select data-i18n-group="division_options"></select>
-                                    <select data-i18n-group="district_options"></select>
-                                    <select data-i18n-group="upazila_thana_options"></select>
-                                    <select data-i18n-group="city_corporation_municipality_options"></select>
-                                    <select data-i18n-group="union_options"></select>
+                                <div class="area-select-panel">
+                                    <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                    <div class="filter-bar" style="margin-bottom:0;">
+                                        <select data-i18n-group="division_options"></select>
+                                        <select data-i18n-group="district_options"></select>
+                                        <select data-i18n-group="upazila_thana_options"></select>
+                                        <select data-i18n-group="city_corporation_municipality_options"></select>
+                                        <select data-i18n-group="union_options"></select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
@@ -2370,14 +2388,16 @@
                             <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_blood_recipient_options"></select></div>
                             <div class="col-md-6"><label class="form-label" data-i18n="msg_blood_direction_label">অনুরোধের দিক</label><select class="form-select" data-i18n-group="msg_blood_direction_options"></select></div>
                             <div class="col-12">
-                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
-                                <div class="filter-bar" style="margin-bottom:0;">
-                                    <select data-i18n-group="division_options"></select>
-                                    <select data-i18n-group="district_options"></select>
-                                    <select data-i18n-group="upazila_thana_options"></select>
-                                    <select data-i18n-group="city_corporation_municipality_options"></select>
-                                    <select data-i18n-group="union_options"></select>
-                                    <select data-i18n-group="blood_group_options"></select>
+                                <div class="area-select-panel">
+                                    <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                    <div class="filter-bar" style="margin-bottom:0;">
+                                        <select data-i18n-group="division_options"></select>
+                                        <select data-i18n-group="district_options"></select>
+                                        <select data-i18n-group="upazila_thana_options"></select>
+                                        <select data-i18n-group="city_corporation_municipality_options"></select>
+                                        <select data-i18n-group="union_options"></select>
+                                        <select data-i18n-group="blood_group_options"></select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
@@ -2471,15 +2491,17 @@
                                     <label class="channel-toggle-btn"><input type="radio" name="channel_newborn" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
                                 </div>
                             </div>
-                            <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_newborn_recipient_options"></select></div>
+                            <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_newborn_recipient_options"></select></div>
                             <div class="col-12">
-                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
-                                <div class="filter-bar" style="margin-bottom:0;">
-                                    <select data-i18n-group="division_options"></select>
-                                    <select data-i18n-group="district_options"></select>
-                                    <select data-i18n-group="upazila_thana_options"></select>
-                                    <select data-i18n-group="city_corporation_municipality_options"></select>
-                                    <select data-i18n-group="union_options"></select>
+                                <div class="area-select-panel">
+                                    <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                    <div class="filter-bar" style="margin-bottom:0;">
+                                        <select data-i18n-group="division_options"></select>
+                                        <select data-i18n-group="district_options"></select>
+                                        <select data-i18n-group="upazila_thana_options"></select>
+                                        <select data-i18n-group="city_corporation_municipality_options"></select>
+                                        <select data-i18n-group="union_options"></select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
@@ -2561,15 +2583,17 @@
                                     <label class="channel-toggle-btn"><input type="radio" name="channel_vaccine" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
                                 </div>
                             </div>
-                            <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_vaccine_recipient_options"></select></div>
+                            <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_vaccine_recipient_options"></select></div>
                             <div class="col-12">
-                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
-                                <div class="filter-bar" style="margin-bottom:0;">
-                                    <select data-i18n-group="division_options"></select>
-                                    <select data-i18n-group="district_options"></select>
-                                    <select data-i18n-group="upazila_thana_options"></select>
-                                    <select data-i18n-group="city_corporation_municipality_options"></select>
-                                    <select data-i18n-group="union_options"></select>
+                                <div class="area-select-panel">
+                                    <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                    <div class="filter-bar" style="margin-bottom:0;">
+                                        <select data-i18n-group="division_options"></select>
+                                        <select data-i18n-group="district_options"></select>
+                                        <select data-i18n-group="upazila_thana_options"></select>
+                                        <select data-i18n-group="city_corporation_municipality_options"></select>
+                                        <select data-i18n-group="union_options"></select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
@@ -2679,15 +2703,17 @@
                                     <label class="channel-toggle-btn"><input type="radio" name="channel_provider" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
                                 </div>
                             </div>
-                            <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_provider_recipient_options"></select></div>
+                            <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_provider_recipient_options"></select></div>
                             <div class="col-12">
-                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
-                                <div class="filter-bar" style="margin-bottom:0;">
-                                    <select data-i18n-group="division_options"></select>
-                                    <select data-i18n-group="district_options"></select>
-                                    <select data-i18n-group="upazila_thana_options"></select>
-                                    <select data-i18n-group="city_corporation_municipality_options"></select>
-                                    <select data-i18n-group="union_options"></select>
+                                <div class="area-select-panel">
+                                    <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                    <div class="filter-bar" style="margin-bottom:0;">
+                                        <select data-i18n-group="division_options"></select>
+                                        <select data-i18n-group="district_options"></select>
+                                        <select data-i18n-group="upazila_thana_options"></select>
+                                        <select data-i18n-group="city_corporation_municipality_options"></select>
+                                        <select data-i18n-group="union_options"></select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
@@ -2769,15 +2795,17 @@
                                     <label class="channel-toggle-btn"><input type="radio" name="channel_volunteer" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
                                 </div>
                             </div>
-                            <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_volunteer_recipient_options"></select></div>
+                            <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_volunteer_recipient_options"></select></div>
                             <div class="col-12">
-                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
-                                <div class="filter-bar" style="margin-bottom:0;">
-                                    <select data-i18n-group="division_options"></select>
-                                    <select data-i18n-group="district_options"></select>
-                                    <select data-i18n-group="upazila_thana_options"></select>
-                                    <select data-i18n-group="city_corporation_municipality_options"></select>
-                                    <select data-i18n-group="union_options"></select>
+                                <div class="area-select-panel">
+                                    <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                    <div class="filter-bar" style="margin-bottom:0;">
+                                        <select data-i18n-group="division_options"></select>
+                                        <select data-i18n-group="district_options"></select>
+                                        <select data-i18n-group="upazila_thana_options"></select>
+                                        <select data-i18n-group="city_corporation_municipality_options"></select>
+                                        <select data-i18n-group="union_options"></select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
