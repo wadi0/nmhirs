@@ -695,6 +695,16 @@
         .area-select-panel .filter-bar { margin-bottom: 12px; }
         .area-select-panel .filter-bar select { background-color: #fff; }
 
+        /* === Message/script field + voice hint === */
+        .message-field-label { display: flex; align-items: center; }
+        .message-field-label i { color: var(--imche-purple-2); }
+        .voice-hint-note {
+            display: flex; align-items: center; gap: 8px; margin-top: 8px; padding: 9px 14px;
+            background: var(--imche-purple-soft); color: var(--imche-purple); border-radius: 10px;
+            font-size: 0.82rem; font-weight: 600;
+        }
+        .voice-hint-note i { font-size: 1rem; flex-shrink: 0; }
+
         /* === Buttons === */
         .btn-pill { border-radius: 10px !important; padding: 8px 18px !important; font-size: 0.85rem !important; font-weight: 600 !important; }
 
@@ -2237,8 +2247,8 @@
                             <div class="col-12">
                                 <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
                                 <div class="channel-toggle">
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_pregnant" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_pregnant" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_pregnant" value="sms" onchange="updateChannelUI(this)" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_pregnant" value="voice" onchange="updateChannelUI(this)"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
                                 </div>
                             </div>
                             <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_pregnant_recipient_options"></select></div>
@@ -2254,7 +2264,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                            <div class="col-12">
+                                <label class="form-label message-field-label"><i class="bi bi-chat-dots-fill me-1"></i><span data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</span></label>
+                                <textarea class="form-control" rows="4" data-i18n-ph="message_sms" placeholder="এসএমএস বার্তাটি এখানে লিখুন..."></textarea>
+                                <div class="voice-hint-note d-none">
+                                    <i class="bi bi-mic-fill"></i>
+                                    <span data-i18n="voice_script_hint">এটি ভয়েস কলের স্ক্রিপ্ট — টেক্সট-টু-স্পিচ প্রযুক্তিতে কলে পড়ে শোনানো হবে।</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
@@ -2381,8 +2398,8 @@
                             <div class="col-12">
                                 <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
                                 <div class="channel-toggle">
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_blood" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_blood" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_blood" value="sms" onchange="updateChannelUI(this)" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_blood" value="voice" onchange="updateChannelUI(this)"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
                                 </div>
                             </div>
                             <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_blood_recipient_options"></select></div>
@@ -2400,7 +2417,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                            <div class="col-12">
+                                <label class="form-label message-field-label"><i class="bi bi-chat-dots-fill me-1"></i><span data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</span></label>
+                                <textarea class="form-control" rows="4" data-i18n-ph="message_sms" placeholder="এসএমএস বার্তাটি এখানে লিখুন..."></textarea>
+                                <div class="voice-hint-note d-none">
+                                    <i class="bi bi-mic-fill"></i>
+                                    <span data-i18n="voice_script_hint">এটি ভয়েস কলের স্ক্রিপ্ট — টেক্সট-টু-স্পিচ প্রযুক্তিতে কলে পড়ে শোনানো হবে।</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
@@ -2487,8 +2511,8 @@
                             <div class="col-12">
                                 <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
                                 <div class="channel-toggle">
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_newborn" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_newborn" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_newborn" value="sms" onchange="updateChannelUI(this)" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_newborn" value="voice" onchange="updateChannelUI(this)"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
                                 </div>
                             </div>
                             <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_newborn_recipient_options"></select></div>
@@ -2504,7 +2528,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                            <div class="col-12">
+                                <label class="form-label message-field-label"><i class="bi bi-chat-dots-fill me-1"></i><span data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</span></label>
+                                <textarea class="form-control" rows="4" data-i18n-ph="message_sms" placeholder="এসএমএস বার্তাটি এখানে লিখুন..."></textarea>
+                                <div class="voice-hint-note d-none">
+                                    <i class="bi bi-mic-fill"></i>
+                                    <span data-i18n="voice_script_hint">এটি ভয়েস কলের স্ক্রিপ্ট — টেক্সট-টু-স্পিচ প্রযুক্তিতে কলে পড়ে শোনানো হবে।</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
@@ -2579,8 +2610,8 @@
                             <div class="col-12">
                                 <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
                                 <div class="channel-toggle">
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_vaccine" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_vaccine" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_vaccine" value="sms" onchange="updateChannelUI(this)" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_vaccine" value="voice" onchange="updateChannelUI(this)"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
                                 </div>
                             </div>
                             <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_vaccine_recipient_options"></select></div>
@@ -2596,7 +2627,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                            <div class="col-12">
+                                <label class="form-label message-field-label"><i class="bi bi-chat-dots-fill me-1"></i><span data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</span></label>
+                                <textarea class="form-control" rows="4" data-i18n-ph="message_sms" placeholder="এসএমএস বার্তাটি এখানে লিখুন..."></textarea>
+                                <div class="voice-hint-note d-none">
+                                    <i class="bi bi-mic-fill"></i>
+                                    <span data-i18n="voice_script_hint">এটি ভয়েস কলের স্ক্রিপ্ট — টেক্সট-টু-স্পিচ প্রযুক্তিতে কলে পড়ে শোনানো হবে।</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
@@ -2699,8 +2737,8 @@
                             <div class="col-12">
                                 <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
                                 <div class="channel-toggle">
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_provider" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_provider" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_provider" value="sms" onchange="updateChannelUI(this)" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_provider" value="voice" onchange="updateChannelUI(this)"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
                                 </div>
                             </div>
                             <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_provider_recipient_options"></select></div>
@@ -2716,7 +2754,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                            <div class="col-12">
+                                <label class="form-label message-field-label"><i class="bi bi-chat-dots-fill me-1"></i><span data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</span></label>
+                                <textarea class="form-control" rows="4" data-i18n-ph="message_sms" placeholder="এসএমএস বার্তাটি এখানে লিখুন..."></textarea>
+                                <div class="voice-hint-note d-none">
+                                    <i class="bi bi-mic-fill"></i>
+                                    <span data-i18n="voice_script_hint">এটি ভয়েস কলের স্ক্রিপ্ট — টেক্সট-টু-স্পিচ প্রযুক্তিতে কলে পড়ে শোনানো হবে।</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
@@ -2791,8 +2836,8 @@
                             <div class="col-12">
                                 <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
                                 <div class="channel-toggle">
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_volunteer" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
-                                    <label class="channel-toggle-btn"><input type="radio" name="channel_volunteer" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_volunteer" value="sms" onchange="updateChannelUI(this)" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_volunteer" value="voice" onchange="updateChannelUI(this)"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
                                 </div>
                             </div>
                             <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_volunteer_recipient_options"></select></div>
@@ -2808,7 +2853,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                            <div class="col-12">
+                                <label class="form-label message-field-label"><i class="bi bi-chat-dots-fill me-1"></i><span data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</span></label>
+                                <textarea class="form-control" rows="4" data-i18n-ph="message_sms" placeholder="এসএমএস বার্তাটি এখানে লিখুন..."></textarea>
+                                <div class="voice-hint-note d-none">
+                                    <i class="bi bi-mic-fill"></i>
+                                    <span data-i18n="voice_script_hint">এটি ভয়েস কলের স্ক্রিপ্ট — টেক্সট-টু-স্পিচ প্রযুক্তিতে কলে পড়ে শোনানো হবে।</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
@@ -3302,6 +3354,9 @@ const I18N = {
     "channel_sms": "এসএমএস",
     "channel_voice": "ভয়েস কল",
     "form_message_or_script": "বার্তা / স্ক্রিপ্ট",
+    "voice_script_hint": "এটি ভয়েস কলের স্ক্রিপ্ট — টেক্সট-টু-স্পিচ প্রযুক্তিতে কলে পড়ে শোনানো হবে।",
+    "PH_message_sms": "এসএমএস বার্তাটি এখানে লিখুন...",
+    "PH_message_voice": "ভয়েস কলের স্ক্রিপ্টটি এখানে লিখুন (টেক্সট-টু-স্পিচ)...",
     "btn_send_message": "পাঠান",
     "auto_rules_title": "সংশ্লিষ্ট স্বয়ংক্রিয় নিয়মাবলী",
     "history_title": "প্রেরণের ইতিহাস",
@@ -3634,6 +3689,9 @@ const I18N = {
     "channel_sms": "SMS",
     "channel_voice": "Voice Call",
     "form_message_or_script": "Message / Script",
+    "voice_script_hint": "This is the voice call script — it will be read aloud on the call using text-to-speech.",
+    "PH_message_sms": "Write your SMS message here...",
+    "PH_message_voice": "Write your voice call script here (text-to-speech)...",
     "btn_send_message": "Send",
     "auto_rules_title": "Related Automated Rules",
     "history_title": "Sending History",
@@ -6962,7 +7020,26 @@ function sendCategoryMessage(formEl) {
     const set = messages[currentLang] || messages.bn;
     alert(isVoice ? set.voice : set.sms);
     formEl.reset();
+    const defaultChannel = formEl.querySelector('input[name^="channel_"][value="sms"]');
+    if (defaultChannel) updateChannelUI(defaultChannel);
     return false;
+}
+
+function updateChannelUI(radio) {
+    const form = radio.closest('form');
+    if (!form) return;
+    const isVoice = radio.value === 'voice';
+    const labelIcon = form.querySelector('.message-field-label i');
+    const textarea = form.querySelector('.message-field-label').closest('.col-12').querySelector('textarea');
+    const hint = form.querySelector('.voice-hint-note');
+    if (labelIcon) labelIcon.className = isVoice ? 'bi bi-mic-fill me-1' : 'bi bi-chat-dots-fill me-1';
+    if (textarea) {
+        const phAttr = isVoice ? 'message_voice' : 'message_sms';
+        textarea.setAttribute('data-i18n-ph', phAttr);
+        const phKey = 'PH_' + phAttr;
+        if (I18N[currentLang] && I18N[currentLang][phKey]) textarea.setAttribute('placeholder', I18N[currentLang][phKey]);
+    }
+    if (hint) hint.classList.toggle('d-none', !isVoice);
 }
 // ================================================================
 // CHART.JS SETUP
