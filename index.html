@@ -722,6 +722,29 @@
             .content-area { padding: 16px 12px; }
             .top-header { padding: 0 14px; }
             .header-title { font-size: 1.05rem; }
+            .filter-bar select, .filter-bar input { min-width: 100%; }
+            .channel-toggle { flex-direction: column; }
+            .channel-toggle-btn { justify-content: center; }
+        }
+
+        @media (max-width: 767px) {
+            .filter-bar select, .filter-bar input { min-width: calc(50% - 5px); }
+        }
+
+        /* === Channel toggle (SMS / Voice Call) === */
+        .channel-toggle { display: flex; gap: 10px; flex-wrap: wrap; }
+        .channel-toggle-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 22px; border: 1.5px solid var(--border-color); border-radius: 12px;
+            cursor: pointer; font-weight: 700; font-size: 0.9rem; color: var(--text-dark);
+            background: #fff; transition: 0.15s; flex: 1; min-width: 160px;
+        }
+        .channel-toggle-btn i { font-size: 1.05rem; }
+        .channel-toggle-btn input { display: none; }
+        .channel-toggle-btn:hover { border-color: var(--imche-purple-2); background: var(--imche-purple-soft); }
+        .channel-toggle-btn:has(input:checked) {
+            background: linear-gradient(135deg, var(--imche-purple), var(--imche-purple-2));
+            border-color: transparent; color: #fff;
         }
 
         @media (max-width: 500px) {
@@ -944,7 +967,20 @@
                 </ul>
             </li>
 
-            <!-- 8. বার্তা প্রেরণ -->
+            <!-- 8. স্বেচ্ছাসেবক ও সেবিকা ব্যবস্থাপনা -->
+            <li class="nav-group">
+                <div class="nav-group-toggle" onclick="toggleNavGroup(this)">
+                    <i class="bi bi-people-fill nav-ico"></i>
+                    <span data-i18n="menu_volunteer_group">স্বেচ্ছাসেবক ও সেবিকা ব্যবস্থাপনা</span>
+                    <i class="bi bi-chevron-right nav-caret"></i>
+                </div>
+                <ul class="nav-submenu">
+                    <li><a class="nav-sublink" onclick="showSection('volunteer-list', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_volunteer_list">স্বেচ্ছাসেবক/সেবিকার তালিকা</span></a></li>
+                    <li><a class="nav-sublink" onclick="showSection('new-volunteer', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_new_volunteer">নতুন স্বেচ্ছাসেবক/সেবিকা যুক্ত করুন</span></a></li>
+                </ul>
+            </li>
+
+            <!-- 9. বার্তা প্রেরণ -->
             <li class="nav-group">
                 <div class="nav-group-toggle" onclick="toggleNavGroup(this)">
                     <i class="bi bi-send-fill nav-ico"></i>
@@ -2049,6 +2085,107 @@
                 </div>
             </section>
             <!-- ============================================================ -->
+            <!-- স্বেচ্ছাসেবক/সেবিকার তালিকা                                      -->
+            <!-- ============================================================ -->
+            <section class="dashboard-section" id="section-volunteer-list">
+                <div class="section-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="section-icon-badge"><i class="bi bi-people-fill"></i></div>
+                        <div>
+                            <h3 data-i18n="menu_volunteer_list">স্বেচ্ছাসেবক/সেবিকার তালিকা</h3>
+                            <p data-i18n="volunteer_list_sub">নিবন্ধিত স্বেচ্ছাসেবক ও সেবিকাদের তথ্য ও কার্যক্রম</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-purple btn-pill" onclick="showSectionById('new-volunteer')"><i class="bi bi-plus-lg me-1"></i><span data-i18n="menu_new_volunteer">নতুন স্বেচ্ছাসেবক/সেবিকা যুক্ত করুন</span></button>
+                </div>
+
+                <div class="info-card-grid">
+                    <div class="info-card ic-1"><div class="info-card-icon"><i class="bi bi-people-fill"></i></div><div class="info-card-label" data-i18n="kpi_volunteer_total">মোট স্বেচ্ছাসেবক ও সেবিকা</div><div class="info-card-value">১৮৪</div></div>
+                    <div class="info-card ic-5"><div class="info-card-icon"><i class="bi bi-person-fill"></i></div><div class="info-card-label" data-i18n="kpi_volunteer_male">মোট স্বেচ্ছাসেবক (পুরুষ)</div><div class="info-card-value">৯৮</div></div>
+                    <div class="info-card ic-3"><div class="info-card-icon"><i class="bi bi-person-heart"></i></div><div class="info-card-label" data-i18n="kpi_volunteer_female">মোট স্বেচ্ছাসেবিকা (মহিলা)</div><div class="info-card-value">৮৬</div></div>
+                    <div class="info-card ic-7"><div class="info-card-icon"><i class="bi bi-check-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_volunteer_active">সক্রিয় স্বেচ্ছাসেবী</div><div class="info-card-value">১৬২</div></div>
+                </div>
+
+                <div class="data-panel">
+                    <div class="filter-bar">
+                        <input type="text" data-i18n-ph="search_name_mobile" placeholder="নাম বা মোবাইল দিয়ে খুঁজুন">
+                        <select data-i18n-group="gender_options"></select>
+                        <select data-i18n-group="division_options"></select>
+                        <select data-i18n-group="district_options"></select>
+                        <select data-i18n-group="upazila_thana_options"></select>
+                        <select data-i18n-group="city_corporation_municipality_options"></select>
+                        <select data-i18n-group="union_options"></select>
+                        <select data-i18n-group="ward_options"></select>
+                        <select data-i18n-group="village_options"></select>
+                        <button class="btn btn-outline-purple btn-pill"><i class="bi bi-funnel me-1"></i><span data-i18n="filter">ফিল্টার</span></button>
+                    </div>
+                    <div class="table-responsive-panel">
+                        <table class="app-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_sl">ক্রমিক</th>
+                                    <th data-i18n="th_name">নাম</th>
+                                    <th data-i18n="th_gender">লিঙ্গ</th>
+                                    <th data-i18n="th_age">বয়স</th>
+                                    <th data-i18n="th_mobile">মোবাইল</th>
+                                    <th data-i18n="th_area">এলাকা/ঠিকানা</th>
+                                    <th data-i18n="th_join_date">যোগদানের তারিখ</th>
+                                    <th data-i18n="th_status">অবস্থা</th>
+                                    <th data-i18n="th_action">অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody id="volunteerTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="table-foot">
+                        <div class="small-note" data-i18n="showing_entries_volunteer">সর্বমোট ১৮৪ জনের মধ্যে ১-৬ দেখানো হচ্ছে</div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn btn-sm btn-purple btn-pill">১</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill">২</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- নতুন স্বেচ্ছাসেবক/সেবিকা যুক্ত করুন                               -->
+            <!-- ============================================================ -->
+            <section class="dashboard-section" id="section-new-volunteer">
+                <div class="section-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="section-icon-badge"><i class="bi bi-person-plus-fill"></i></div>
+                        <div>
+                            <h3 data-i18n="menu_new_volunteer">নতুন স্বেচ্ছাসেবক/সেবিকা যুক্ত করুন</h3>
+                            <p data-i18n="new_volunteer_sub">নতুন স্বেচ্ছাসেবক বা সেবিকার তথ্য নিবন্ধন করুন</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="data-panel">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-md-6"><label class="form-label" data-i18n="th_name">নাম</label><input type="text" class="form-control"></div>
+                            <div class="col-md-3"><label class="form-label" data-i18n="form_gender">লিঙ্গ</label><select class="form-select" data-i18n-group="gender_options"></select></div>
+                            <div class="col-md-3"><label class="form-label" data-i18n="form_age">বয়স</label><input type="number" class="form-control"></div>
+                            <div class="col-md-3"><label class="form-label" data-i18n="th_mobile">মোবাইল নম্বর</label><input type="text" class="form-control"></div>
+                            <div class="col-md-3"><label class="form-label" data-i18n="form_nid">জাতীয় পরিচয়পত্র নম্বর (NID)</label><input type="text" class="form-control"></div>
+                            <div class="col-md-3"><label class="form-label" data-i18n="form_join_date">যোগদানের তারিখ</label><input type="date" class="form-control"></div>
+                            <div class="col-md-3"><label class="form-label" data-i18n="form_division">বিভাগ</label><select class="form-select" data-i18n-group="division_options"></select></div>
+                            <div class="col-md-3"><label class="form-label" data-i18n="form_district">জেলা</label><select class="form-select" data-i18n-group="district_options"></select></div>
+                            <div class="col-md-3"><label class="form-label" data-i18n="form_upazila">উপজেলা</label><select class="form-select" data-i18n-group="upazila_options"></select></div>
+                            <div class="col-md-3"><label class="form-label" data-i18n="form_union">ইউনিয়ন</label><select class="form-select" data-i18n-group="union_options"></select></div>
+                            <div class="col-12"><label class="form-label" data-i18n="form_skill_area">কাজের ক্ষেত্র / দক্ষতা</label><textarea class="form-control" rows="3"></textarea></div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
+                            <button type="submit" class="btn btn-purple btn-pill" data-i18n="btn_save">সংরক্ষণ করুন</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <!-- ============================================================ -->
             <!-- বার্তা প্রেরণ - গর্ভবতী                                          -->
             <!-- ============================================================ -->
             <section class="dashboard-section" id="section-msg-pregnant">
@@ -2081,6 +2218,13 @@
                     <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
                     <form onsubmit="return sendCategoryMessage(this)">
                         <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
+                                <div class="channel-toggle">
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_pregnant" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_pregnant" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                </div>
+                            </div>
                             <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_pregnant_recipient_options"></select></div>
                             <div class="col-12">
                                 <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
@@ -2090,11 +2234,8 @@
                                     <select data-i18n-group="upazila_thana_options"></select>
                                     <select data-i18n-group="city_corporation_municipality_options"></select>
                                     <select data-i18n-group="union_options"></select>
-                                    <select data-i18n-group="ward_options"></select>
-                                    <select data-i18n-group="village_options"></select>
                                 </div>
                             </div>
-                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
@@ -2219,6 +2360,13 @@
                     <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
                     <form onsubmit="return sendCategoryMessage(this)">
                         <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
+                                <div class="channel-toggle">
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_blood" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_blood" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                </div>
+                            </div>
                             <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_blood_recipient_options"></select></div>
                             <div class="col-md-6"><label class="form-label" data-i18n="msg_blood_direction_label">অনুরোধের দিক</label><select class="form-select" data-i18n-group="msg_blood_direction_options"></select></div>
                             <div class="col-12">
@@ -2229,12 +2377,9 @@
                                     <select data-i18n-group="upazila_thana_options"></select>
                                     <select data-i18n-group="city_corporation_municipality_options"></select>
                                     <select data-i18n-group="union_options"></select>
-                                    <select data-i18n-group="ward_options"></select>
-                                    <select data-i18n-group="village_options"></select>
                                     <select data-i18n-group="blood_group_options"></select>
                                 </div>
                             </div>
-                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
@@ -2319,6 +2464,13 @@
                     <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
                     <form onsubmit="return sendCategoryMessage(this)">
                         <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
+                                <div class="channel-toggle">
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_newborn" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_newborn" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                </div>
+                            </div>
                             <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_newborn_recipient_options"></select></div>
                             <div class="col-12">
                                 <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
@@ -2328,11 +2480,8 @@
                                     <select data-i18n-group="upazila_thana_options"></select>
                                     <select data-i18n-group="city_corporation_municipality_options"></select>
                                     <select data-i18n-group="union_options"></select>
-                                    <select data-i18n-group="ward_options"></select>
-                                    <select data-i18n-group="village_options"></select>
                                 </div>
                             </div>
-                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
@@ -2405,6 +2554,13 @@
                     <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
                     <form onsubmit="return sendCategoryMessage(this)">
                         <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
+                                <div class="channel-toggle">
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_vaccine" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_vaccine" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                </div>
+                            </div>
                             <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_vaccine_recipient_options"></select></div>
                             <div class="col-12">
                                 <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
@@ -2414,11 +2570,8 @@
                                     <select data-i18n-group="upazila_thana_options"></select>
                                     <select data-i18n-group="city_corporation_municipality_options"></select>
                                     <select data-i18n-group="union_options"></select>
-                                    <select data-i18n-group="ward_options"></select>
-                                    <select data-i18n-group="village_options"></select>
                                 </div>
                             </div>
-                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
@@ -2519,6 +2672,13 @@
                     <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
                     <form onsubmit="return sendCategoryMessage(this)">
                         <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
+                                <div class="channel-toggle">
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_provider" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_provider" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                </div>
+                            </div>
                             <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_provider_recipient_options"></select></div>
                             <div class="col-12">
                                 <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
@@ -2528,11 +2688,8 @@
                                     <select data-i18n-group="upazila_thana_options"></select>
                                     <select data-i18n-group="city_corporation_municipality_options"></select>
                                     <select data-i18n-group="union_options"></select>
-                                    <select data-i18n-group="ward_options"></select>
-                                    <select data-i18n-group="village_options"></select>
                                 </div>
                             </div>
-                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
@@ -2605,6 +2762,13 @@
                     <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
                     <form onsubmit="return sendCategoryMessage(this)">
                         <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label>
+                                <div class="channel-toggle">
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_volunteer" value="sms" checked><i class="bi bi-chat-dots-fill"></i><span data-i18n="channel_sms">এসএমএস</span></label>
+                                    <label class="channel-toggle-btn"><input type="radio" name="channel_volunteer" value="voice"><i class="bi bi-telephone-fill"></i><span data-i18n="channel_voice">ভয়েস কল</span></label>
+                                </div>
+                            </div>
                             <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_volunteer_recipient_options"></select></div>
                             <div class="col-12">
                                 <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
@@ -2614,11 +2778,8 @@
                                     <select data-i18n-group="upazila_thana_options"></select>
                                     <select data-i18n-group="city_corporation_municipality_options"></select>
                                     <select data-i18n-group="union_options"></select>
-                                    <select data-i18n-group="ward_options"></select>
-                                    <select data-i18n-group="village_options"></select>
                                 </div>
                             </div>
-                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
                             <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
@@ -2864,6 +3025,22 @@ const I18N = {
     "menu_vaccine_child": "শিশুর টিকার রেকর্ড",
     "menu_health_center_group": "স্বাস্থ্য সেবা কেন্দ্র",
     "menu_health_center_list": "কেন্দ্রের তালিকা",
+    "menu_volunteer_group": "স্বেচ্ছাসেবক ও সেবিকা ব্যবস্থাপনা",
+    "menu_volunteer_list": "স্বেচ্ছাসেবক/সেবিকার তালিকা",
+    "menu_new_volunteer": "নতুন স্বেচ্ছাসেবক/সেবিকা যুক্ত করুন",
+    "volunteer_list_sub": "নিবন্ধিত স্বেচ্ছাসেবক ও সেবিকাদের তথ্য ও কার্যক্রম",
+    "new_volunteer_sub": "নতুন স্বেচ্ছাসেবক বা সেবিকার তথ্য নিবন্ধন করুন",
+    "kpi_volunteer_total": "মোট স্বেচ্ছাসেবক ও সেবিকা",
+    "kpi_volunteer_male": "মোট স্বেচ্ছাসেবক (পুরুষ)",
+    "kpi_volunteer_female": "মোট স্বেচ্ছাসেবিকা (মহিলা)",
+    "kpi_volunteer_active": "সক্রিয় স্বেচ্ছাসেবী",
+    "th_join_date": "যোগদানের তারিখ",
+    "th_area": "এলাকা/ঠিকানা",
+    "form_join_date": "যোগদানের তারিখ",
+    "form_skill_area": "কাজের ক্ষেত্র / দক্ষতা",
+    "form_nid": "জাতীয় পরিচয়পত্র নম্বর (NID)",
+    "status_inactive": "নিষ্ক্রিয়",
+    "showing_entries_volunteer": "সর্বমোট ১৮৪ জনের মধ্যে ১-৬ দেখানো হচ্ছে",
     "menu_message_group": "বার্তা প্রেরণ",
     "menu_msg_pregnant": "গর্ভবতী",
     "menu_msg_blood": "রক্তদাতা",
@@ -3094,6 +3271,8 @@ const I18N = {
     "form_recipient_type": "প্রাপক ধরন",
     "msg_blood_direction_label": "অনুরোধের দিক",
     "form_channel": "চ্যানেল নির্বাচন করুন",
+    "channel_sms": "এসএমএস",
+    "channel_voice": "ভয়েস কল",
     "form_message_or_script": "বার্তা / স্ক্রিপ্ট",
     "btn_send_message": "পাঠান",
     "auto_rules_title": "সংশ্লিষ্ট স্বয়ংক্রিয় নিয়মাবলী",
@@ -3178,6 +3357,22 @@ const I18N = {
     "menu_vaccine_child": "Child Vaccination Records",
     "menu_health_center_group": "Health Facilities",
     "menu_health_center_list": "Facility List",
+    "menu_volunteer_group": "Volunteer Management",
+    "menu_volunteer_list": "Volunteer List",
+    "menu_new_volunteer": "Add New Volunteer",
+    "volunteer_list_sub": "Information and activities of registered male and female volunteers",
+    "new_volunteer_sub": "Register information for a new male or female volunteer",
+    "kpi_volunteer_total": "Total Volunteers",
+    "kpi_volunteer_male": "Total Male Volunteers",
+    "kpi_volunteer_female": "Total Female Volunteers",
+    "kpi_volunteer_active": "Active Volunteers",
+    "th_join_date": "Join Date",
+    "th_area": "Area/Address",
+    "form_join_date": "Join Date",
+    "form_skill_area": "Area of Work / Skill",
+    "form_nid": "National ID Number (NID)",
+    "status_inactive": "Inactive",
+    "showing_entries_volunteer": "Showing 1-6 of 184 total",
     "menu_message_group": "Send Message",
     "menu_msg_pregnant": "Pregnant Women",
     "menu_msg_blood": "Blood Donors",
@@ -3408,6 +3603,8 @@ const I18N = {
     "form_recipient_type": "Recipient Type",
     "msg_blood_direction_label": "Request Direction",
     "form_channel": "Select Channel",
+    "channel_sms": "SMS",
+    "channel_voice": "Voice Call",
     "form_message_or_script": "Message / Script",
     "btn_send_message": "Send",
     "auto_rules_title": "Related Automated Rules",
@@ -4436,10 +4633,6 @@ const OPTION_GROUPS = {
       "en": "Other"
     }
   ],
-  "msg_channel_options": [
-    { "bn": "এসএমএস", "en": "SMS" },
-    { "bn": "ভয়েস কল", "en": "Voice Call" }
-  ],
   "msg_pregnant_recipient_options": [
     { "bn": "বর্তমান গর্ভবতী (সকল)", "en": "Current Pregnant (All)" },
     { "bn": "ঝুঁকিপূর্ণ গর্ভবতী (ক্ষেত্র অনুযায়ী)", "en": "High-risk Pregnant (By Risk Factor)" },
@@ -4480,6 +4673,44 @@ const OPTION_GROUPS = {
 };
 
 const TABLE_DATA = {
+  "volunteerTableBody": [
+    [
+      { "bn": "মিজানুর রহমান", "en": "Mizanur Rahman" },
+      { "bn": "পুরুষ", "en": "Male" },
+      "৩২",
+      "01711223344",
+      { "bn": "মিরপুর, ঢাকা", "en": "Mirpur, Dhaka" },
+      "2025-03-12",
+      { "bn": "সক্রিয়", "en": "Active" }
+    ],
+    [
+      { "bn": "সালমা আক্তার", "en": "Salma Akter" },
+      { "bn": "মহিলা", "en": "Female" },
+      "২৮",
+      "01822334455",
+      { "bn": "বোয়ালখালী, চট্টগ্রাম", "en": "Boalkhali, Chattogram" },
+      "2025-05-20",
+      { "bn": "সক্রিয়", "en": "Active" }
+    ],
+    [
+      { "bn": "আরিফুল ইসলাম", "en": "Ariful Islam" },
+      { "bn": "পুরুষ", "en": "Male" },
+      "৪১",
+      "01933445566",
+      { "bn": "সদর, রাজশাহী", "en": "Sadar, Rajshahi" },
+      "2024-11-08",
+      { "bn": "নিষ্ক্রিয়", "en": "Inactive" }
+    ],
+    [
+      { "bn": "নাসরিন সুলতানা", "en": "Nasrin Sultana" },
+      { "bn": "মহিলা", "en": "Female" },
+      "২৫",
+      "01644556677",
+      { "bn": "কোতোয়ালী, খুলনা", "en": "Kotwali, Khulna" },
+      "2026-01-15",
+      { "bn": "সক্রিয়", "en": "Active" }
+    ]
+  ],
   "recentActivityTable": [
     [
       {
@@ -6319,6 +6550,10 @@ const STATUS_BADGE_CLASS_BY_BN = {
     'অরিসিভড': 'badge-muted',
     'এসএমএস': 'badge-info',
     'ভয়েস কল': 'badge-purple',
+    'সক্রিয়': 'badge-ok',
+    'নিষ্ক্রিয়': 'badge-muted',
+    'পুরুষ': 'badge-info',
+    'মহিলা': 'badge-purple',
 };
 function badgeClassFor(cell) {
     if (cell && cell.i18n !== undefined) return STATUS_BADGE_CLASS_BY_KEY[cell.i18n] || 'badge-purple';
@@ -6392,6 +6627,8 @@ const TABLE_RENDER_CONFIG = {
         columns: ['sl', 0, 1, 2, 3, 4, 5, { type: 'badge', idx: 6 }, 'action'] },
     healthCenterTableBody: { selector: '#healthCenterTableBody',
         columns: ['sl', 0, 1, 2, 3, { type: 'map', idx: 4 }] },
+    volunteerTableBody: { selector: '#volunteerTableBody',
+        columns: ['sl', 0, { type: 'badge', idx: 1 }, 2, 3, 4, 5, { type: 'badge', idx: 6 }, 'action'] },
     msgPregnantHistoryTableBody: { selector: '#msgPregnantHistoryTableBody',
         columns: ['sl', 0, { type: 'badge', idx: 1 }, 2, 3, 4, { type: 'badge', idx: 5 }] },
     msgBloodHistoryTableBody: { selector: '#msgBloodHistoryTableBody',
@@ -6517,6 +6754,8 @@ const SECTION_META = {
     'vaccine-pregnancy': { title: 'menu_vaccine_pregnancy', group: 'menu_vaccine_group' },
     'vaccine-child': { title: 'menu_vaccine_child', group: 'menu_vaccine_group' },
     'health-center-list': { title: 'menu_health_center_list', group: 'menu_health_center_group' },
+    'volunteer-list': { title: 'menu_volunteer_list', group: 'menu_volunteer_group' },
+    'new-volunteer': { title: 'menu_new_volunteer', group: 'menu_volunteer_group' },
     'msg-pregnant': { title: 'menu_msg_pregnant', group: 'menu_message_group' },
     'msg-blood': { title: 'menu_msg_blood', group: 'menu_message_group' },
     'msg-newborn': { title: 'menu_msg_newborn', group: 'menu_message_group' },
@@ -6680,8 +6919,8 @@ function sendNotification(type) {
 }
 
 function sendCategoryMessage(formEl) {
-    const channelSelect = formEl.querySelector('[data-i18n-group="msg_channel_options"]');
-    const isVoice = channelSelect && channelSelect.selectedIndex === 1;
+    const checkedChannel = formEl.querySelector('input[name^="channel_"]:checked');
+    const isVoice = checkedChannel && checkedChannel.value === 'voice';
     const messages = {
         bn: {
             sms: 'নির্বাচিত প্রাপক ধরন ও এলাকার মোবাইল নম্বরে এসএমএস সফলভাবে পাঠানো হয়েছে।',
