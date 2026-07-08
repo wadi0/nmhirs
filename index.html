@@ -944,7 +944,24 @@
                 </ul>
             </li>
 
-            <!-- 8. রিপোর্ট -->
+            <!-- 8. বার্তা প্রেরণ -->
+            <li class="nav-group">
+                <div class="nav-group-toggle" onclick="toggleNavGroup(this)">
+                    <i class="bi bi-send-fill nav-ico"></i>
+                    <span data-i18n="menu_message_group">বার্তা প্রেরণ</span>
+                    <i class="bi bi-chevron-right nav-caret"></i>
+                </div>
+                <ul class="nav-submenu">
+                    <li><a class="nav-sublink" onclick="showSection('msg-pregnant', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_msg_pregnant">গর্ভবতী</span></a></li>
+                    <li><a class="nav-sublink" onclick="showSection('msg-blood', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_msg_blood">রক্তদাতা</span></a></li>
+                    <li><a class="nav-sublink" onclick="showSection('msg-newborn', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_msg_newborn">নবজাতক ও শিশু</span></a></li>
+                    <li><a class="nav-sublink" onclick="showSection('msg-vaccine', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_msg_vaccine">টিকাদান</span></a></li>
+                    <li><a class="nav-sublink" onclick="showSection('msg-provider', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_msg_provider">সেবা প্রদানকারী (GO/NGO)</span></a></li>
+                    <li><a class="nav-sublink" onclick="showSection('msg-volunteer', this)"><i class="bi bi-circle-fill"></i><span data-i18n="menu_msg_volunteer">স্বেচ্ছাসেবী</span></a></li>
+                </ul>
+            </li>
+
+            <!-- 9. রিপোর্ট -->
             <li class="nav-group">
                 <div class="nav-group-toggle" onclick="toggleNavGroup(this)">
                     <i class="bi bi-file-earmark-bar-graph-fill nav-ico"></i>
@@ -2032,6 +2049,615 @@
                 </div>
             </section>
             <!-- ============================================================ -->
+            <!-- বার্তা প্রেরণ - গর্ভবতী                                          -->
+            <!-- ============================================================ -->
+            <section class="dashboard-section" id="section-msg-pregnant">
+                <div class="section-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="section-icon-badge"><i class="bi bi-person-heart"></i></div>
+                        <div>
+                            <h3 data-i18n="menu_msg_pregnant">গর্ভবতী</h3>
+                            <p data-i18n="msg_pregnant_sub">গর্ভবতী মায়েদের বিভিন্ন ধরন অনুযায়ী এসএমএস ও ভয়েস কল পাঠান</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card-grid">
+                    <div class="info-card ic-1"><div class="info-card-icon"><i class="bi bi-send-check-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_sent_month">এই মাসে প্রেরিত বার্তা/কল</div><div class="info-card-value">৫৮</div></div>
+                    <div class="info-card ic-7"><div class="info-card-icon"><i class="bi bi-check-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_delivered">সফলভাবে পৌঁছেছে</div><div class="info-card-value">১৫,২৪০</div></div>
+                    <div class="info-card ic-5"><div class="info-card-icon"><i class="bi bi-hourglass-split"></i></div><div class="info-card-label" data-i18n="kpi_msg_pending">প্রক্রিয়াধীন</div><div class="info-card-value">৩,৪১৭</div></div>
+                    <div class="info-card ic-3"><div class="info-card-icon"><i class="bi bi-x-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_failed">ব্যর্থ</div><div class="info-card-value">১,২৪০</div></div>
+                </div>
+
+                <div class="notify-card">
+                    <div class="ni-icon"><i class="bi bi-info-circle-fill"></i></div>
+                    <div>
+                        <div style="font-weight:700; margin-bottom:4px;" data-i18n="message_notify_title">গুরুত্বপূর্ণ তথ্য</div>
+                        <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="msg_notify_desc">নির্বাচিত প্রাপক ধরন ও এলাকার ভিত্তিতে নিবন্ধিত মোবাইল নম্বরে এসএমএস অথবা ভয়েস কল পাঠানো হবে। পাঠানোর পূর্বে বার্তা/স্ক্রিপ্টটি ভালোভাবে যাচাই করুন।</div>
+                    </div>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
+                    <form onsubmit="return sendCategoryMessage(this)">
+                        <div class="row g-3">
+                            <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_pregnant_recipient_options"></select></div>
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                <div class="filter-bar" style="margin-bottom:0;">
+                                    <select data-i18n-group="division_options"></select>
+                                    <select data-i18n-group="district_options"></select>
+                                    <select data-i18n-group="upazila_thana_options"></select>
+                                    <select data-i18n-group="city_corporation_municipality_options"></select>
+                                    <select data-i18n-group="union_options"></select>
+                                    <select data-i18n-group="ward_options"></select>
+                                    <select data-i18n-group="village_options"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
+                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
+                            <button type="submit" class="btn btn-purple btn-pill"><i class="bi bi-send-fill me-1"></i><span data-i18n="btn_send_message">পাঠান</span></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-gear-fill text-purple"></i><span data-i18n="auto_rules_title">সংশ্লিষ্ট স্বয়ংক্রিয় নিয়মাবলী</span></h3>
+                    <div class="d-flex align-items-start gap-2 mb-3">
+                        <i class="bi bi-check-circle-fill text-purple" style="margin-top:3px;"></i>
+                        <div class="flex-grow-1">
+                            <div style="font-weight:700;" data-i18n="auto_rule_anc_reminder_title">ANC চেকআপ রিমাইন্ডার</div>
+                            <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="auto_rule_anc_reminder_desc">সকল গর্ভবতী মায়ের ৪টি নির্ধারিত ANC চেকআপ তারিখের পূর্বে নির্দিষ্ট সময়ে স্বয়ংক্রিয়ভাবে SMS পাঠানো হবে।</div>
+                        </div>
+                        <span class="badge-purple" data-i18n="status_active">সক্রিয়</span>
+                    </div>
+                    <div class="d-flex align-items-start gap-2 mb-3">
+                        <i class="bi bi-check-circle-fill text-purple" style="margin-top:3px;"></i>
+                        <div class="flex-grow-1">
+                            <div style="font-weight:700;" data-i18n="auto_rule_anc_overdue_title">ANC চেকআপ সময় অতিক্রান্ত সতর্কতা</div>
+                            <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="auto_rule_anc_overdue_desc">যাদের ANC চেকআপের নির্ধারিত তারিখ অতিক্রান্ত হয়েছে, তাদের স্বয়ংক্রিয়ভাবে SMS পাঠানো হবে।</div>
+                        </div>
+                        <span class="badge-purple" data-i18n="status_active">সক্রিয়</span>
+                    </div>
+                    <div class="d-flex align-items-start gap-2 mb-3">
+                        <i class="bi bi-check-circle-fill text-purple" style="margin-top:3px;"></i>
+                        <div class="flex-grow-1">
+                            <div style="font-weight:700;" data-i18n="auto_rule_pnc_reminder_title">PNC চেকআপ রিমাইন্ডার</div>
+                            <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="auto_rule_pnc_reminder_desc">প্রসব পরবর্তী ২৪ ঘণ্টা, ২-৩ দিন, ৭-১৪ দিন ও ৪২ দিনের নির্ধারিত সময়ে সকল প্রসূতি মায়ের কাছে স্বয়ংক্রিয় SMS পাঠানো হবে।</div>
+                        </div>
+                        <span class="badge-purple" data-i18n="status_active">সক্রিয়</span>
+                    </div>
+                    <div class="d-flex align-items-start gap-2 mb-3">
+                        <i class="bi bi-check-circle-fill text-purple" style="margin-top:3px;"></i>
+                        <div class="flex-grow-1">
+                            <div style="font-weight:700;" data-i18n="auto_rule_anc_call_title">ANC চেকআপ রিমাইন্ডার কল</div>
+                            <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="auto_rule_anc_call_desc">সকল গর্ভবতী মায়ের ৪টি নির্ধারিত ANC চেকআপ তারিখের পূর্বে নির্দিষ্ট সময়ে স্বয়ংক্রিয়ভাবে ভয়েস কল যাবে।</div>
+                        </div>
+                        <span class="badge-purple" data-i18n="status_active">সক্রিয়</span>
+                    </div>
+                    <div class="d-flex align-items-start gap-2 mb-3">
+                        <i class="bi bi-check-circle-fill text-purple" style="margin-top:3px;"></i>
+                        <div class="flex-grow-1">
+                            <div style="font-weight:700;" data-i18n="auto_rule_pnc_call_title">PNC চেকআপ রিমাইন্ডার কল</div>
+                            <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="auto_rule_pnc_call_desc">প্রসব পরবর্তী ২৪ ঘণ্টা, ২-৩ দিন, ৭-১৪ দিন ও ৪২ দিনের নির্ধারিত সময়ে সকল প্রসূতি ও ঝুঁকিপূর্ণ মায়ের কাছে স্বয়ংক্রিয় ভয়েস কল যাবে।</div>
+                        </div>
+                        <span class="badge-purple" data-i18n="status_active">সক্রিয়</span>
+                    </div>
+                    <div class="d-flex align-items-start gap-2">
+                        <i class="bi bi-check-circle-fill text-purple" style="margin-top:3px;"></i>
+                        <div class="flex-grow-1">
+                            <div style="font-weight:700;" data-i18n="auto_rule_risk_alert_title">ঝুঁকিপূর্ণ গর্ভবতীর জরুরি সতর্কতা কল</div>
+                            <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="auto_rule_risk_alert_desc">ঝুঁকিপূর্ণ হিসেবে চিহ্নিত গর্ভবতী মায়েদের প্রয়োজন অনুযায়ী তাৎক্ষণিকভাবে সতর্কতামূলক ভয়েস কল যাবে।</div>
+                        </div>
+                        <span class="badge-purple" data-i18n="status_active">সক্রিয়</span>
+                    </div>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-clock-history text-purple"></i><span data-i18n="history_title">প্রেরণের ইতিহাস</span></h3>
+                    <div class="table-responsive-panel">
+                        <table class="app-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_sl">ক্রমিক</th>
+                                    <th data-i18n="th_recipient_type">প্রাপক ধরন</th>
+                                    <th data-i18n="th_channel">চ্যানেল</th>
+                                    <th data-i18n="th_message">বার্তা</th>
+                                    <th data-i18n="th_recipient_count">প্রাপক সংখ্যা</th>
+                                    <th data-i18n="th_date">তারিখ</th>
+                                    <th data-i18n="th_status">অবস্থা</th>
+                                </tr>
+                            </thead>
+                            <tbody id="msgPregnantHistoryTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="table-foot">
+                        <div class="small-note" data-i18n="showing_entries_msg">সাম্প্রতিক প্রেরণসমূহ দেখানো হচ্ছে</div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn btn-sm btn-purple btn-pill">১</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill">২</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- বার্তা প্রেরণ - রক্তদাতা                                        -->
+            <!-- ============================================================ -->
+            <section class="dashboard-section" id="section-msg-blood">
+                <div class="section-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="section-icon-badge"><i class="bi bi-droplet-half"></i></div>
+                        <div>
+                            <h3 data-i18n="menu_msg_blood">রক্তদাতা</h3>
+                            <p data-i18n="msg_blood_sub">রক্তদাতা ও রক্ত প্রয়োজনীয় ব্যক্তিদের এসএমএস ও ভয়েস কল পাঠান</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card-grid">
+                    <div class="info-card ic-1"><div class="info-card-icon"><i class="bi bi-send-check-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_sent_month">এই মাসে প্রেরিত বার্তা/কল</div><div class="info-card-value">২৪</div></div>
+                    <div class="info-card ic-7"><div class="info-card-icon"><i class="bi bi-check-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_delivered">সফলভাবে পৌঁছেছে</div><div class="info-card-value">৬,৮৫০</div></div>
+                    <div class="info-card ic-5"><div class="info-card-icon"><i class="bi bi-hourglass-split"></i></div><div class="info-card-label" data-i18n="kpi_msg_pending">প্রক্রিয়াধীন</div><div class="info-card-value">৬২০</div></div>
+                    <div class="info-card ic-3"><div class="info-card-icon"><i class="bi bi-x-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_failed">ব্যর্থ</div><div class="info-card-value">১৮০</div></div>
+                </div>
+
+                <div class="notify-card">
+                    <div class="ni-icon"><i class="bi bi-info-circle-fill"></i></div>
+                    <div>
+                        <div style="font-weight:700; margin-bottom:4px;" data-i18n="message_notify_title">গুরুত্বপূর্ণ তথ্য</div>
+                        <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="msg_notify_desc">নির্বাচিত প্রাপক ধরন ও এলাকার ভিত্তিতে নিবন্ধিত মোবাইল নম্বরে এসএমএস অথবা ভয়েস কল পাঠানো হবে। পাঠানোর পূর্বে বার্তা/স্ক্রিপ্টটি ভালোভাবে যাচাই করুন।</div>
+                    </div>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
+                    <form onsubmit="return sendCategoryMessage(this)">
+                        <div class="row g-3">
+                            <div class="col-md-6"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_blood_recipient_options"></select></div>
+                            <div class="col-md-6"><label class="form-label" data-i18n="msg_blood_direction_label">অনুরোধের দিক</label><select class="form-select" data-i18n-group="msg_blood_direction_options"></select></div>
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                <div class="filter-bar" style="margin-bottom:0;">
+                                    <select data-i18n-group="division_options"></select>
+                                    <select data-i18n-group="district_options"></select>
+                                    <select data-i18n-group="upazila_thana_options"></select>
+                                    <select data-i18n-group="city_corporation_municipality_options"></select>
+                                    <select data-i18n-group="union_options"></select>
+                                    <select data-i18n-group="ward_options"></select>
+                                    <select data-i18n-group="village_options"></select>
+                                    <select data-i18n-group="blood_group_options"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
+                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
+                            <button type="submit" class="btn btn-purple btn-pill"><i class="bi bi-send-fill me-1"></i><span data-i18n="btn_send_message">পাঠান</span></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-gear-fill text-purple"></i><span data-i18n="auto_rules_title">সংশ্লিষ্ট স্বয়ংক্রিয় নিয়মাবলী</span></h3>
+                    <div class="d-flex align-items-start gap-2">
+                        <i class="bi bi-check-circle-fill text-purple" style="margin-top:3px;"></i>
+                        <div class="flex-grow-1">
+                            <div style="font-weight:700;" data-i18n="auto_rule_blood_thanks_title">রক্তদানের পর ধন্যবাদ বার্তা</div>
+                            <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="auto_rule_blood_thanks_desc">একজন রক্তদাতা রক্তদান সম্পন্ন করার সাথে সাথে তাকে স্বয়ংক্রিয়ভাবে ধন্যবাদ ও শুভেচ্ছা SMS পাঠানো হবে।</div>
+                        </div>
+                        <span class="badge-purple" data-i18n="status_active">সক্রিয়</span>
+                    </div>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-clock-history text-purple"></i><span data-i18n="history_title">প্রেরণের ইতিহাস</span></h3>
+                    <div class="table-responsive-panel">
+                        <table class="app-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_sl">ক্রমিক</th>
+                                    <th data-i18n="th_recipient_type">প্রাপক ধরন</th>
+                                    <th data-i18n="th_channel">চ্যানেল</th>
+                                    <th data-i18n="th_message">বার্তা</th>
+                                    <th data-i18n="th_recipient_count">প্রাপক সংখ্যা</th>
+                                    <th data-i18n="th_date">তারিখ</th>
+                                    <th data-i18n="th_status">অবস্থা</th>
+                                </tr>
+                            </thead>
+                            <tbody id="msgBloodHistoryTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="table-foot">
+                        <div class="small-note" data-i18n="showing_entries_msg">সাম্প্রতিক প্রেরণসমূহ দেখানো হচ্ছে</div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn btn-sm btn-purple btn-pill">১</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill">২</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- বার্তা প্রেরণ - নবজাতক ও শিশু                                   -->
+            <!-- ============================================================ -->
+            <section class="dashboard-section" id="section-msg-newborn">
+                <div class="section-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="section-icon-badge"><i class="bi bi-emoji-smile-fill"></i></div>
+                        <div>
+                            <h3 data-i18n="menu_msg_newborn">নবজাতক ও শিশু</h3>
+                            <p data-i18n="msg_newborn_sub">নবজাতক ও শিশুর অভিভাবকদের এসএমএস ও ভয়েস কল পাঠান</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card-grid">
+                    <div class="info-card ic-1"><div class="info-card-icon"><i class="bi bi-send-check-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_sent_month">এই মাসে প্রেরিত বার্তা/কল</div><div class="info-card-value">১৯</div></div>
+                    <div class="info-card ic-7"><div class="info-card-icon"><i class="bi bi-check-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_delivered">সফলভাবে পৌঁছেছে</div><div class="info-card-value">৪,৩২০</div></div>
+                    <div class="info-card ic-5"><div class="info-card-icon"><i class="bi bi-hourglass-split"></i></div><div class="info-card-label" data-i18n="kpi_msg_pending">প্রক্রিয়াধীন</div><div class="info-card-value">৫৪০</div></div>
+                    <div class="info-card ic-3"><div class="info-card-icon"><i class="bi bi-x-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_failed">ব্যর্থ</div><div class="info-card-value">৯৬</div></div>
+                </div>
+
+                <div class="notify-card">
+                    <div class="ni-icon"><i class="bi bi-info-circle-fill"></i></div>
+                    <div>
+                        <div style="font-weight:700; margin-bottom:4px;" data-i18n="message_notify_title">গুরুত্বপূর্ণ তথ্য</div>
+                        <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="msg_notify_desc">নির্বাচিত প্রাপক ধরন ও এলাকার ভিত্তিতে নিবন্ধিত মোবাইল নম্বরে এসএমএস অথবা ভয়েস কল পাঠানো হবে। পাঠানোর পূর্বে বার্তা/স্ক্রিপ্টটি ভালোভাবে যাচাই করুন।</div>
+                    </div>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
+                    <form onsubmit="return sendCategoryMessage(this)">
+                        <div class="row g-3">
+                            <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_newborn_recipient_options"></select></div>
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                <div class="filter-bar" style="margin-bottom:0;">
+                                    <select data-i18n-group="division_options"></select>
+                                    <select data-i18n-group="district_options"></select>
+                                    <select data-i18n-group="upazila_thana_options"></select>
+                                    <select data-i18n-group="city_corporation_municipality_options"></select>
+                                    <select data-i18n-group="union_options"></select>
+                                    <select data-i18n-group="ward_options"></select>
+                                    <select data-i18n-group="village_options"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
+                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
+                            <button type="submit" class="btn btn-purple btn-pill"><i class="bi bi-send-fill me-1"></i><span data-i18n="btn_send_message">পাঠান</span></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-clock-history text-purple"></i><span data-i18n="history_title">প্রেরণের ইতিহাস</span></h3>
+                    <div class="table-responsive-panel">
+                        <table class="app-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_sl">ক্রমিক</th>
+                                    <th data-i18n="th_recipient_type">প্রাপক ধরন</th>
+                                    <th data-i18n="th_channel">চ্যানেল</th>
+                                    <th data-i18n="th_message">বার্তা</th>
+                                    <th data-i18n="th_recipient_count">প্রাপক সংখ্যা</th>
+                                    <th data-i18n="th_date">তারিখ</th>
+                                    <th data-i18n="th_status">অবস্থা</th>
+                                </tr>
+                            </thead>
+                            <tbody id="msgNewbornHistoryTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="table-foot">
+                        <div class="small-note" data-i18n="showing_entries_msg">সাম্প্রতিক প্রেরণসমূহ দেখানো হচ্ছে</div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn btn-sm btn-purple btn-pill">১</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill">২</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- বার্তা প্রেরণ - টিকাদান                                          -->
+            <!-- ============================================================ -->
+            <section class="dashboard-section" id="section-msg-vaccine">
+                <div class="section-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="section-icon-badge"><i class="bi bi-shield-plus"></i></div>
+                        <div>
+                            <h3 data-i18n="menu_msg_vaccine">টিকাদান</h3>
+                            <p data-i18n="msg_vaccine_sub">টিকাদান সংক্রান্ত রিমাইন্ডার এসএমএস ও ভয়েস কল পাঠান</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card-grid">
+                    <div class="info-card ic-1"><div class="info-card-icon"><i class="bi bi-send-check-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_sent_month">এই মাসে প্রেরিত বার্তা/কল</div><div class="info-card-value">৪১</div></div>
+                    <div class="info-card ic-7"><div class="info-card-icon"><i class="bi bi-check-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_delivered">সফলভাবে পৌঁছেছে</div><div class="info-card-value">৯,৭৬০</div></div>
+                    <div class="info-card ic-5"><div class="info-card-icon"><i class="bi bi-hourglass-split"></i></div><div class="info-card-label" data-i18n="kpi_msg_pending">প্রক্রিয়াধীন</div><div class="info-card-value">১,৮৯০</div></div>
+                    <div class="info-card ic-3"><div class="info-card-icon"><i class="bi bi-x-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_failed">ব্যর্থ</div><div class="info-card-value">৩১২</div></div>
+                </div>
+
+                <div class="notify-card">
+                    <div class="ni-icon"><i class="bi bi-info-circle-fill"></i></div>
+                    <div>
+                        <div style="font-weight:700; margin-bottom:4px;" data-i18n="message_notify_title">গুরুত্বপূর্ণ তথ্য</div>
+                        <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="msg_notify_desc">নির্বাচিত প্রাপক ধরন ও এলাকার ভিত্তিতে নিবন্ধিত মোবাইল নম্বরে এসএমএস অথবা ভয়েস কল পাঠানো হবে। পাঠানোর পূর্বে বার্তা/স্ক্রিপ্টটি ভালোভাবে যাচাই করুন।</div>
+                    </div>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
+                    <form onsubmit="return sendCategoryMessage(this)">
+                        <div class="row g-3">
+                            <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_vaccine_recipient_options"></select></div>
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                <div class="filter-bar" style="margin-bottom:0;">
+                                    <select data-i18n-group="division_options"></select>
+                                    <select data-i18n-group="district_options"></select>
+                                    <select data-i18n-group="upazila_thana_options"></select>
+                                    <select data-i18n-group="city_corporation_municipality_options"></select>
+                                    <select data-i18n-group="union_options"></select>
+                                    <select data-i18n-group="ward_options"></select>
+                                    <select data-i18n-group="village_options"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
+                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
+                            <button type="submit" class="btn btn-purple btn-pill"><i class="bi bi-send-fill me-1"></i><span data-i18n="btn_send_message">পাঠান</span></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-gear-fill text-purple"></i><span data-i18n="auto_rules_title">সংশ্লিষ্ট স্বয়ংক্রিয় নিয়মাবলী</span></h3>
+                    <div class="d-flex align-items-start gap-2 mb-3">
+                        <i class="bi bi-check-circle-fill text-purple" style="margin-top:3px;"></i>
+                        <div class="flex-grow-1">
+                            <div style="font-weight:700;" data-i18n="auto_rule_vaccine_pregnancy_title">গর্ভকালীন টিকা রিমাইন্ডার</div>
+                            <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="auto_rule_vaccine_pregnancy_desc">গর্ভকালীন টিকা প্রাপ্য মায়েদের এলাকা ও সময় অনুযায়ী স্বয়ংক্রিয়ভাবে SMS পাঠানো হবে।</div>
+                        </div>
+                        <span class="badge-purple" data-i18n="status_active">সক্রিয়</span>
+                    </div>
+                    <div class="d-flex align-items-start gap-2 mb-3">
+                        <i class="bi bi-check-circle-fill text-purple" style="margin-top:3px;"></i>
+                        <div class="flex-grow-1">
+                            <div style="font-weight:700;" data-i18n="auto_rule_vaccine_before_title">শিশুর টিকাদান রিমাইন্ডার কল (পূর্বে)</div>
+                            <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="auto_rule_vaccine_before_desc">শিশুর প্রতিটি ধাপের টিকা প্রদানের নির্ধারিত তারিখের পূর্বে নির্দিষ্ট সময়ে অভিভাবকের কাছে স্বয়ংক্রিয় ভয়েস কল যাবে।</div>
+                        </div>
+                        <span class="badge-purple" data-i18n="status_active">সক্রিয়</span>
+                    </div>
+                    <div class="d-flex align-items-start gap-2">
+                        <i class="bi bi-check-circle-fill text-purple" style="margin-top:3px;"></i>
+                        <div class="flex-grow-1">
+                            <div style="font-weight:700;" data-i18n="auto_rule_vaccine_after_title">শিশুর টিকাদান নিশ্চিতকরণ কল (পরে)</div>
+                            <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="auto_rule_vaccine_after_desc">টিকা প্রদানের পর নির্দিষ্ট সময়ে অভিভাবকের কাছে নিশ্চিতকরণ ভয়েস কল যাবে।</div>
+                        </div>
+                        <span class="badge-purple" data-i18n="status_active">সক্রিয়</span>
+                    </div>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-clock-history text-purple"></i><span data-i18n="history_title">প্রেরণের ইতিহাস</span></h3>
+                    <div class="table-responsive-panel">
+                        <table class="app-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_sl">ক্রমিক</th>
+                                    <th data-i18n="th_recipient_type">প্রাপক ধরন</th>
+                                    <th data-i18n="th_channel">চ্যানেল</th>
+                                    <th data-i18n="th_message">বার্তা</th>
+                                    <th data-i18n="th_recipient_count">প্রাপক সংখ্যা</th>
+                                    <th data-i18n="th_date">তারিখ</th>
+                                    <th data-i18n="th_status">অবস্থা</th>
+                                </tr>
+                            </thead>
+                            <tbody id="msgVaccineHistoryTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="table-foot">
+                        <div class="small-note" data-i18n="showing_entries_msg">সাম্প্রতিক প্রেরণসমূহ দেখানো হচ্ছে</div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn btn-sm btn-purple btn-pill">১</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill">২</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- বার্তা প্রেরণ - সেবা প্রদানকারী (GO/NGO)                        -->
+            <!-- ============================================================ -->
+            <section class="dashboard-section" id="section-msg-provider">
+                <div class="section-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="section-icon-badge"><i class="bi bi-building"></i></div>
+                        <div>
+                            <h3 data-i18n="menu_msg_provider">সেবা প্রদানকারী (GO/NGO)</h3>
+                            <p data-i18n="msg_provider_sub">সেবা প্রদানকারী (GO/NGO) কর্মকর্তাদের এসএমএস ও ভয়েস কল পাঠান</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card-grid">
+                    <div class="info-card ic-1"><div class="info-card-icon"><i class="bi bi-send-check-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_sent_month">এই মাসে প্রেরিত বার্তা/কল</div><div class="info-card-value">১২</div></div>
+                    <div class="info-card ic-7"><div class="info-card-icon"><i class="bi bi-check-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_delivered">সফলভাবে পৌঁছেছে</div><div class="info-card-value">৮৬০</div></div>
+                    <div class="info-card ic-5"><div class="info-card-icon"><i class="bi bi-hourglass-split"></i></div><div class="info-card-label" data-i18n="kpi_msg_pending">প্রক্রিয়াধীন</div><div class="info-card-value">৬৪</div></div>
+                    <div class="info-card ic-3"><div class="info-card-icon"><i class="bi bi-x-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_failed">ব্যর্থ</div><div class="info-card-value">১৮</div></div>
+                </div>
+
+                <div class="notify-card">
+                    <div class="ni-icon"><i class="bi bi-info-circle-fill"></i></div>
+                    <div>
+                        <div style="font-weight:700; margin-bottom:4px;" data-i18n="message_notify_title">গুরুত্বপূর্ণ তথ্য</div>
+                        <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="msg_notify_desc">নির্বাচিত প্রাপক ধরন ও এলাকার ভিত্তিতে নিবন্ধিত মোবাইল নম্বরে এসএমএস অথবা ভয়েস কল পাঠানো হবে। পাঠানোর পূর্বে বার্তা/স্ক্রিপ্টটি ভালোভাবে যাচাই করুন।</div>
+                    </div>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
+                    <form onsubmit="return sendCategoryMessage(this)">
+                        <div class="row g-3">
+                            <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_provider_recipient_options"></select></div>
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                <div class="filter-bar" style="margin-bottom:0;">
+                                    <select data-i18n-group="division_options"></select>
+                                    <select data-i18n-group="district_options"></select>
+                                    <select data-i18n-group="upazila_thana_options"></select>
+                                    <select data-i18n-group="city_corporation_municipality_options"></select>
+                                    <select data-i18n-group="union_options"></select>
+                                    <select data-i18n-group="ward_options"></select>
+                                    <select data-i18n-group="village_options"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
+                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
+                            <button type="submit" class="btn btn-purple btn-pill"><i class="bi bi-send-fill me-1"></i><span data-i18n="btn_send_message">পাঠান</span></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-clock-history text-purple"></i><span data-i18n="history_title">প্রেরণের ইতিহাস</span></h3>
+                    <div class="table-responsive-panel">
+                        <table class="app-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_sl">ক্রমিক</th>
+                                    <th data-i18n="th_recipient_type">প্রাপক ধরন</th>
+                                    <th data-i18n="th_channel">চ্যানেল</th>
+                                    <th data-i18n="th_message">বার্তা</th>
+                                    <th data-i18n="th_recipient_count">প্রাপক সংখ্যা</th>
+                                    <th data-i18n="th_date">তারিখ</th>
+                                    <th data-i18n="th_status">অবস্থা</th>
+                                </tr>
+                            </thead>
+                            <tbody id="msgProviderHistoryTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="table-foot">
+                        <div class="small-note" data-i18n="showing_entries_msg">সাম্প্রতিক প্রেরণসমূহ দেখানো হচ্ছে</div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn btn-sm btn-purple btn-pill">১</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill">২</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- বার্তা প্রেরণ - স্বেচ্ছাসেবী                                     -->
+            <!-- ============================================================ -->
+            <section class="dashboard-section" id="section-msg-volunteer">
+                <div class="section-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="section-icon-badge"><i class="bi bi-people-fill"></i></div>
+                        <div>
+                            <h3 data-i18n="menu_msg_volunteer">স্বেচ্ছাসেবী</h3>
+                            <p data-i18n="msg_volunteer_sub">স্বেচ্ছাসেবীদের এসএমএস ও ভয়েস কল পাঠান</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card-grid">
+                    <div class="info-card ic-1"><div class="info-card-icon"><i class="bi bi-send-check-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_sent_month">এই মাসে প্রেরিত বার্তা/কল</div><div class="info-card-value">১৫</div></div>
+                    <div class="info-card ic-7"><div class="info-card-icon"><i class="bi bi-check-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_delivered">সফলভাবে পৌঁছেছে</div><div class="info-card-value">১,২৪০</div></div>
+                    <div class="info-card ic-5"><div class="info-card-icon"><i class="bi bi-hourglass-split"></i></div><div class="info-card-label" data-i18n="kpi_msg_pending">প্রক্রিয়াধীন</div><div class="info-card-value">২১০</div></div>
+                    <div class="info-card ic-3"><div class="info-card-icon"><i class="bi bi-x-circle-fill"></i></div><div class="info-card-label" data-i18n="kpi_msg_failed">ব্যর্থ</div><div class="info-card-value">৪২</div></div>
+                </div>
+
+                <div class="notify-card">
+                    <div class="ni-icon"><i class="bi bi-info-circle-fill"></i></div>
+                    <div>
+                        <div style="font-weight:700; margin-bottom:4px;" data-i18n="message_notify_title">গুরুত্বপূর্ণ তথ্য</div>
+                        <div class="text-muted-soft" style="font-size:0.86rem;" data-i18n="msg_notify_desc">নির্বাচিত প্রাপক ধরন ও এলাকার ভিত্তিতে নিবন্ধিত মোবাইল নম্বরে এসএমএস অথবা ভয়েস কল পাঠানো হবে। পাঠানোর পূর্বে বার্তা/স্ক্রিপ্টটি ভালোভাবে যাচাই করুন।</div>
+                    </div>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-pencil-square text-purple"></i><span data-i18n="compose_title">নতুন বার্তা/কল তৈরি করুন</span></h3>
+                    <form onsubmit="return sendCategoryMessage(this)">
+                        <div class="row g-3">
+                            <div class="col-12"><label class="form-label" data-i18n="form_recipient_type">প্রাপক ধরন</label><select class="form-select" data-i18n-group="msg_volunteer_recipient_options"></select></div>
+                            <div class="col-12">
+                                <label class="form-label" data-i18n="area_selection_label">এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)</label>
+                                <div class="filter-bar" style="margin-bottom:0;">
+                                    <select data-i18n-group="division_options"></select>
+                                    <select data-i18n-group="district_options"></select>
+                                    <select data-i18n-group="upazila_thana_options"></select>
+                                    <select data-i18n-group="city_corporation_municipality_options"></select>
+                                    <select data-i18n-group="union_options"></select>
+                                    <select data-i18n-group="ward_options"></select>
+                                    <select data-i18n-group="village_options"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4"><label class="form-label" data-i18n="form_channel">চ্যানেল নির্বাচন করুন</label><select class="form-select" data-i18n-group="msg_channel_options"></select></div>
+                            <div class="col-12"><label class="form-label" data-i18n="form_message_or_script">বার্তা / স্ক্রিপ্ট</label><textarea class="form-control" rows="4"></textarea></div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-purple btn-pill" data-i18n="btn_cancel">বাতিল</button>
+                            <button type="submit" class="btn btn-purple btn-pill"><i class="bi bi-send-fill me-1"></i><span data-i18n="btn_send_message">পাঠান</span></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="data-panel">
+                    <h3 class="panel-title"><i class="bi bi-clock-history text-purple"></i><span data-i18n="history_title">প্রেরণের ইতিহাস</span></h3>
+                    <div class="table-responsive-panel">
+                        <table class="app-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_sl">ক্রমিক</th>
+                                    <th data-i18n="th_recipient_type">প্রাপক ধরন</th>
+                                    <th data-i18n="th_channel">চ্যানেল</th>
+                                    <th data-i18n="th_message">বার্তা</th>
+                                    <th data-i18n="th_recipient_count">প্রাপক সংখ্যা</th>
+                                    <th data-i18n="th_date">তারিখ</th>
+                                    <th data-i18n="th_status">অবস্থা</th>
+                                </tr>
+                            </thead>
+                            <tbody id="msgVolunteerHistoryTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="table-foot">
+                        <div class="small-note" data-i18n="showing_entries_msg">সাম্প্রতিক প্রেরণসমূহ দেখানো হচ্ছে</div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn btn-sm btn-purple btn-pill">১</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill">২</button>
+                            <button class="btn btn-sm btn-outline-purple btn-pill"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ============================================================ -->
             <!-- মাতৃমৃত্যু রেকর্ড                                               -->
             <!-- ============================================================ -->
             <section class="dashboard-section" id="section-maternal-death">
@@ -2238,6 +2864,13 @@ const I18N = {
     "menu_vaccine_child": "শিশুর টিকার রেকর্ড",
     "menu_health_center_group": "স্বাস্থ্য সেবা কেন্দ্র",
     "menu_health_center_list": "কেন্দ্রের তালিকা",
+    "menu_message_group": "বার্তা প্রেরণ",
+    "menu_msg_pregnant": "গর্ভবতী",
+    "menu_msg_blood": "রক্তদাতা",
+    "menu_msg_newborn": "নবজাতক ও শিশু",
+    "menu_msg_vaccine": "টিকাদান",
+    "menu_msg_provider": "সেবা প্রদানকারী (GO/NGO)",
+    "menu_msg_volunteer": "স্বেচ্ছাসেবী",
     "menu_mortality_group": "মৃত্যু পর্যবেক্ষণ",
     "menu_maternal_death": "মাতৃমৃত্যু রেকর্ড",
     "menu_child_death": "শিশুমৃত্যু রেকর্ড",
@@ -2445,6 +3078,55 @@ const I18N = {
     "report_vaccine_total": "মোট টিকা রেকর্ড",
     "report_facility_total": "মোট স্বাস্থ্য সেবা কেন্দ্র",
     "report_mortality_total": "মোট মৃত্যু (মাতৃ + শিশু)",
+    "msg_pregnant_sub": "গর্ভবতী মায়েদের বিভিন্ন ধরন অনুযায়ী এসএমএস ও ভয়েস কল পাঠান",
+    "msg_blood_sub": "রক্তদাতা ও রক্ত প্রয়োজনীয় ব্যক্তিদের এসএমএস ও ভয়েস কল পাঠান",
+    "msg_newborn_sub": "নবজাতক ও শিশুর অভিভাবকদের এসএমএস ও ভয়েস কল পাঠান",
+    "msg_vaccine_sub": "টিকাদান সংক্রান্ত রিমাইন্ডার এসএমএস ও ভয়েস কল পাঠান",
+    "msg_provider_sub": "সেবা প্রদানকারী (GO/NGO) কর্মকর্তাদের এসএমএস ও ভয়েস কল পাঠান",
+    "msg_volunteer_sub": "স্বেচ্ছাসেবীদের এসএমএস ও ভয়েস কল পাঠান",
+    "kpi_msg_sent_month": "এই মাসে প্রেরিত বার্তা/কল",
+    "kpi_msg_delivered": "সফলভাবে পৌঁছেছে",
+    "kpi_msg_pending": "প্রক্রিয়াধীন",
+    "kpi_msg_failed": "ব্যর্থ",
+    "message_notify_title": "গুরুত্বপূর্ণ তথ্য",
+    "msg_notify_desc": "নির্বাচিত প্রাপক ধরন ও এলাকার ভিত্তিতে নিবন্ধিত মোবাইল নম্বরে এসএমএস অথবা ভয়েস কল পাঠানো হবে। পাঠানোর পূর্বে বার্তা/স্ক্রিপ্টটি ভালোভাবে যাচাই করুন।",
+    "compose_title": "নতুন বার্তা/কল তৈরি করুন",
+    "form_recipient_type": "প্রাপক ধরন",
+    "msg_blood_direction_label": "অনুরোধের দিক",
+    "form_channel": "চ্যানেল নির্বাচন করুন",
+    "form_message_or_script": "বার্তা / স্ক্রিপ্ট",
+    "btn_send_message": "পাঠান",
+    "auto_rules_title": "সংশ্লিষ্ট স্বয়ংক্রিয় নিয়মাবলী",
+    "history_title": "প্রেরণের ইতিহাস",
+    "th_recipient_type": "প্রাপক ধরন",
+    "th_channel": "চ্যানেল",
+    "th_message": "বার্তা",
+    "th_recipient_count": "প্রাপক সংখ্যা",
+    "showing_entries_msg": "সাম্প্রতিক প্রেরণসমূহ দেখানো হচ্ছে",
+    "area_selection_label": "এলাকাভিত্তিক প্রাপক নির্বাচন (ঐচ্ছিক)",
+    "status_active": "সক্রিয়",
+    "sms_auto_rules_title": "স্বয়ংক্রিয় বার্তা নিয়মাবলী",
+    "auto_rule_anc_reminder_title": "ANC চেকআপ রিমাইন্ডার",
+    "auto_rule_anc_reminder_desc": "সকল গর্ভবতী মায়ের ৪টি নির্ধারিত ANC চেকআপ তারিখের পূর্বে নির্দিষ্ট সময়ে স্বয়ংক্রিয়ভাবে SMS পাঠানো হবে।",
+    "auto_rule_anc_overdue_title": "ANC চেকআপ সময় অতিক্রান্ত সতর্কতা",
+    "auto_rule_anc_overdue_desc": "যাদের ANC চেকআপের নির্ধারিত তারিখ অতিক্রান্ত হয়েছে, তাদের স্বয়ংক্রিয়ভাবে SMS পাঠানো হবে।",
+    "auto_rule_pnc_reminder_title": "PNC চেকআপ রিমাইন্ডার",
+    "auto_rule_pnc_reminder_desc": "প্রসব পরবর্তী ২৪ ঘণ্টা, ২-৩ দিন, ৭-১৪ দিন ও ৪২ দিনের নির্ধারিত সময়ে সকল প্রসূতি মায়ের কাছে স্বয়ংক্রিয় SMS পাঠানো হবে।",
+    "auto_rule_vaccine_pregnancy_title": "গর্ভকালীন টিকা রিমাইন্ডার",
+    "auto_rule_vaccine_pregnancy_desc": "গর্ভকালীন টিকা প্রাপ্য মায়েদের এলাকা ও সময় অনুযায়ী স্বয়ংক্রিয়ভাবে SMS পাঠানো হবে।",
+    "auto_rule_blood_thanks_title": "রক্তদানের পর ধন্যবাদ বার্তা",
+    "auto_rule_blood_thanks_desc": "একজন রক্তদাতা রক্তদান সম্পন্ন করার সাথে সাথে তাকে স্বয়ংক্রিয়ভাবে ধন্যবাদ ও শুভেচ্ছা SMS পাঠানো হবে।",
+    "voice_auto_rules_title": "স্বয়ংক্রিয় কল নিয়মাবলী",
+    "auto_rule_anc_call_title": "ANC চেকআপ রিমাইন্ডার কল",
+    "auto_rule_anc_call_desc": "সকল গর্ভবতী মায়ের ৪টি নির্ধারিত ANC চেকআপ তারিখের পূর্বে নির্দিষ্ট সময়ে স্বয়ংক্রিয়ভাবে ভয়েস কল যাবে।",
+    "auto_rule_pnc_call_title": "PNC চেকআপ রিমাইন্ডার কল",
+    "auto_rule_pnc_call_desc": "প্রসব পরবর্তী ২৪ ঘণ্টা, ২-৩ দিন, ৭-১৪ দিন ও ৪২ দিনের নির্ধারিত সময়ে সকল প্রসূতি ও ঝুঁকিপূর্ণ মায়ের কাছে স্বয়ংক্রিয় ভয়েস কল যাবে।",
+    "auto_rule_vaccine_before_title": "শিশুর টিকাদান রিমাইন্ডার কল (পূর্বে)",
+    "auto_rule_vaccine_before_desc": "শিশুর প্রতিটি ধাপের টিকা প্রদানের নির্ধারিত তারিখের পূর্বে নির্দিষ্ট সময়ে অভিভাবকের কাছে স্বয়ংক্রিয় ভয়েস কল যাবে।",
+    "auto_rule_vaccine_after_title": "শিশুর টিকাদান নিশ্চিতকরণ কল (পরে)",
+    "auto_rule_vaccine_after_desc": "টিকা প্রদানের পর নির্দিষ্ট সময়ে অভিভাবকের কাছে নিশ্চিতকরণ ভয়েস কল যাবে।",
+    "auto_rule_risk_alert_title": "ঝুঁকিপূর্ণ গর্ভবতীর জরুরি সতর্কতা কল",
+    "auto_rule_risk_alert_desc": "ঝুঁকিপূর্ণ হিসেবে চিহ্নিত গর্ভবতী মায়েদের প্রয়োজন অনুযায়ী তাৎক্ষণিকভাবে সতর্কতামূলক ভয়েস কল যাবে।",
     "menu_legacy_mother_app_group": "আমার অ্যাপ (মায়ের জন্য)",
     "menu_legacy_dashboard_overview": "ড্যাশবোর্ড ওভারভিউ",
     "menu_legacy_service_card": "গর্ভকালীন সেবা কার্ড",
@@ -2496,6 +3178,13 @@ const I18N = {
     "menu_vaccine_child": "Child Vaccination Records",
     "menu_health_center_group": "Health Facilities",
     "menu_health_center_list": "Facility List",
+    "menu_message_group": "Send Message",
+    "menu_msg_pregnant": "Pregnant Women",
+    "menu_msg_blood": "Blood Donors",
+    "menu_msg_newborn": "Newborn & Child",
+    "menu_msg_vaccine": "Vaccination",
+    "menu_msg_provider": "Service Providers (GO/NGO)",
+    "menu_msg_volunteer": "Volunteers",
     "menu_mortality_group": "Mortality Monitoring",
     "menu_maternal_death": "Maternal Death Records",
     "menu_child_death": "Child Death Records",
@@ -2703,6 +3392,55 @@ const I18N = {
     "report_vaccine_total": "Total Vaccination Records",
     "report_facility_total": "Total Health Facilities",
     "report_mortality_total": "Total Deaths (Maternal + Child)",
+    "msg_pregnant_sub": "Send SMS and voice calls to pregnant mothers by recipient type",
+    "msg_blood_sub": "Send SMS and voice calls to blood donors and blood requesters",
+    "msg_newborn_sub": "Send SMS and voice calls to newborn and child guardians",
+    "msg_vaccine_sub": "Send vaccination-related reminder SMS and voice calls",
+    "msg_provider_sub": "Send SMS and voice calls to service provider (GO/NGO) officers",
+    "msg_volunteer_sub": "Send SMS and voice calls to volunteers",
+    "kpi_msg_sent_month": "Messages/Calls Sent This Month",
+    "kpi_msg_delivered": "Successfully Delivered",
+    "kpi_msg_pending": "Processing",
+    "kpi_msg_failed": "Failed",
+    "message_notify_title": "Important Note",
+    "msg_notify_desc": "SMS or a voice call will be sent to the registered mobile numbers of the selected recipient type and area. Please review the message/script carefully before sending.",
+    "compose_title": "Compose New Message/Call",
+    "form_recipient_type": "Recipient Type",
+    "msg_blood_direction_label": "Request Direction",
+    "form_channel": "Select Channel",
+    "form_message_or_script": "Message / Script",
+    "btn_send_message": "Send",
+    "auto_rules_title": "Related Automated Rules",
+    "history_title": "Sending History",
+    "th_recipient_type": "Recipient Type",
+    "th_channel": "Channel",
+    "th_message": "Message",
+    "th_recipient_count": "Recipients",
+    "showing_entries_msg": "Showing recent sending activity",
+    "area_selection_label": "Area-based Recipient Selection (Optional)",
+    "status_active": "Active",
+    "sms_auto_rules_title": "Automated Message Rules",
+    "auto_rule_anc_reminder_title": "ANC Checkup Reminder",
+    "auto_rule_anc_reminder_desc": "An automatic SMS will be sent to all pregnant mothers at a set time before each of the 4 scheduled ANC checkup dates.",
+    "auto_rule_anc_overdue_title": "ANC Checkup Overdue Alert",
+    "auto_rule_anc_overdue_desc": "Mothers whose scheduled ANC checkup date has passed will automatically receive an SMS.",
+    "auto_rule_pnc_reminder_title": "PNC Checkup Reminder",
+    "auto_rule_pnc_reminder_desc": "An automatic SMS will be sent to all postnatal mothers at the scheduled 24-hour, 2-3 day, 7-14 day, and 42-day milestones.",
+    "auto_rule_vaccine_pregnancy_title": "Pregnancy Vaccine Reminder",
+    "auto_rule_vaccine_pregnancy_desc": "Mothers due for a pregnancy vaccine dose will automatically receive an SMS based on area and schedule.",
+    "auto_rule_blood_thanks_title": "Post-donation Thank-you Message",
+    "auto_rule_blood_thanks_desc": "As soon as a blood donor completes a donation, they will automatically receive a thank-you SMS.",
+    "voice_auto_rules_title": "Automated Call Rules",
+    "auto_rule_anc_call_title": "ANC Checkup Reminder Call",
+    "auto_rule_anc_call_desc": "An automatic voice call will be sent to all pregnant mothers at a set time before each of the 4 scheduled ANC checkup dates.",
+    "auto_rule_pnc_call_title": "PNC Checkup Reminder Call",
+    "auto_rule_pnc_call_desc": "An automatic voice call will be sent to all postnatal and high-risk mothers at the scheduled 24-hour, 2-3 day, 7-14 day, and 42-day milestones.",
+    "auto_rule_vaccine_before_title": "Child Vaccination Reminder Call (Before)",
+    "auto_rule_vaccine_before_desc": "An automatic voice call will be sent to guardians at a set time before the scheduled date of each vaccine dose.",
+    "auto_rule_vaccine_after_title": "Child Vaccination Confirmation Call (After)",
+    "auto_rule_vaccine_after_desc": "A confirmation voice call will be sent to guardians at a set time after the vaccine dose is given.",
+    "auto_rule_risk_alert_title": "High-risk Pregnant Emergency Alert Call",
+    "auto_rule_risk_alert_desc": "An instant alert voice call will be sent to mothers flagged as high-risk whenever needed.",
     "menu_legacy_mother_app_group": "My App (For Mothers)",
     "menu_legacy_dashboard_overview": "Dashboard Overview",
     "menu_legacy_service_card": "Pregnancy Service Card",
@@ -3697,6 +4435,47 @@ const OPTION_GROUPS = {
       "bn": "অন্যান্য",
       "en": "Other"
     }
+  ],
+  "msg_channel_options": [
+    { "bn": "এসএমএস", "en": "SMS" },
+    { "bn": "ভয়েস কল", "en": "Voice Call" }
+  ],
+  "msg_pregnant_recipient_options": [
+    { "bn": "বর্তমান গর্ভবতী (সকল)", "en": "Current Pregnant (All)" },
+    { "bn": "ঝুঁকিপূর্ণ গর্ভবতী (ক্ষেত্র অনুযায়ী)", "en": "High-risk Pregnant (By Risk Factor)" },
+    { "bn": "ভাতা পাওয়ার উপযুক্ত গর্ভবতী", "en": "Allowance-eligible Pregnant" },
+    { "bn": "সদ্য নিবন্ধিত গর্ভবতী", "en": "Newly Registered Pregnant" },
+    { "bn": "ANC চেকআপ প্রাপ্য (নির্ধারিত তারিখের পূর্বে রিমাইন্ডার)", "en": "ANC Checkup Due (Reminder Before Date)" },
+    { "bn": "ANC চেকআপ সময় অতিক্রান্ত", "en": "ANC Checkup Overdue" },
+    { "bn": "PNC চেকআপ প্রাপ্য (নির্ধারিত সময়ের রিমাইন্ডার)", "en": "PNC Checkup Due (Scheduled Reminder)" },
+    { "bn": "PNC চেকআপ সময় অতিক্রান্ত", "en": "PNC Checkup Overdue" }
+  ],
+  "msg_blood_recipient_options": [
+    { "bn": "সকল রক্তদাতা", "en": "All Blood Donors" },
+    { "bn": "রক্তের গ্রুপ ভিত্তিক রক্তদাতা", "en": "Blood Donors by Blood Group" },
+    { "bn": "রক্তের চাহিদাকারী/আবেদনকারী গর্ভবতী", "en": "Pregnant Mothers Requesting Blood" },
+    { "bn": "রক্তদানের পর ধন্যবাদ/শুভেচ্ছা বার্তা প্রাপক", "en": "Post-donation Thank-you Recipients" }
+  ],
+  "msg_blood_direction_options": [
+    { "bn": "গর্ভবতী মা থেকে রক্তদাতার কাছে", "en": "From Pregnant Mother to Blood Donor" },
+    { "bn": "রক্তদাতার কাছ থেকে গর্ভবতী মায়ের কাছে", "en": "From Blood Donor to Pregnant Mother" }
+  ],
+  "msg_newborn_recipient_options": [
+    { "bn": "সকল নবজাতকের অভিভাবক", "en": "All Newborn Guardians" },
+    { "bn": "নবজাতকের অভিভাবক (এলাকা/গ্রাম ভিত্তিক)", "en": "Newborn Guardians (Area/Village-based)" }
+  ],
+  "msg_vaccine_recipient_options": [
+    { "bn": "গর্ভকালীন টিকা প্রাপ্য মা (সময় ভিত্তিক)", "en": "Mothers Due for Pregnancy Vaccine (Time-based)" },
+    { "bn": "শিশুর টিকা প্রাপ্য (ধাপ অনুযায়ী, তারিখের পূর্বে)", "en": "Children Due for Vaccine (By Dose, Before Date)" },
+    { "bn": "শিশুর টিকা প্রদানের পর নিশ্চিতকরণ", "en": "Post-vaccination Confirmation (Children)" }
+  ],
+  "msg_provider_recipient_options": [
+    { "bn": "পদবী অনুযায়ী কর্মকর্তা", "en": "Officers by Designation" },
+    { "bn": "উপজেলা/এলাকাভিত্তিক কর্মকর্তা", "en": "Officers by Upazila/Area" }
+  ],
+  "msg_volunteer_recipient_options": [
+    { "bn": "গ্রুপ ভিত্তিক স্বেচ্ছাসেবী", "en": "Volunteers by Group" },
+    { "bn": "এলাকাভিত্তিক স্বেচ্ছাসেবী", "en": "Volunteers by Area" }
   ]
 };
 
@@ -5225,6 +6004,138 @@ const TABLE_DATA = {
         "en": "Bazarpara, Boalkhali, Khulna"
       }
     ]
+  ],
+  "msgPregnantHistoryTableBody": [
+    [
+      { "bn": "বর্তমান গর্ভবতী (সকল)", "en": "Current Pregnant (All)" },
+      { "bn": "এসএমএস", "en": "SMS" },
+      { "bn": "আগামীকাল আপনার ANC চেকআপ ক্যাম্প অনুষ্ঠিত হবে। নিকটস্থ স্বাস্থ্য কেন্দ্রে উপস্থিত থাকুন।", "en": "Your ANC checkup camp will be held tomorrow. Please visit the nearest health center." },
+      "৪,৫৮২",
+      "2026-07-05",
+      { "bn": "প্রেরণ সম্পন্ন", "en": "Sent" }
+    ],
+    [
+      { "bn": "ঝুঁকিপূর্ণ গর্ভবতী (ক্ষেত্র অনুযায়ী)", "en": "High-risk Pregnant (By Risk Factor)" },
+      { "bn": "ভয়েস কল", "en": "Voice Call" },
+      { "bn": "আপনি ঝুঁকিপূর্ণ হিসেবে চিহ্নিত। জরুরি প্রয়োজনে নিকটস্থ হাসপাতালে যোগাযোগ করুন।", "en": "You are marked as high-risk. Please contact the nearest hospital in case of emergency." },
+      "৬৭৩",
+      "2026-07-03",
+      { "bn": "রিসিভ হয়েছে", "en": "Answered" }
+    ],
+    [
+      { "bn": "ভাতা পাওয়ার উপযুক্ত গর্ভবতী", "en": "Allowance-eligible Pregnant" },
+      { "bn": "এসএমএস", "en": "SMS" },
+      { "bn": "আপনার মাতৃত্বকালীন ভাতা আগামী সপ্তাহে বিতরণ করা হবে। সংশ্লিষ্ট কেন্দ্রে যোগাযোগ করুন।", "en": "Your maternity allowance will be disbursed next week. Please contact the relevant center." },
+      "৮৯৫",
+      "2026-06-28",
+      { "bn": "প্রেরণ সম্পন্ন", "en": "Sent" }
+    ]
+  ],
+  "msgBloodHistoryTableBody": [
+    [
+      { "bn": "সকল রক্তদাতা", "en": "All Blood Donors" },
+      { "bn": "এসএমএস", "en": "SMS" },
+      { "bn": "একজন প্রসূতির জন্য জরুরি ভিত্তিতে রক্তের প্রয়োজন। রক্তদানে এগিয়ে আসুন।", "en": "Urgent blood needed for a maternity patient. Please come forward to donate." },
+      "৩,৪১৭",
+      "2026-07-01",
+      { "bn": "প্রক্রিয়াধীন", "en": "Processing" }
+    ],
+    [
+      { "bn": "রক্তদানের পর ধন্যবাদ/শুভেচ্ছা বার্তা প্রাপক", "en": "Post-donation Thank-you Recipients" },
+      { "bn": "এসএমএস", "en": "SMS" },
+      { "bn": "আপনার রক্তদানের জন্য আন্তরিক ধন্যবাদ। আপনার এই অবদান একজন মায়ের জীবন বাঁচাতে সাহায্য করবে।", "en": "Thank you for your blood donation. Your contribution will help save a mother's life." },
+      "২১৮",
+      "2026-06-29",
+      { "bn": "প্রেরণ সম্পন্ন", "en": "Sent" }
+    ],
+    [
+      { "bn": "রক্তের চাহিদাকারী/আবেদনকারী গর্ভবতী", "en": "Pregnant Mothers Requesting Blood" },
+      { "bn": "ভয়েস কল", "en": "Voice Call" },
+      { "bn": "আপনার আবেদনকৃত রক্তের গ্রুপের একজন দাতা পাওয়া গেছে। নিকটস্থ কেন্দ্রে যোগাযোগ করুন।", "en": "A donor matching your requested blood group has been found. Please contact the nearest center." },
+      "৪২",
+      "2026-06-26",
+      { "bn": "রিসিভ হয়েছে", "en": "Answered" }
+    ]
+  ],
+  "msgNewbornHistoryTableBody": [
+    [
+      { "bn": "সকল নবজাতকের অভিভাবক", "en": "All Newborn Guardians" },
+      { "bn": "এসএমএস", "en": "SMS" },
+      { "bn": "আপনার শিশুর পরবর্তী টিকাদানের তারিখ আগামী সপ্তাহে। নির্ধারিত কেন্দ্রে উপস্থিত থাকুন।", "en": "Your child's next vaccination date is next week. Please visit the scheduled center." },
+      "১,২৪০",
+      "2026-06-25",
+      { "bn": "ব্যর্থ", "en": "Failed" }
+    ],
+    [
+      { "bn": "নবজাতকের অভিভাবক (এলাকা/গ্রাম ভিত্তিক)", "en": "Newborn Guardians (Area/Village-based)" },
+      { "bn": "ভয়েস কল", "en": "Voice Call" },
+      { "bn": "নবজাতকের যত্ন ও পুষ্টি সংক্রান্ত পরামর্শ", "en": "Newborn care and nutrition advice" },
+      "৩৮৬",
+      "2026-06-22",
+      { "bn": "রিসিভ হয়েছে", "en": "Answered" }
+    ]
+  ],
+  "msgVaccineHistoryTableBody": [
+    [
+      { "bn": "গর্ভকালীন টিকা প্রাপ্য মা (সময় ভিত্তিক)", "en": "Mothers Due for Pregnancy Vaccine (Time-based)" },
+      { "bn": "এসএমএস", "en": "SMS" },
+      { "bn": "আপনার TT/TD টিকার পরবর্তী ডোজের নির্ধারিত তারিখ আগামী ৩ দিনের মধ্যে।", "en": "Your next TT/TD vaccine dose is due within the next 3 days." },
+      "৭১৫",
+      "2026-07-02",
+      { "bn": "প্রেরণ সম্পন্ন", "en": "Sent" }
+    ],
+    [
+      { "bn": "শিশুর টিকা প্রাপ্য (ধাপ অনুযায়ী, তারিখের পূর্বে)", "en": "Children Due for Vaccine (By Dose, Before Date)" },
+      { "bn": "ভয়েস কল", "en": "Voice Call" },
+      { "bn": "টিকাদান রিমাইন্ডার", "en": "Vaccination reminder" },
+      "১,২৪০",
+      "2026-06-30",
+      { "bn": "প্রক্রিয়াধীন", "en": "Processing" }
+    ],
+    [
+      { "bn": "শিশুর টিকা প্রদানের পর নিশ্চিতকরণ", "en": "Post-vaccination Confirmation (Children)" },
+      { "bn": "ভয়েস কল", "en": "Voice Call" },
+      { "bn": "আপনার শিশুকে সফলভাবে টিকা প্রদান করা হয়েছে। ধন্যবাদ।", "en": "Your child has been successfully vaccinated. Thank you." },
+      "৯৮৪",
+      "2026-06-27",
+      { "bn": "রিসিভ হয়েছে", "en": "Answered" }
+    ]
+  ],
+  "msgProviderHistoryTableBody": [
+    [
+      { "bn": "পদবী অনুযায়ী কর্মকর্তা", "en": "Officers by Designation" },
+      { "bn": "এসএমএস", "en": "SMS" },
+      { "bn": "মাঠপর্যায়ে নতুন কর্মসূচি সংক্রান্ত নির্দেশনা", "en": "Instructions on the new field-level program" },
+      "৩৮২",
+      "2026-06-27",
+      { "bn": "প্রেরণ সম্পন্ন", "en": "Sent" }
+    ],
+    [
+      { "bn": "উপজেলা/এলাকাভিত্তিক কর্মকর্তা", "en": "Officers by Upazila/Area" },
+      { "bn": "ভয়েস কল", "en": "Voice Call" },
+      { "bn": "আগামী সভা সংক্রান্ত জরুরি বার্তা", "en": "Urgent message regarding the upcoming meeting" },
+      "৯৬",
+      "2026-06-20",
+      { "bn": "রিসিভ হয়েছে", "en": "Answered" }
+    ]
+  ],
+  "msgVolunteerHistoryTableBody": [
+    [
+      { "bn": "গ্রুপ ভিত্তিক স্বেচ্ছাসেবী", "en": "Volunteers by Group" },
+      { "bn": "এসএমএস", "en": "SMS" },
+      { "bn": "রক্তদান কর্মসূচিতে অংশগ্রহণের আমন্ত্রণ", "en": "Invitation to participate in a blood donation program" },
+      "৩,৪১৭",
+      "2026-06-24",
+      { "bn": "অরিসিভড", "en": "Not Answered" }
+    ],
+    [
+      { "bn": "এলাকাভিত্তিক স্বেচ্ছাসেবী", "en": "Volunteers by Area" },
+      { "bn": "ভয়েস কল", "en": "Voice Call" },
+      { "bn": "আগামী স্বাস্থ্য ক্যাম্পে সহায়তার জন্য অনুরোধ", "en": "Request for assistance at the upcoming health camp" },
+      "১৪৮",
+      "2026-06-18",
+      { "bn": "রিসিভ হয়েছে", "en": "Answered" }
+    ]
   ]
 };
 
@@ -5401,6 +6312,13 @@ const STATUS_BADGE_CLASS_BY_BN = {
     'নিম্ন': 'badge-ok',
     'মধ্যম': 'badge-warn',
     'উচ্চ': 'badge-risk',
+    'প্রেরণ সম্পন্ন': 'badge-ok',
+    'প্রক্রিয়াধীন': 'badge-info',
+    'ব্যর্থ': 'badge-risk',
+    'রিসিভ হয়েছে': 'badge-ok',
+    'অরিসিভড': 'badge-muted',
+    'এসএমএস': 'badge-info',
+    'ভয়েস কল': 'badge-purple',
 };
 function badgeClassFor(cell) {
     if (cell && cell.i18n !== undefined) return STATUS_BADGE_CLASS_BY_KEY[cell.i18n] || 'badge-purple';
@@ -5418,11 +6336,18 @@ function populateOptionGroups() {
         if (!group) return;
         const prevIndex = sel.selectedIndex >= 0 ? sel.selectedIndex : 0;
         sel.innerHTML = '';
+        let currentOptgroup = null;
         group.forEach((opt, idx) => {
+            if (opt.groupLabel) {
+                currentOptgroup = document.createElement('optgroup');
+                currentOptgroup.label = currentLang === 'bn' ? opt.groupLabel.bn : opt.groupLabel.en;
+                sel.appendChild(currentOptgroup);
+                return;
+            }
             const o = document.createElement('option');
             o.value = idx;
             o.textContent = currentLang === 'bn' ? opt.bn : opt.en;
-            sel.appendChild(o);
+            (currentOptgroup || sel).appendChild(o);
         });
         sel.selectedIndex = Math.min(prevIndex, sel.options.length - 1);
     });
@@ -5467,6 +6392,18 @@ const TABLE_RENDER_CONFIG = {
         columns: ['sl', 0, 1, 2, 3, 4, 5, { type: 'badge', idx: 6 }, 'action'] },
     healthCenterTableBody: { selector: '#healthCenterTableBody',
         columns: ['sl', 0, 1, 2, 3, { type: 'map', idx: 4 }] },
+    msgPregnantHistoryTableBody: { selector: '#msgPregnantHistoryTableBody',
+        columns: ['sl', 0, { type: 'badge', idx: 1 }, 2, 3, 4, { type: 'badge', idx: 5 }] },
+    msgBloodHistoryTableBody: { selector: '#msgBloodHistoryTableBody',
+        columns: ['sl', 0, { type: 'badge', idx: 1 }, 2, 3, 4, { type: 'badge', idx: 5 }] },
+    msgNewbornHistoryTableBody: { selector: '#msgNewbornHistoryTableBody',
+        columns: ['sl', 0, { type: 'badge', idx: 1 }, 2, 3, 4, { type: 'badge', idx: 5 }] },
+    msgVaccineHistoryTableBody: { selector: '#msgVaccineHistoryTableBody',
+        columns: ['sl', 0, { type: 'badge', idx: 1 }, 2, 3, 4, { type: 'badge', idx: 5 }] },
+    msgProviderHistoryTableBody: { selector: '#msgProviderHistoryTableBody',
+        columns: ['sl', 0, { type: 'badge', idx: 1 }, 2, 3, 4, { type: 'badge', idx: 5 }] },
+    msgVolunteerHistoryTableBody: { selector: '#msgVolunteerHistoryTableBody',
+        columns: ['sl', 0, { type: 'badge', idx: 1 }, 2, 3, 4, { type: 'badge', idx: 5 }] },
     maternalDeathTableBody: { selector: '#maternalDeathTableBody',
         columns: ['sl', 0, 1, 2, 3, 4, 5, 6, 'action'] },
     childDeathTableBody: { selector: '#childDeathTableBody',
@@ -5580,6 +6517,12 @@ const SECTION_META = {
     'vaccine-pregnancy': { title: 'menu_vaccine_pregnancy', group: 'menu_vaccine_group' },
     'vaccine-child': { title: 'menu_vaccine_child', group: 'menu_vaccine_group' },
     'health-center-list': { title: 'menu_health_center_list', group: 'menu_health_center_group' },
+    'msg-pregnant': { title: 'menu_msg_pregnant', group: 'menu_message_group' },
+    'msg-blood': { title: 'menu_msg_blood', group: 'menu_message_group' },
+    'msg-newborn': { title: 'menu_msg_newborn', group: 'menu_message_group' },
+    'msg-vaccine': { title: 'menu_msg_vaccine', group: 'menu_message_group' },
+    'msg-provider': { title: 'menu_msg_provider', group: 'menu_message_group' },
+    'msg-volunteer': { title: 'menu_msg_volunteer', group: 'menu_message_group' },
     'report': { title: 'menu_report', group: 'menu_report_group' },
     'maternal-death': { title: 'menu_maternal_death', group: 'menu_mortality_group' },
     'child-death': { title: 'menu_child_death', group: 'menu_mortality_group' },
@@ -5734,6 +6677,25 @@ function sendNotification(type) {
     };
     const msg = (messages[currentLang] && messages[currentLang][type]) || messages[currentLang].allowance;
     alert(msg);
+}
+
+function sendCategoryMessage(formEl) {
+    const channelSelect = formEl.querySelector('[data-i18n-group="msg_channel_options"]');
+    const isVoice = channelSelect && channelSelect.selectedIndex === 1;
+    const messages = {
+        bn: {
+            sms: 'নির্বাচিত প্রাপক ধরন ও এলাকার মোবাইল নম্বরে এসএমএস সফলভাবে পাঠানো হয়েছে।',
+            voice: 'নির্বাচিত প্রাপক ধরন ও এলাকার মোবাইল নম্বরে ভয়েস কল পাঠানো শুরু হয়েছে।'
+        },
+        en: {
+            sms: 'The SMS has been successfully sent to the selected recipient type and area.',
+            voice: 'The voice call has started sending to the selected recipient type and area.'
+        }
+    };
+    const set = messages[currentLang] || messages.bn;
+    alert(isVoice ? set.voice : set.sms);
+    formEl.reset();
+    return false;
 }
 // ================================================================
 // CHART.JS SETUP
